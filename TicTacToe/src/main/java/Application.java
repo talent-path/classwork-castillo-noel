@@ -74,16 +74,16 @@ public class Application {
 
             printScore();
             board = clearBoard();
-            System.out.println("Enter 1 to play again, or any other key to exit: ");
-            String playAgainSelection = scn.nextLine();
-            if (!playAgainSelection.equals("1")) {
-                playAgain = false;
-            } else {
+            int playAgainSelection = Console.readInt("Enter 1 to play again, or 2 to exit: ", 1, 2);
+            if (playAgainSelection == 1) {
+                playAgain = true;
                 gameOver = false;
+            } else {
+                playAgain = false;
             }
 
         }
-        System.out.println("Thank you for playing Tic Tac Toe!");
+        System.out.println("Thank you for playing Tic Tac Toe " + player1Name + " and " + player2Name + "!");
     }
 
     public static void printRules() {
@@ -275,9 +275,9 @@ public class Application {
 
     public static void determineMultiplayer() {
         Scanner scn = new Scanner(System.in);
-        System.out.println("Enter 1 for Multiplayer or any other key to face the Computer:");
-        String multiplayerInput = scn.nextLine();
-        if (multiplayerInput.equals("1")) {
+
+        int multiplayerInput = Console.readInt("Enter 1 for Multiplayer or 2 to face the Computer:", 1, 2);
+        if (multiplayerInput == 1) {
             multiplayer = true;
         } else {
             difficultyLvl = Console.readInt("Enter the given number to select difficulty\n1: Easy\n2: Moderate\n3: Hard", 1, 3);

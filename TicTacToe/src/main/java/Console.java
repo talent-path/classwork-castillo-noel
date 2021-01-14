@@ -90,7 +90,7 @@ public class Console {
         int num = readInt(msg);
 
         while (num < min || num > max) {
-            print("The entered integer is outside the range of MIN and MAX, retry!");
+            print("The entered number is outside the range of options, retry!");
             num = readInt(msg);
         }
         return num;
