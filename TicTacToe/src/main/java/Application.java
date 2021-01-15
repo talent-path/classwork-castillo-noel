@@ -103,7 +103,8 @@ public class Application {
                 "You can choose either X or O as your icon, with the opposing player defaulting to the unselected icon.\n" +
                 "Players take turns putting their icon in empty squares.\n" +
                 "The first player to get 3 of her/his icons in a row (up, down, across, or diagonally) is the winner.\n" +
-                "When all 9 squares are full, the game is over.\n");
+                "When all 9 squares are full, the game is over.\n" +
+                "(If playing another game. The player who did not make the last move will make the first move in the next game to ensure equal playing time for both sides!!)");
     }
 
 
