@@ -1,32 +1,57 @@
 public class Player {
 
-    public static String playerName;
+    private String playerName;
 
-    public static String playerIcon;
+    private String playerIcon;
 
-    public static int numberOfVictories;
+    private int numberOfVictories;
 
-    public static String getPlayerName() {
+    private int numberOfLosses;
+
+    private int numberOfTies;
+
+    public void printScore() {
+        System.out.println(playerName + " - Victories: " + numberOfVictories + ", Losses: " +
+                numberOfLosses + ", Ties: " + numberOfTies);
+    }
+
+    public String getPlayerName() {
         return playerName;
     }
 
-    public static void setPlayerName(String playerName) {
-        Player.playerName = playerName;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
-    public static String getPlayerIcon() {
+    public String getPlayerIcon() {
         return playerIcon;
     }
 
-    public static void setPlayerIcon(String playerIcon) {
-        Player.playerIcon = playerIcon;
+    public void setPlayerIcon(String playerIcon) {
+        this.playerIcon = playerIcon;
     }
 
-    public static int getNumberOfVictories() {
+    public int getNumberOfVictories() {
         return numberOfVictories;
     }
 
-    public static void setNumberOfVictories(int numberOfVictories) {
-        Player.numberOfVictories = numberOfVictories;
+    public void setNumberOfVictories(int numberOfVictories) {
+        this.numberOfVictories = numberOfVictories;
+    }
+
+    public int getNumberOfLosses() {
+        return numberOfLosses;
+    }
+
+    public void setNumberOfLosses(int numberOfLosses) {
+        this.numberOfLosses = numberOfLosses;
+    }
+
+    public int getNumberOfTies() {
+        return numberOfTies;
+    }
+
+    public void setNumberOfTies(int numberOfTies) {
+        this.numberOfTies = numberOfTies;
     }
 }

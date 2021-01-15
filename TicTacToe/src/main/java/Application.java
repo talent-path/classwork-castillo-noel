@@ -4,43 +4,44 @@ import java.util.Scanner;
 public class Application {
 
     //The variables can be contained within the Player class variable for improved readability/style
-    public static Player player1 = new Player();
-
-    public static Player player2 = new Player();
-
-    public static String player1Icon;
-
-    public static String player2Icon;
-
-    public static String player1Name;
-
-    public static String player2Name;
-
     public static boolean multiplayer;
 
-    public static int player1Victories;
-
-    public static int player2Victories;
-
     public static int numberOfMoves;
-
-    public static int tieCount;
 
     public static int difficultyLvl;
 
     public static void main(String[] args) {
 
         Board board = new Board();
+        Player player1 = new Player();
+        Player player2 = new Player();
         board.clearBoard();
-        playGame(board);
+        playGame(board, player1, player2);
 
     }
 
-    public static void playGame(Board board) {
+    public static void playGame(Board board, Player player1, Player player2) {
         printRules();
         determineMultiplayer();
-        enterNames();
-        selectIcon();
+
+        System.out.println("Player 1 please enter your name:");
+        player1 = enterName(player1);
+
+        if (multiplayer) {
+            System.out.println("Player 2 please enter your name:");
+            player2 = enterName(player2);
+        } else {
+            player2.setPlayerName("Computer");
+        }
+
+
+        player1 = selectIcon(player1);
+        if(player1.getPlayerIcon().equals("X")){
+            player2.setPlayerIcon("O");
+        } else{
+            player2.setPlayerIcon("X");
+        }
+
         boolean player1Turn = true;
         boolean gameOver = false;
         boolean playAgain = true;
@@ -50,21 +51,24 @@ public class Application {
             numberOfMoves = 0;
             while (!gameOver) {
                 if (player1Turn) {
-                    playerBoardPlacement(board, player1Icon, player1Name);
-                    if (checkWinner(board)) {
+                    playerBoardPlacement(board, player1);
+                    if (checkWinner(board, player1, player2)) {
                         gameOver = true;
-                        player1Victories++;
+                        player1.setNumberOfVictories(player1.getNumberOfVictories() + 1);
+                        player2.setNumberOfLosses(player2.getNumberOfLosses() + 1);
                     }
                     player1Turn = !player1Turn;
                 } else {
                     if (multiplayer) {
-                        playerBoardPlacement(board, player2Icon, player2Name);
+                        playerBoardPlacement(board, player2);
                     } else {
-                        computerBoardPlacement(board, player2Icon, player2Name);
+                        computerBoardPlacement(board, player2, player1);
                     }
-                    if (checkWinner(board)) {
+                    if (checkWinner(board, player1, player2)) {
                         gameOver = true;
-                        player2Victories++;
+                        player2.setNumberOfVictories(player2.getNumberOfVictories() + 1);
+                        player1.setNumberOfLosses(player1.getNumberOfLosses() + 1);
+                        System.out.println(player2.getNumberOfVictories());
                     }
                     player1Turn = !player1Turn;
                 }
@@ -73,12 +77,15 @@ public class Application {
 
                 if (numberOfMoves == 9 && !gameOver) {
                     System.out.println("The game resulted in a tie!");
-                    tieCount++;
+                    player1.setNumberOfTies(player1.getNumberOfTies() + 1);
+                    player2.setNumberOfTies(player2.getNumberOfTies() + 1);
                     gameOver = true;
                 }
             }
 
-            printScore();
+            player1.printScore();
+            player2.printScore();
+
             board.clearBoard();
             int playAgainSelection = Console.readInt("Enter 1 to play again, or 2 to exit: ", 1, 2);
             if (playAgainSelection == 1) {
@@ -89,7 +96,7 @@ public class Application {
             }
 
         }
-        System.out.println("Thank you for playing Tic Tac Toe " + player1Name + " and " + player2Name + "!");
+        System.out.println("Thank you for playing Tic Tac Toe " + player1.getPlayerName() + " and " + player2.getPlayerName() + "!");
     }
 
     public static void printRules() {
@@ -101,26 +108,20 @@ public class Application {
                 "When all 9 squares are full, the game is over.\n");
     }
 
-    public static void printScore() {
-        System.out.println(player1Name + " victories: " + player1Victories);
-        System.out.println(player2Name + " victories: " + player2Victories);
-        System.out.println("Ties: " + tieCount);
-    }
 
-
-    public static void playerBoardPlacement(Board board, String playerIcon, String playerName) {
+    public static void playerBoardPlacement(Board board, Player player) {
 
         boolean movePlaced = false;
         Scanner scn = new Scanner(System.in);
 
         while (!movePlaced) {
-            System.out.println("Your move " + playerName + ". Select a position from the board above by entering the number displayed in the slot: ");
+            System.out.println("Your move " + player.getPlayerName() + ". Select a position from the board above by entering the number displayed in the slot: ");
             board.printBoard();
             String userSelection = scn.nextLine();
             for (int row = 0; row < board.getBoard().length; row++) {
                 for (int col = 0; col < board.getBoard()[row].length; col++) {
                     if (userSelection.equals(board.getBoard()[row][col])) {
-                        board.getBoard()[row][col] = playerIcon;
+                        board.getBoard()[row][col] = player.getPlayerIcon();
                         movePlaced = true;
                         return;
                     }
@@ -131,19 +132,19 @@ public class Application {
 
     }
 
-    public static void computerBoardPlacement(Board board, String playerIcon, String playerName) {
+    public static void computerBoardPlacement(Board board, Player computer, Player player) {
 
         boolean movePlaced = false;
-        System.out.println(playerName + " has placed a move.");
+        System.out.println(computer.getPlayerName() + " has placed a move.");
 
         //Easy Mode
         if (difficultyLvl == 1) {
             while (!movePlaced) {
                 for (int row = 0; row < board.getBoard().length; row++) {
                     for (int col = 0; col < board.getBoard()[row].length; col++) {
-                        if (!player1Icon.equals(board.getBoard()[row][col]) && !player2Icon.equals(board.getBoard()[row][col])) {
+                        if (!player.getPlayerIcon().equals((board.getBoard()[row][col])) && !computer.getPlayerIcon().equals((board.getBoard()[row][col]))) {
                             if (Rng.coinFlip() && Rng.coinFlip()) {
-                                board.getBoard()[row][col] = playerIcon;
+                                board.getBoard()[row][col] = computer.getPlayerIcon();
                                 movePlaced = true;
                                 return;
                             }
@@ -157,16 +158,16 @@ public class Application {
         if (difficultyLvl == 2) {
             while (!movePlaced) {
                 if (numberOfMoves == 0) {
-                    board.getBoard()[0][0] = playerIcon;
+                    board.getBoard()[0][0] = computer.getPlayerIcon();
                     movePlaced = true;
                     return;
                 } else if (numberOfMoves == 1) {
-                    if (board.getBoard()[1][1] == player1Icon) {
-                        board.getBoard()[0][0] = playerIcon;
+                    if (board.getBoard()[1][1] == player.getPlayerIcon()) {
+                        board.getBoard()[0][0] = computer.getPlayerIcon();
                         movePlaced = true;
                         return;
                     } else {
-                        board.getBoard()[1][1] = playerIcon;
+                        board.getBoard()[1][1] = computer.getPlayerIcon();
                         movePlaced = true;
                         return;
                     }
@@ -174,9 +175,9 @@ public class Application {
                     while (!movePlaced) {
                         for (int row = 0; row < board.getBoard().length; row++) {
                             for (int col = 0; col < board.getBoard()[row].length; col++) {
-                                if (!player1Icon.equals(board.getBoard()[row][col]) && !player2Icon.equals(board.getBoard()[row][col])) {
+                                if (!player.getPlayerIcon().equals((board.getBoard()[row][col])) && !computer.getPlayerIcon().equals((board.getBoard()[row][col]))) {
                                     if (Rng.coinFlip() && Rng.coinFlip()) {
-                                        board.getBoard()[row][col] = playerIcon;
+                                        board.getBoard()[row][col] = computer.getPlayerIcon();
                                         movePlaced = true;
                                         return;
                                     }
@@ -193,16 +194,16 @@ public class Application {
         if (difficultyLvl == 3) {
             while (!movePlaced) {
                 if (numberOfMoves == 0) {
-                    board.getBoard()[0][0] = playerIcon;
+                    board.getBoard()[0][0] = computer.getPlayerIcon();
                     movePlaced = true;
                     return;
                 } else if (numberOfMoves == 1) {
-                    if (board.getBoard()[1][1] == player1Icon) {
-                        board.getBoard()[0][0] = playerIcon;
+                    if (board.getBoard()[1][1] == player.getPlayerIcon()) {
+                        board.getBoard()[0][0] = computer.getPlayerIcon();
                         movePlaced = true;
                         return;
                     } else {
-                        board.getBoard()[1][1] = playerIcon;
+                        board.getBoard()[1][1] = computer.getPlayerIcon();
                         movePlaced = true;
                         return;
                     }
@@ -210,9 +211,9 @@ public class Application {
                     while (!movePlaced) {
                         for (int row = 0; row < board.getBoard().length; row++) {
                             for (int col = 0; col < board.getBoard()[row].length; col++) {
-                                if (!player1Icon.equals(board.getBoard()[row][col]) && !player2Icon.equals(board.getBoard()[row][col])) {
+                                if (!player.getPlayerIcon().equals((board.getBoard()[row][col])) && !computer.getPlayerIcon().equals((board.getBoard()[row][col]))) {
                                     if (Rng.coinFlip() && Rng.coinFlip()) {
-                                        board.getBoard()[row][col] = playerIcon;
+                                        board.getBoard()[row][col] = computer.getPlayerIcon();
                                         movePlaced = true;
                                         return;
                                     }
@@ -227,37 +228,25 @@ public class Application {
 
     }
 
-    public static void selectIcon() {
+    public static Player selectIcon(Player player) {
         Scanner scn = new Scanner(System.in);
 
         while (true) {
-            System.out.println(player1Name + " enter X or O for your icon selection:");
-            player1Icon = scn.nextLine().toUpperCase(Locale.ROOT);
-            if (player1Icon.equals("X")) {
-                player2Icon = "O";
-                return;
-            } else if (player1Icon.equals("O")) {
-                player2Icon = "X";
-                return;
-            } else {
-                System.out.println("That is not a valid entry!");
+            System.out.println(player.getPlayerName() + " enter X or O for your icon selection:");
+            String iconSelection = scn.nextLine().toUpperCase();
+            if (iconSelection.equals("X") || iconSelection.equals("O")) {
+                player.setPlayerIcon(iconSelection);
+                return player;
             }
+            System.out.println("That is not a valid entry!");
         }
     }
 
-    public static void enterNames() {
+    public static Player enterName(Player player) {
         Scanner scn = new Scanner(System.in);
-        System.out.println("Player 1 please enter your name:");
-        player1Name = scn.nextLine();
-        player1.setPlayerName(player1Name);
-        if (multiplayer) {
-            System.out.println("Player 2 please enter your name:");
-            player2Name = scn.nextLine();
-            player2.setPlayerName(player2Name);
-        } else {
-            player2Name = "Computer";
-            player2.setPlayerName("Computer");
-        }
+        String playerNameInput = scn.nextLine();
+        player.setPlayerName(playerNameInput);
+        return player;
     }
 
     public static void determineMultiplayer() {
@@ -271,79 +260,79 @@ public class Application {
         }
     }
 
-    public static boolean checkWinner(Board board) {
+    public static boolean checkWinner(Board board, Player player1, Player player2) {
 
         //There are 8 winning conditions
         //Horizontal wins:
-        if (board.getBoard()[0][0].equals(player1Icon) && board.getBoard()[0][1].equals(player1Icon) && board.getBoard()[0][2].equals(player1Icon)) {
-            System.out.println(player1Name + " Won!");
+        if (board.getBoard()[0][0].equals(player1.getPlayerIcon()) && board.getBoard()[0][1].equals(player1.getPlayerIcon()) && board.getBoard()[0][2].equals(player1.getPlayerIcon())) {
+            System.out.println(player1.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[1][0].equals(player1Icon) && board.getBoard()[1][1].equals(player1Icon) && board.getBoard()[1][2].equals(player1Icon)) {
-            System.out.println(player1Name + " Won!");
+        if (board.getBoard()[1][0].equals(player1.getPlayerIcon()) && board.getBoard()[1][1].equals(player1.getPlayerIcon()) && board.getBoard()[1][2].equals(player1.getPlayerIcon())) {
+            System.out.println(player1.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[2][0].equals(player1Icon) && board.getBoard()[2][1].equals(player1Icon) && board.getBoard()[2][2].equals(player1Icon)) {
-            System.out.println(player1Name + " Won!");
+        if (board.getBoard()[2][0].equals(player1.getPlayerIcon()) && board.getBoard()[2][1].equals(player1.getPlayerIcon()) && board.getBoard()[2][2].equals(player1.getPlayerIcon())) {
+            System.out.println(player1.getPlayerName() + " Won!");
             return true;
         }
 
-        if (board.getBoard()[0][0].equals(player2Icon) && board.getBoard()[0][1].equals(player2Icon) && board.getBoard()[0][2].equals(player2Icon)) {
-            System.out.println(player2Name + " Won!");
+        if (board.getBoard()[0][0].equals(player2.getPlayerIcon()) && board.getBoard()[0][1].equals(player2.getPlayerIcon()) && board.getBoard()[0][2].equals(player2.getPlayerIcon())) {
+            System.out.println(player2.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[1][0].equals(player2Icon) && board.getBoard()[1][1].equals(player2Icon) && board.getBoard()[1][2].equals(player2Icon)) {
-            System.out.println(player2Name + " Won!");
+        if (board.getBoard()[1][0].equals(player2.getPlayerIcon()) && board.getBoard()[1][1].equals(player2.getPlayerIcon()) && board.getBoard()[1][2].equals(player2.getPlayerIcon())) {
+            System.out.println(player2.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[2][0].equals(player2Icon) && board.getBoard()[2][1].equals(player2Icon) && board.getBoard()[2][2].equals(player2Icon)) {
-            System.out.println(player2Name + " Won!");
+        if (board.getBoard()[2][0].equals(player2.getPlayerIcon()) && board.getBoard()[2][1].equals(player2.getPlayerIcon()) && board.getBoard()[2][2].equals(player2.getPlayerIcon())) {
+            System.out.println(player2.getPlayerName() + " Won!");
             return true;
         }
 
         //Vertical wins:
-        if (board.getBoard()[0][0].equals(player1Icon) && board.getBoard()[1][0].equals(player1Icon) && board.getBoard()[2][0].equals(player1Icon)) {
-            System.out.println(player1Name + " Won!");
+        if (board.getBoard()[0][0].equals(player1.getPlayerIcon()) && board.getBoard()[1][0].equals(player1.getPlayerIcon()) && board.getBoard()[2][0].equals(player1.getPlayerIcon())) {
+            System.out.println(player1.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[0][1].equals(player1Icon) && board.getBoard()[1][1].equals(player1Icon) && board.getBoard()[2][1].equals(player1Icon)) {
-            System.out.println(player1Name + " Won!");
+        if (board.getBoard()[0][1].equals(player1.getPlayerIcon()) && board.getBoard()[1][1].equals(player1.getPlayerIcon()) && board.getBoard()[2][1].equals(player1.getPlayerIcon())) {
+            System.out.println(player1.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[0][2].equals(player1Icon) && board.getBoard()[1][2].equals(player1Icon) && board.getBoard()[2][2].equals(player1Icon)) {
-            System.out.println(player2Name + " Won!");
+        if (board.getBoard()[0][2].equals(player1.getPlayerIcon()) && board.getBoard()[1][2].equals(player1.getPlayerIcon()) && board.getBoard()[2][2].equals(player1.getPlayerIcon())) {
+            System.out.println(player1.getPlayerName() + " Won!");
             return true;
         }
 
-        if (board.getBoard()[0][0].equals(player2Icon) && board.getBoard()[1][0].equals(player2Icon) && board.getBoard()[2][0].equals(player2Icon)) {
-            System.out.println(player2Name + " Won!");
+        if (board.getBoard()[0][0].equals(player2.getPlayerIcon()) && board.getBoard()[1][0].equals(player2.getPlayerIcon()) && board.getBoard()[2][0].equals(player2.getPlayerIcon())) {
+            System.out.println(player2.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[0][1].equals(player2Icon) && board.getBoard()[1][1].equals(player2Icon) && board.getBoard()[2][1].equals(player2Icon)) {
-            System.out.println(player2Name + " Won!");
+        if (board.getBoard()[0][1].equals(player2.getPlayerIcon()) && board.getBoard()[1][1].equals(player2.getPlayerIcon()) && board.getBoard()[2][1].equals(player2.getPlayerIcon())) {
+            System.out.println(player2.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[0][2].equals(player2Icon) && board.getBoard()[1][2].equals(player2Icon) && board.getBoard()[2][2].equals(player2Icon)) {
-            System.out.println(player2Name + "Won!");
+        if (board.getBoard()[0][2].equals(player2.getPlayerIcon()) && board.getBoard()[1][2].equals(player2.getPlayerIcon()) && board.getBoard()[2][2].equals(player2.getPlayerIcon())) {
+            System.out.println(player2.getPlayerName() + "Won!");
             return true;
         }
 
         //Diagonal wins:
-        if (board.getBoard()[0][0].equals(player1Icon) && board.getBoard()[1][1].equals(player1Icon) && board.getBoard()[2][2].equals(player1Icon)) {
-            System.out.println(player1Name + " Won!");
+        if (board.getBoard()[0][0].equals(player1.getPlayerIcon()) && board.getBoard()[1][1].equals(player1.getPlayerIcon()) && board.getBoard()[2][2].equals(player1.getPlayerIcon())) {
+            System.out.println(player1.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[0][2].equals(player1Icon) && board.getBoard()[1][1].equals(player1Icon) && board.getBoard()[2][0].equals(player1Icon)) {
-            System.out.println(player1Name + " Won!");
+        if (board.getBoard()[0][2].equals(player1.getPlayerIcon()) && board.getBoard()[1][1].equals(player1.getPlayerIcon()) && board.getBoard()[2][0].equals(player1.getPlayerIcon())) {
+            System.out.println(player1.getPlayerName() + " Won!");
             return true;
         }
 
-        if (board.getBoard()[0][0].equals(player2Icon) && board.getBoard()[1][1].equals(player2Icon) && board.getBoard()[2][2].equals(player2Icon)) {
-            System.out.println(player2Name + " Won!");
+        if (board.getBoard()[0][0].equals(player2.getPlayerIcon()) && board.getBoard()[1][1].equals(player2.getPlayerIcon()) && board.getBoard()[2][2].equals(player2.getPlayerIcon())) {
+            System.out.println(player2.getPlayerName() + " Won!");
             return true;
         }
-        if (board.getBoard()[0][2].equals(player2Icon) && board.getBoard()[1][1].equals(player2Icon) && board.getBoard()[2][0].equals(player2Icon)) {
-            System.out.println(player2Name + " Won!");
+        if (board.getBoard()[0][2].equals(player2.getPlayerIcon()) && board.getBoard()[1][1].equals(player2.getPlayerIcon()) && board.getBoard()[2][0].equals(player2.getPlayerIcon())) {
+            System.out.println(player2.getPlayerName() + " Won!");
             return true;
         }
 
