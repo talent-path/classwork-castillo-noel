@@ -1,9 +1,7 @@
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Application {
 
-    //The variables can be contained within the Player class variable for improved readability/style
     public static boolean multiplayer;
 
     public static int numberOfMoves;
