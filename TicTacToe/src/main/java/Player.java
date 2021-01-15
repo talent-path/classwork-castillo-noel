@@ -1,5 +1,6 @@
 public class Player {
 
+    // V A R I A B L E S
     private String playerName;
 
     private String playerIcon;
@@ -10,6 +11,7 @@ public class Player {
 
     private int numberOfTies;
 
+    //M E T H O D S
     public void printScore() {
         System.out.println(playerName + " - Victories: " + numberOfVictories + ", Losses: " +
                 numberOfLosses + ", Ties: " + numberOfTies);

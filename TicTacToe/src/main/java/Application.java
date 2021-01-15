@@ -2,12 +2,14 @@ import java.util.Scanner;
 
 public class Application {
 
+    // V A R I A B L E S
     public static boolean multiplayer;
 
     public static int numberOfMoves;
 
     public static int difficultyLvl;
 
+    // M A I N
     public static void main(String[] args) {
 
         Board board = new Board();
@@ -18,6 +20,7 @@ public class Application {
 
     }
 
+    // M E T H O D S
     public static void playGame(Board board, Player player1, Player player2) {
         printRules();
         determineMultiplayer();
@@ -34,9 +37,9 @@ public class Application {
 
 
         player1 = selectIcon(player1);
-        if(player1.getPlayerIcon().equals("X")){
+        if (player1.getPlayerIcon().equals("X")) {
             player2.setPlayerIcon("O");
-        } else{
+        } else {
             player2.setPlayerIcon("X");
         }
 

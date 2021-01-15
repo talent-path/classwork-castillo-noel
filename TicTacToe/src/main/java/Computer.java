@@ -5,11 +5,11 @@ public class Computer extends Player {
 
 
     // C O N S T R U C T O R S
-    public Computer(){
+    public Computer() {
         this.setPlayerName("Computer");
     }
 
-    public Computer(Player player, int difficultyLvl){
+    public Computer(Player player, int difficultyLvl) {
         this.setPlayerName("Computer");
         this.difficultyLvl = difficultyLvl;
     }

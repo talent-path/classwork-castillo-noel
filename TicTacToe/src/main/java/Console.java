@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Console {
 
+    // M E T H O D S
     public static long readLong(String msg, long min, long max) {
         long num = readLong(msg);
 
@@ -119,11 +120,11 @@ public class Console {
         System.out.println(msg);
     }
 
-    public static int min (int[] arr){
+    public static int min(int[] arr) {
 
         int min = arr[0];
-        for(int num: arr){
-            if(num < min){
+        for (int num : arr) {
+            if (num < min) {
                 min = num;
             }
         }
@@ -131,11 +132,11 @@ public class Console {
         return min;
     }
 
-    public static int max (int[] arr) {
+    public static int max(int[] arr) {
 
         int max = arr[0];
-        for(int num: arr){
-            if(num > max){
+        for (int num : arr) {
+            if (num > max) {
                 max = num;
             }
         }
@@ -143,41 +144,41 @@ public class Console {
         return max;
     }
 
-    public static double sum (int[] arr) {
+    public static double sum(int[] arr) {
 
         double sum = 0;
-        for(int num: arr){
+        for (int num : arr) {
             sum += num;
         }
 
         return sum;
     }
 
-    public static double avg (int[] arr){
+    public static double avg(int[] arr) {
 
         return sum(arr) / arr.length;
     }
 
-    public static double stdv (int[] arr){
+    public static double stdv(int[] arr) {
 
         double avg = avg(arr);
         double stdv = 0.0;
-        for(double num: arr){
+        for (double num : arr) {
             stdv += Math.pow(num - avg, 2);
         }
 
-        return Math.sqrt(stdv/arr.length);
+        return Math.sqrt(stdv / arr.length);
     }
 
-    public static int fibonacci(int n){
+    public static int fibonacci(int n) {
 
         int a = 0;
         int b = 1;
         int next = 0;
 
-        if(n == 1){
+        if (n == 1) {
             return a;
-        } else if(n == 2){
+        } else if (n == 2) {
             return b;
         } else {
 
