@@ -14,8 +14,6 @@ import com.tp.rpg.weapons.*;
 import java.util.*;
 
 
-
-
 public class Application {
 
     // V A R I A B L E S
@@ -28,18 +26,19 @@ public class Application {
     public static void main(String[] args) {
         PlayerCharacter pc = setUpPlayer();
 
+
         while (pc.isAlive() && dragonsDefeated == 0) {
             NonPlayerCharacter enemy = setUpEnemy();
 
             battle(pc, enemy);
-            if(pc.isAlive()){
-                if(enemy.getClass().equals("class Dragon")) {
+            if (pc.isAlive()) {
+                if (enemy.getClass().equals("class Dragon")) {
                     dragonsDefeated++;
-                } else if(enemy.getClass().equals("class Troll")){
+                } else if (enemy.getClass().equals("class Troll")) {
                     trollsDefeated++;
-                } else if(enemy.getClass().equals("class Orc")){
+                } else if (enemy.getClass().equals("class Orc")) {
                     orcsDefeated++;
-                } else{
+                } else {
                     goblinsDefeated++;
                 }
             }
@@ -101,13 +100,13 @@ public class Application {
     private static NonPlayerCharacter setUpEnemy() {
         Random rng = new Random();
         int enemyRng = rng.nextInt(11);
-        if(enemyRng < 5){
+        if (enemyRng < 5) {
             return new Goblin();
-        } else if(enemyRng >= 5 && enemyRng <= 7){
+        } else if (enemyRng >= 5 && enemyRng <= 7) {
             return new Orc();
-        } else if(enemyRng > 7 && enemyRng < 10){
+        } else if (enemyRng > 7 && enemyRng < 10) {
             return new Troll();
-        } else{
+        } else {
             return new Dragon();
         }
     }
@@ -122,7 +121,7 @@ public class Application {
         while (pc.isAlive() && enemy.isAlive()) {
             if (pc.makeChoice().equals("Attack")) {
                 pc.attack(enemy);
-            } else if(pc.makeChoice().equals("Use Item")){
+            } else if (pc.makeChoice().equals("Use Item")) {
                 //TODO: consider other actions
                 throw new UnsupportedOperationException();
             } else {
@@ -140,7 +139,7 @@ public class Application {
 
     //display some message
     private static void gameOverScreen() {
-        if(dragonsDefeated == 0){
+        if (dragonsDefeated == 0) {
             System.out.println("Your life has been lost in the forest...");
         } else {
             System.out.println("You've slain the Dragon and left the forest as a Hero!");

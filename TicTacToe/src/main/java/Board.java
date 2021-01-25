@@ -17,7 +17,7 @@ public class Board {
 
     public static String[][] clearBoard() {
 
-        board = new String[][]{
+        board = new String[][] {
                 {"1", "2", "3"},
                 {"4", "5", "6"},
                 {"7", "8", "9"}

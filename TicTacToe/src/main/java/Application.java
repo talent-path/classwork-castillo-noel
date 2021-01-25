@@ -17,7 +17,6 @@ public class Application {
         Player player2 = new Player();
         board.clearBoard();
         playGame(board, player1, player2);
-
     }
 
     // M E T H O D S
@@ -223,7 +222,6 @@ public class Application {
                             }
                         }
                     }
-
                 }
             }
         }
