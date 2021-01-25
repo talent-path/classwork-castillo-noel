@@ -17,6 +17,7 @@ public class PlayerCharacter extends Character {
     //C O N S T R U C T O R
     public PlayerCharacter(String name){
         this.name = name;
+        this.hp = 100;
     }
 
     public PlayerCharacter(String name, Weapon weapon, Armor armor){

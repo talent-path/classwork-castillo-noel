@@ -19,9 +19,9 @@ public abstract class Character implements Chooser {
 
     // V A R I A B L E S
 
-    public int hp = 100;
+    public int hp;
 
-    public int magicLvl = 0;
+    public int magicLvl;
 
     public Armor armor;
 

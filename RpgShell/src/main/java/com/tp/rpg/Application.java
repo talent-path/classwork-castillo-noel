@@ -9,10 +9,15 @@ import com.tp.rpg.weapons.*;
 
 import java.util.*;
 
-// V A R I A B L E S
 
-// M A I N
+
+
 public class Application {
+
+    // V A R I A B L E S
+    public int enemiesDefeated = 0;
+
+    // M A I N
     public static void main(String[] args) {
         PlayerCharacter pc = setUpPlayer();
 
@@ -89,9 +94,12 @@ public class Application {
         while (a.isAlive() && b.isAlive()) {
             if (a.makeChoice().equals("Attack")) {
                 attacker.attack(defender);
-            } else {
+            } else if(a.makeChoice().equals("Use Item")){
                 //TODO: consider other actions
                 throw new UnsupportedOperationException();
+            } else {
+                System.out.println(a.getName() + " decides to run away!");
+                break;
             }
 
             //TODO: display HP status?
@@ -105,5 +113,13 @@ public class Application {
 
     //display some message
     private static void gameOverScreen() {
+    }
+
+    public int getEnemiesDefeated() {
+        return enemiesDefeated;
+    }
+
+    public void setEnemiesDefeated(int enemiesDefeated) {
+        this.enemiesDefeated = enemiesDefeated;
     }
 }
