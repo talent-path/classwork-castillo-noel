@@ -1,4 +1,4 @@
 package com.tp.rpg.items;
 
-public class MagicPotion {
+public class MagicPotion extends Item{
 }

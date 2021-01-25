@@ -4,21 +4,22 @@ import com.tp.rpg.armors.Chainmail;
 import com.tp.rpg.armors.Leather;
 import com.tp.rpg.armors.Plate;
 import com.tp.rpg.armors.Robe;
+import com.tp.rpg.items.*;
 import com.tp.rpg.weapons.*;
 
-import java.util.Scanner;
+import java.util.*;
 
+// V A R I A B L E S
 
-
+// M A I N
 public class Application {
     public static void main(String[] args) {
-
         PlayerCharacter pc = setUpPlayer();
 
-        while( pc.isAlive() ){
+        while (pc.isAlive()) {
             NonPlayerCharacter enemy = setUpEnemy();
 
-            battle( pc, enemy );
+            battle(pc, enemy);
 
         }
 
@@ -26,14 +27,16 @@ public class Application {
 
     }
 
+    // M E T H O D S
+
     //walk the user through setting up their character
     private static PlayerCharacter setUpPlayer() {
         Scanner scn = new Scanner((System.in));
         System.out.println("What is your name traveler?");
         String name = scn.nextLine();
         PlayerCharacter player = new PlayerCharacter(name);
-        int weaponSelection = Console.readInt("Select your weapon:\n(1) Axe\n(2) Bow\n(3) Sword\n(4) Dagger",1, 4);
-        switch(weaponSelection){
+        int weaponSelection = Console.readInt("Select your weapon:\n(1) Axe\n(2) Bow\n(3) Sword\n(4) Dagger", 1, 4);
+        switch (weaponSelection) {
             case 1:
                 player.setWeapon(new Axe());
                 break;
@@ -48,8 +51,8 @@ public class Application {
                 break;
         }
 
-        int armorSelection = Console.readInt("Select your armor:\n(1) Robe\n(2) Leather Vest\n(3) Chainmail\n(4) Plate",1, 4);
-        switch(armorSelection){
+        int armorSelection = Console.readInt("Select your armor:\n(1) Robe\n(2) Leather Vest\n(3) Chainmail\n(4) Plate", 1, 4);
+        switch (armorSelection) {
             case 1:
                 player.setArmor(new Robe());
                 break;
@@ -64,6 +67,10 @@ public class Application {
                 break;
         }
 
+        player.getItems().put(new ArmorKit(), 1);
+        player.getItems().put(new Bandage(), 1);
+        player.getItems().put(new HealthPotion(), 1);
+        player.getItems().put(new SharpeningStone(), 1);
         return player;
     }
 
@@ -79,8 +86,8 @@ public class Application {
         Character attacker = a;
         Character defender = b;
 
-        while( a.isAlive() && b.isAlive() ){
-            if( a.makeChoice().equals("Attack")) {
+        while (a.isAlive() && b.isAlive()) {
+            if (a.makeChoice().equals("Attack")) {
                 attacker.attack(defender);
             } else {
                 //TODO: consider other actions
