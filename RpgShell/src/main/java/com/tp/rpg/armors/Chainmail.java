@@ -1,8 +1,8 @@
 package com.tp.rpg.armors;
 
-public class Shirt implements Armor {
+public class Chainmail implements Armor {
 
-    int defense = 2;
+    int defense = 15;
 
     public int reduceDamage(int startingDamage) {
 
@@ -16,4 +16,5 @@ public class Shirt implements Armor {
     public void setDefense(int defense) {
         this.defense = defense;
     }
+
 }

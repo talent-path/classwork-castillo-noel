@@ -6,4 +6,9 @@ public interface Armor {
     //outputs the amount of damage to actually take
     int reduceDamage( int startingDamage );
 
+    int getDefense();
+
+    void setDefense(int defense);
+
+
 }

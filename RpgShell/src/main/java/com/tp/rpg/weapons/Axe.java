@@ -1,12 +1,12 @@
 package com.tp.rpg.weapons;
 
-public class Fist implements Weapon {
+public class Axe  implements Weapon {
 
-    int attack = 5;
+    int attack = 25;
 
     public int generateDamage() {
 
-        return 5;
+        return attack;
     }
 
     public int getAttack() {
