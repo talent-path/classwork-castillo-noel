@@ -5,6 +5,24 @@ import java.util.List;
 public class HangmanViewModel {
     String partialWord;
     List<Character> guessedLetters;
+    Integer numberOfCorrectGuesses;
+    Boolean isGameOver = false;
+
+    public Boolean getGameOver() {
+        return isGameOver;
+    }
+
+    public void setGameOver(Boolean gameOver) {
+        isGameOver = gameOver;
+    }
+
+    public void setNumberOfCorrectGuesses(Integer numberOfCorrectGuesses) {
+        this.numberOfCorrectGuesses = numberOfCorrectGuesses;
+    }
+
+    public Integer getNumberOfCorrectGuesses() {
+        return numberOfCorrectGuesses;
+    }
 
     public String getPartialWord() {
         return partialWord;

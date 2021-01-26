@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Component
 public class HangmanInMemDao implements HangmanDao {
@@ -15,9 +16,25 @@ public class HangmanInMemDao implements HangmanDao {
 
     List<HangmanGame> allGames = new ArrayList<>();
 
+    Random random = new Random();
+
+    int idCounter = 0;
+
+    String[] words = {"geography", "cat", "yesterday", "java", "truck", "opportunity",
+            "fish", "token", "transportation", "bottom", "apple", "cake",
+            "remote", "boots", "terminology", "arm", "cranberry", "tool",
+            "caterpillar", "spoon", "watermelon", "laptop", "toe", "toad",
+            "fundamental", "capitol", "garbage", "anticipate", "pesky"};
+
     public HangmanInMemDao(){
-        HangmanGame onlyGame = new HangmanGame( 100, "zebra" );
-        allGames.add( onlyGame );
+        
+//        HangmanGame onlyGame = new HangmanGame( 100, "zebra" );
+//        allGames.add( onlyGame );
+
+        for(int counter = 0; counter < words.length; counter++) {
+            allGames.add(new HangmanGame(counter, words[counter]));
+        }
+
     }
 
     @Override

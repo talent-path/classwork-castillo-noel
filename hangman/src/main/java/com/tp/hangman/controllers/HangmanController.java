@@ -29,7 +29,8 @@ public class HangmanController {
 
     @GetMapping("/game/{gameId}/guess/{guess}")
     public HangmanViewModel guessLetter( @PathVariable String guess, @PathVariable Integer gameId ){
-        return service.makeGuess( gameId, guess );
+        HangmanViewModel viewModel = service.makeGuess( gameId, guess );
+        return viewModel;
     }
 
 
