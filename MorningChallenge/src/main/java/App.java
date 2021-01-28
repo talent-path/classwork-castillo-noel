@@ -2,17 +2,250 @@ import java.util.*;
 
 public class App {
 
-    public static int counter = 1;
-
     public static void main(String[] args) {
 
 
-        System.out.println(lengthOfLongestSubstring("Hello"));
-        System.out.println(lengthOfLongestSubstring("HelloMyDoood"));
-        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+    }
 
+    public boolean checkRow(char[][] board, int row, char num) {
+        for (int i = 0; i < 9; i++) {
+            if (board[row][i] == num) return true;
+        }
+
+        return false;
+    }
+
+    public boolean checkCol(char[][] board, int col, char num) {
+        for (int i = 0; i < 9; i++) {
+            if (board[i][col] == num) return true;
+        }
+
+        return false;
+    }
+
+    public boolean checkSquare(char[][] board, int row, int col, char num) {
+        int r = row - row % 3;
+        int c = col - col % 3;
+
+        for (int i = r; i < r + 3; i++) {
+            for (int j = c; j < c + 3; j++) {
+                if (board[i][j] == num) return true;
+            }
+        }
+
+        return false;
 
     }
+
+    public void solveSudoku(char[][] board){
+
+        boolean done = false;
+
+        //1. loop through all the squares
+        for(int row = 0; row < 9; row++){
+            for(int col = 0; col < 9; col++){
+                //2. If the square is a '.', try each number one at a time
+                if(board[row][col] == '.'){
+
+                    for(char toTry = '1'; !done && toTry <= '9'; toTry++){
+                       board[row][col] = toTry;
+                       //3. Recursively check the board
+                       if(sudokuValid(board)){
+                           solveSudoku(board);
+                           done = checkSolved(board);
+                       }
+                    }
+
+                    //4. If we can't solve it after trying all numbers,
+                    //      that means our earlier guess was bad, so we
+                    //      need to give up here and let the recursion unwind.
+
+                    if(!done){
+                        board[row][col] = '.';
+
+                        //now we're done because we tried everything
+                        done = true;
+
+                    }
+
+
+                }
+            }
+        }
+    }
+
+    public boolean checkSolved(char[][] board) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') return false;
+            }
+        }
+        return true;
+    }
+
+
+    public boolean checkUnsolved(char[][] board) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkPlacement(int row, int col, char value, char[][] board) {
+        char[][] boardCopy = new char[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                boardCopy[i][j] = board[i][j];
+            }
+        }
+        if (boardCopy[row][col] == '.') {
+            boardCopy[row][col] = value;
+            if (sudokuValid(boardCopy)) {
+                board[row][col] = value;
+                return true;
+            } else {
+                board[row][col] = '.';
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean placementValid(char[][] board, int row, int col) {
+
+        List<Character> columns = new ArrayList<>();
+        List<Character> rows = new ArrayList<>();
+        List<Character> squares = new ArrayList<>();
+
+        //Columns
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[j][i] == '.') {
+                    continue;
+                } else {
+                    if (columns.contains(board[j][i])) {
+                        return false;
+                    }
+                    columns.add(board[j][i]);
+                }
+            }
+            columns.clear();
+        }
+
+        //Rows
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') {
+                    continue;
+                } else {
+                    if (rows.contains(board[i][j])) {
+                        return false;
+                    }
+                    rows.add(board[i][j]);
+                }
+            }
+            rows.clear();
+        }
+
+        //Squares
+        for (int row = 0; row < 9; row += 3) {
+            for (int col = 0; col < 9; col += 3) {
+                for (int i = row; i < row + 3; i++) {
+                    for (int j = col; j < col + 3; j++) {
+                        if (board[i][j] == '.') {
+                            continue;
+                        } else {
+                            if (squares.contains(board[i][j])) {
+                                return false;
+                            }
+                            squares.add(board[i][j]);
+                        }
+                    }
+                }
+                squares.clear();
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean sudokuValid(char[][] board) {
+
+        List<Character> columns = new ArrayList<>();
+        List<Character> rows = new ArrayList<>();
+        List<Character> squares = new ArrayList<>();
+
+        //Columns
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[j][i] == '.') {
+                    continue;
+                } else {
+                    if (columns.contains(board[j][i])) {
+                        return false;
+                    }
+                    columns.add(board[j][i]);
+                }
+            }
+            columns.clear();
+        }
+
+        //Rows
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') {
+                    continue;
+                } else {
+                    if (rows.contains(board[i][j])) {
+                        return false;
+                    }
+                    rows.add(board[i][j]);
+                }
+            }
+            rows.clear();
+        }
+
+        //Squares
+        for (int row = 0; row < 9; row += 3) {
+            for (int col = 0; col < 9; col += 3) {
+                for (int i = row; i < row + 3; i++) {
+                    for (int j = col; j < col + 3; j++) {
+                        if (board[i][j] == '.') {
+                            continue;
+                        } else {
+                            if (squares.contains(board[i][j])) {
+                                return false;
+                            }
+                            squares.add(board[i][j]);
+                        }
+                    }
+                }
+                squares.clear();
+            }
+        }
+
+        return true;
+    }
+
+
+    //6: 1 + 2 + 3 = 6
+    //28: 1 + 2 + 4 + 7 + 14 = 28
+//    public static boolean isPerfect(int num) {
+//        if (num <= 0) return false;
+//        int sumOfFactors = 0;
+//
+//        for (int factor = 1; factor <= num / factor; factor++) {
+//            if (num % factor == 0) {
+//                sumOfFactors += factor;
+//                if (factor * factor != num) {
+//                    sumOfFactors += num / factor;
+//            }
+//        }
+//        return sumOfFactors - num == num ? true : false;
+//    }
 
 
 //        Map<Long, Integer> count = new HashMap<>();
@@ -39,32 +272,32 @@ public class App {
 
 //    }
 
-    public static int lengthOfLongestSubstring(String s) {
-        if (s.length() == 0) {
-            return 0;
-        }
-        int counter = 0;
-        int maxLength = 0;
-        Map<Character, Integer> sMap = new HashMap<>();
-
-        for (int i = 0; i < s.length() - 1; i++) {
-            counter++;
-            if (counter >= maxLength && !sMap.containsKey(s.charAt(i))) {
-                sMap.put(s.charAt(i), 1);
-                maxLength = sMap.keySet().size();
-
-            } else if ((counter < maxLength && !sMap.containsKey(s.charAt(i)))) {
-
-                sMap.put(s.charAt(i), 1);
-            } else {
-                counter = 0;
-                sMap.clear();
-            }
-        }
-
-
-        return maxLength;
-    }
+//    public static int lengthOfLongestSubstring(String s) {
+//        if (s.length() == 0) {
+//            return 0;
+//        }
+//        int counter = 0;
+//        int maxLength = 0;
+//        Map<Character, Integer> sMap = new HashMap<>();
+//
+//        for (int i = 0; i < s.length() - 1; i++) {
+//            counter++;
+//            if (counter >= maxLength && !sMap.containsKey(s.charAt(i))) {
+//                sMap.put(s.charAt(i), 1);
+//                maxLength = sMap.keySet().size();
+//
+//            } else if ((counter < maxLength && !sMap.containsKey(s.charAt(i)))) {
+//
+//                sMap.put(s.charAt(i), 1);
+//            } else {
+//                counter = 0;
+//                sMap.clear();
+//            }
+//        }
+//
+//
+//        return maxLength;
+//    }
 //    public static int digitReverse(int toFlip) {
 //        if (toFlip >= 0) {
 //            return toFlip / 10 != 0 ? (int) (((toFlip % 10) * Math.pow(10, String.valueOf(toFlip).length() - 1)) + digitReverse(toFlip / 10))

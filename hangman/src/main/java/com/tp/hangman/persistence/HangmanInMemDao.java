@@ -26,15 +26,14 @@ public class HangmanInMemDao implements HangmanDao {
             "caterpillar", "spoon", "watermelon", "laptop", "toe", "toad",
             "fundamental", "capitol", "garbage", "anticipate", "pesky"};
 
-    public HangmanInMemDao(){
-        
+    public HangmanInMemDao() {
+
 //        HangmanGame onlyGame = new HangmanGame( 100, "zebra" );
 //        allGames.add( onlyGame );
 
-        for(int counter = 0; counter < words.length; counter++) {
+        for (int counter = 0; counter < words.length; counter++) {
             allGames.add(new HangmanGame(counter, words[counter]));
         }
-
     }
 
     @Override
@@ -51,21 +50,21 @@ public class HangmanInMemDao implements HangmanDao {
 //
 //        return toReturn;
 
-        return allGames.stream().filter( g -> g.getGameId().equals(gameId) ).findFirst().orElse(null);
+        return allGames.stream().filter(g -> g.getGameId().equals(gameId)).findFirst().orElse(null);
     }
 
-    public List<HangmanGame> getVowelGames(){
+    public List<HangmanGame> getVowelGames() {
 
         List<HangmanGame> toReturn = new ArrayList<>();
 
-        for( HangmanGame toCheck : allGames ){
+        for (HangmanGame toCheck : allGames) {
             String word = toCheck.getHiddenWord().toLowerCase();
-            if( word.charAt(0) == 'a' ||
+            if (word.charAt(0) == 'a' ||
                     word.charAt(0) == 'e' ||
                     word.charAt(0) == 'i' ||
                     word.charAt(0) == 'o' ||
-                    word.charAt(0) == 'u'){
-                toReturn.add( toCheck );
+                    word.charAt(0) == 'u') {
+                toReturn.add(toCheck);
             }
         }
 
