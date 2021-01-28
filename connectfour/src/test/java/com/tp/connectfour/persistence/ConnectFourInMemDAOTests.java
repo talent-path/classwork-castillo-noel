@@ -175,6 +175,17 @@ class ConnectFourInMemDAOTests {
     }
 
     @Test
+    public void gameOverDiagonalTest() {
+
+        ConnectFourBoard testBoard = toTest.startGame();
+        testBoard.getBoard()[0][0] = 1;
+        testBoard.getBoard()[1][1] = 1;
+        testBoard.getBoard()[2][2] = 1;
+        testBoard.getBoard()[3][3] = 1;
+        assertTrue(toTest.gameOver(testBoard));
+    }
+
+    @Test
     public void gameOverDrawTest() {
 
         ConnectFourBoard testBoard = toTest.startGame();

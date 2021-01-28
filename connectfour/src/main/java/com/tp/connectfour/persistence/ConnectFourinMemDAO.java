@@ -147,6 +147,54 @@ public class ConnectFourinMemDAO implements ConnectFourDAO {
         }
 
         //Diagonal
+        counter1 = 0;
+        counter2 = 0;
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (board.getBoard()[j][i] == 1) {
+                    counter1++;
+                    counter2 = 0;
+                    while (counter1 != 0) {
+                        if (i < 6 && board.getBoard()[j][i + 1] == 1) {
+                            counter1++;
+                        } else if (i > 0 && board.getBoard()[j][i - 1] == 1) {
+                            counter1++;
+                        } else{
+                            counter1 = 0;
+                        }
+                        if (counter1 == 4) {
+                            return true;
+                        }
+                    }
+
+                } else if (board.getBoard()[j][i] == 2) {
+                    counter2++;
+                    counter1 = 0;
+                    while (counter2 != 0) {
+                        if (i < 6 && board.getBoard()[j][i + 1] == 1) {
+                            counter1++;
+                        } else if (i > 0 && board.getBoard()[j][i - 1] == 1) {
+                            counter1++;
+                        } else{
+                            counter1 = 0;
+                        }
+
+                        if (counter2 == 4) {
+                            return true;
+                        }
+                    }
+                } else {
+                    counter1 = 0;
+                    counter2 = 0;
+                }
+                if (counter1 == 4) {
+                    return true;
+                } else if (counter2 == 4) {
+                    return true;
+                }
+            }
+
+        }
 
 
         //Check for full = draw
