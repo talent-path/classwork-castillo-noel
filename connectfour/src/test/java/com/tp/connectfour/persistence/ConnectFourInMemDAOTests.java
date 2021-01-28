@@ -151,4 +151,39 @@ class ConnectFourInMemDAOTests {
         }
     }
 
+    @Test
+    public void gameOverHorizontalTest() {
+
+        ConnectFourBoard testBoard = toTest.startGame();
+        testBoard.getBoard()[0][0] = 1;
+        testBoard.getBoard()[1][0] = 1;
+        testBoard.getBoard()[2][0] = 1;
+        testBoard.getBoard()[3][0] = 1;
+        assertTrue(toTest.gameOver(testBoard));
+
+    }
+
+    @Test
+    public void gameOverVerticalTest() {
+
+        ConnectFourBoard testBoard = toTest.startGame();
+        testBoard.getBoard()[0][0] = 1;
+        testBoard.getBoard()[0][1] = 1;
+        testBoard.getBoard()[0][2] = 1;
+        testBoard.getBoard()[0][3] = 1;
+        assertTrue(toTest.gameOver(testBoard));
+    }
+
+    @Test
+    public void gameOverDrawTest() {
+
+        ConnectFourBoard testBoard = toTest.startGame();
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 6; j++){
+                testBoard.getBoard()[i][j] = 1;
+            }
+        }
+        assertTrue(toTest.gameOver(testBoard));
+    }
+
 }

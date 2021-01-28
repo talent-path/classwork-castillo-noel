@@ -15,5 +15,6 @@ public interface ConnectFourDAO {
     void deleteGame(Integer gameId) throws InvalidGameIdException;
     ConnectFourBoard startGame();
     ConnectFourBoard makeMove(ConnectFourBoard board,Integer col) throws ColunmOutOfBoundsException, NullColumnException;
+    boolean gameOver(ConnectFourBoard board);
 
 }
