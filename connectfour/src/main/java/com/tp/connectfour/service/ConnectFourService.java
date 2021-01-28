@@ -1,5 +1,7 @@
 package com.tp.connectfour.service;
 
+import com.tp.connectfour.exceptions.NullColumnException;
+import com.tp.connectfour.exceptions.NullGameIdException;
 import com.tp.connectfour.persistence.ConnectFourinMemDAO;
 import com.tp.connectfour.exceptions.ColunmOutOfBoundsException;
 import com.tp.connectfour.exceptions.InvalidGameIdException;
@@ -15,7 +17,7 @@ public class ConnectFourService {
     @Autowired
     ConnectFourinMemDAO dao;
 
-    public ConnectFourBoard getGameById(Integer gameId) throws InvalidGameIdException {
+    public ConnectFourBoard getGameById(Integer gameId) throws InvalidGameIdException, NullGameIdException {
         return dao.getGameById(gameId);
     }
 
@@ -31,7 +33,7 @@ public class ConnectFourService {
     public void deleteGame(Integer gameId) throws InvalidGameIdException {
          dao.deleteGame(gameId);
     }
-    public ConnectFourBoard makeMove(ConnectFourBoard board,Integer col) throws ColunmOutOfBoundsException {
+    public ConnectFourBoard makeMove(ConnectFourBoard board,Integer col) throws ColunmOutOfBoundsException, NullColumnException {
 
         return dao.makeMove(board, col);
     }

@@ -1,7 +1,7 @@
 package com.tp.connectfour.model;
 
 public class ConnectFourBoard {
-    private  Integer gameId;
+    private Integer gameId;
     private Integer[][] board;
     boolean playerTurn;
 
@@ -16,13 +16,21 @@ public class ConnectFourBoard {
     public ConnectFourBoard(Integer gameId) {
         this.gameId = gameId;
         this.board = new Integer[7][6];
-        this.playerTurn=Rng.coinFlip();
+        this.playerTurn = true;
     }
 
-public ConnectFourBoard (ConnectFourBoard that){
-        this.gameId=that.gameId;
-        this.board=that.board;
-}
+    public ConnectFourBoard(ConnectFourBoard that) {
+        this.gameId = that.gameId;
+        this.playerTurn = that.playerTurn;
+        this.board = new Integer[7][6];
+
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 6; j++){
+                this.board[i][j] = that.board[i][j];
+            }
+        }
+    }
+
     public Integer getGameId() {
         return gameId;
     }
