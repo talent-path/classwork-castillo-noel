@@ -22,27 +22,29 @@ class LibraryInMemDAOTests {
 
     //this will run before each @Test method
     @BeforeEach
-    public void setup() throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException, NullBookAuthorException, NullBookTitleException, InvalidBookTitleException {
-        List<Book> allBooks = toTest.getAllBooks();
+    public void setup() {
+        try {
+            List<Book> allBooks = toTest.getAllBooks();
 
-        for (Book toRemove : allBooks) {
-            toTest.deleteBook(toRemove.getId());
+            for (Book toRemove : allBooks) {
+                toTest.deleteBook(toRemove.getId());
+            }
+
+            List<String> authors = new ArrayList<>();
+            authors.add("Author One");
+            authors.add("Author Two");
+            Book testBook = new Book(0, "My First Book", authors, 2020);
+            toTest.newBook(testBook);
+
+            authors = new ArrayList<>();
+            authors.add("Author Three");
+            testBook = new Book(1, "My Second Book", authors, 2021);
+            toTest.newBook(testBook);
+        } catch (InvalidBookIdException e) {
+            fail();
         }
-
-        List<String> authors = new ArrayList<>();
-        authors.add("Author One");
-        authors.add("Author Two");
-        Book testBook = new Book(0, "My First Book", authors, 2020);
-        toTest.newBook(testBook);
-
-        authors = new ArrayList<>();
-        authors.add("Author Three");
-        testBook = new Book(1, "My Second Book", authors, 2021);
-        toTest.newBook(testBook);
     }
 
-
-    //READING A BOOK TESTS
     @Test
     public void getBookTestGoldenPath() {
         try {
@@ -51,8 +53,7 @@ class LibraryInMemDAOTests {
             assertEquals(0, testBook.getId());
             assertEquals(2, testBook.getAuthors().size());
             assertEquals(2020, testBook.getPublicationYear());
-        } catch (InvalidBookIdException | NullBookIdException e) {
-            System.out.println(e);
+        } catch (InvalidBookIdException e) {
             fail();
         }
 
@@ -94,27 +95,10 @@ class LibraryInMemDAOTests {
         }
     }
 
-
-    @Test
-    public void getBookByIdTestNullBookId() {
-        try {
-            Book testBook = toTest.getBookById(null);
-            fail();
-        } catch (InvalidBookIdException e) {
-            fail();
-
-        } catch (NullBookIdException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
     @Test
     public void getBookByIdTestPastUpperBoundBookId() {
         try {
             Book testBook = toTest.getBookById(Integer.MAX_VALUE);
-        } catch (NullBookIdException e) {
-            fail();
-
         } catch (InvalidBookIdException ex) {
             //do nothing because this is the specific exception we WANT
         }
@@ -124,9 +108,6 @@ class LibraryInMemDAOTests {
     public void getBookByIdTestPastLowerBoundBookId() {
         try {
             Book testBook = toTest.getBookById(Integer.MIN_VALUE);
-        } catch (NullBookIdException e) {
-            fail();
-
         } catch (InvalidBookIdException ex) {
             //do nothing because this is the specific exception we WANT
         }
@@ -134,8 +115,8 @@ class LibraryInMemDAOTests {
 
 
     @Test
-    public void addBookTestGoldenPath() throws InvalidBookIdException, NullBookIdException {
-
+    public void addBookTestGoldenPath() {
+        try {
             List<String> authors = new ArrayList<>();
             authors.add("Author One");
             authors.add("Author Two");
@@ -143,11 +124,15 @@ class LibraryInMemDAOTests {
 
             toTest.newBook(testBook);
             assertEquals("My First Book", toTest.getBookById(0).getTitle());
+        } catch (InvalidBookIdException e) {
+            fail();
+        }
     }
 
 
     @Test
-    public void editBookTestPastGoldenPath() throws InvalidBookIdException, NullBookIdException {
+    public void editBookTestPastGoldenPath() {
+        try {
             List<String> authors = new ArrayList<>();
             authors.add("Author One");
             authors.add("Author Two");
@@ -158,6 +143,9 @@ class LibraryInMemDAOTests {
             testBook.setPublicationYear(2021);
             toTest.editBook(0, testBook);
             assertEquals("My First Book Updated", toTest.getBookById(0).getTitle());
-
+        } catch (InvalidBookIdException e) {
+            fail();
         }
+
     }
+}

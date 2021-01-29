@@ -41,9 +41,13 @@ public class LibraryService {
         return dao.getAllBooksByAuthor(author);
     }
 
-    public List<Book> getAllBooksByYear(Integer year) throws NullBookYearException {
+    public List<Book> getAllBooksByYear(Integer year) throws NullBookYearException, InvalidBookYearException {
         if (year == null) {
             throw new NullBookYearException("Cannot retrieve books with a null value for publication year.");
+        }
+        if (year > Calendar.getInstance().get(Calendar.YEAR)
+                || year < 800) {
+            throw new InvalidBookYearException("No books were published during the year submitted!");
         }
         return dao.getAllBooksByYear(year);
     }
@@ -67,7 +71,7 @@ public class LibraryService {
                 throw new NullBookAuthorException("You cannot add a Book with a null value for author.");
             }
             if (authorToCheck.equals("")) {
-                throw new InvalidBookAuthorsException("You cannot add a Book without authors.");
+                throw new InvalidBookAuthorsException("You cannot add a Book to have an empty name for an author.");
             }
         }
         if (book.getPublicationYear() > Calendar.getInstance().get(Calendar.YEAR)
@@ -100,7 +104,7 @@ public class LibraryService {
                 throw new NullBookAuthorException("You cannot edit a Book to have a null value for author.");
             }
             if (authorToCheck.equals("")) {
-                throw new InvalidBookAuthorsException("You cannot edit a Book to have authors.");
+                throw new InvalidBookAuthorsException("You cannot edit a Book to have an empty name for an author.");
             }
         }
         if (updatedBook.getPublicationYear() > Calendar.getInstance().get(Calendar.YEAR)

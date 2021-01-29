@@ -24,23 +24,29 @@ class LibraryServiceTests {
 
     //this will run before each @Test method
     @BeforeEach
-    public void setup() throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException, NullBookAuthorException, NullBookTitleException, InvalidBookTitleException {
-        List<Book> allBooks = toTest.getAllBooks();
+    public void setup() {
+        try {
+            List<Book> allBooks = toTest.getAllBooks();
 
-        for (Book toRemove : allBooks) {
-            toTest.deleteBook(toRemove.getId());
+            for (Book toRemove : allBooks) {
+                toTest.deleteBook(toRemove.getId());
+            }
+
+            List<String> authors = new ArrayList<>();
+            authors.add("Author One");
+            authors.add("Author Two");
+            Book testBook = new Book(0, "My First Book", authors, 2020);
+            toTest.newBook(testBook);
+
+            authors = new ArrayList<>();
+            authors.add("Author Three");
+            testBook = new Book(1, "My Second Book", authors, 2021);
+            toTest.newBook(testBook);
+        } catch (InvalidBookIdException | NullBookIdException | InvalidBookAuthorsException
+                | InvalidBookYearException | NullBookAuthorException | NullBookTitleException
+                | InvalidBookTitleException e) {
+            fail();
         }
-
-        List<String> authors = new ArrayList<>();
-        authors.add("Author One");
-        authors.add("Author Two");
-        Book testBook = new Book(0, "My First Book", authors, 2020);
-        toTest.newBook(testBook);
-
-        authors = new ArrayList<>();
-        authors.add("Author Three");
-        testBook = new Book(1, "My Second Book", authors, 2021);
-        toTest.newBook(testBook);
     }
 
 
@@ -135,7 +141,9 @@ class LibraryServiceTests {
         try {
             List<Book> testBooks = toTest.getAllBooksByYear(null);
             fail();
-        } catch (NullBookYearException ex) {
+        } catch(InvalidBookYearException e) {
+            fail();
+        } catch (NullBookYearException  ex) {
             //do nothing because this is the specific exception we WANT
         }
     }

@@ -14,7 +14,7 @@ public class LibraryInMemDAO implements LibraryDAO {
     Integer id = 0;
 
     @Override
-    public Book getBookById(Integer bookId) throws InvalidBookIdException, NullBookIdException {
+    public Book getBookById(Integer bookId) throws InvalidBookIdException {
         for (Book book : allBooks) {
             if (book.getId().equals(bookId)) {
                 return book;
@@ -33,7 +33,7 @@ public class LibraryInMemDAO implements LibraryDAO {
     }
 
     @Override
-    public List<Book> getAllBooksByTitle(String title)  {
+    public List<Book> getAllBooksByTitle(String title) {
 
         List<Book> copyAllBooks = new ArrayList<>();
         for (Book copy : allBooks) {
@@ -45,7 +45,7 @@ public class LibraryInMemDAO implements LibraryDAO {
     }
 
     @Override
-    public List<Book> getAllBooksByAuthor(String author)  {
+    public List<Book> getAllBooksByAuthor(String author) {
 
         List<Book> copyAllBooks = new ArrayList<>();
         for (Book copy : allBooks) {
@@ -60,7 +60,7 @@ public class LibraryInMemDAO implements LibraryDAO {
     }
 
     @Override
-    public List<Book> getAllBooksByYear(Integer year)  {
+    public List<Book> getAllBooksByYear(Integer year) {
         List<Book> copyAllBooks = new ArrayList<>();
         for (Book copy : allBooks) {
             if (copy.getPublicationYear().equals(year)) {

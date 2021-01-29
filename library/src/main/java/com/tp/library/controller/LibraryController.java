@@ -35,7 +35,7 @@ public class LibraryController {
     }
 
     @GetMapping("/books/year/{year}")
-    public List<Book> getAllBooksByYear(@PathVariable Integer year) throws NullBookYearException {
+    public List<Book> getAllBooksByYear(@PathVariable Integer year) throws NullBookYearException, InvalidBookYearException {
         return service.getAllBooksByYear(year);
     }
 
