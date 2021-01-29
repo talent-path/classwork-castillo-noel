@@ -35,7 +35,7 @@ public class LibraryService {
         return dao.getAllBooksByYear(year);
     }
 
-    public Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException {
+    public Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException, NullBookAuthorException, NullBookTitleException, InvalidBookTitleException {
         return dao.newBook(book);
     }
 
@@ -44,7 +44,7 @@ public class LibraryService {
         dao.deleteBook(bookId);
     }
 
-    public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException {
+    public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException, InvalidBookTitleException, InvalidBookYearException, NullBookAuthorException, NullBookTitleException {
         return dao.editBook(bookId, updatedBook);
     }
 

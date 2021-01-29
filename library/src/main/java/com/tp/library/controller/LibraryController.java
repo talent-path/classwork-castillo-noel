@@ -40,7 +40,7 @@ public class LibraryController {
     }
 
     @PostMapping("/books/new-book")
-    public Book newBook(@RequestBody Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException {
+    public Book newBook(@RequestBody Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException, NullBookAuthorException, NullBookTitleException, InvalidBookTitleException {
         return service.newBook(book);
     }
 
@@ -51,7 +51,7 @@ public class LibraryController {
     }
 
     @PutMapping("/books/{bookId}")
-    public Book editBook(@PathVariable Integer bookId, @RequestBody Book book) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException {
+    public Book editBook(@PathVariable Integer bookId, @RequestBody Book book) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException, NullBookAuthorException, NullBookTitleException, InvalidBookTitleException, InvalidBookYearException {
         return service.editBook(bookId, book);
 
     }

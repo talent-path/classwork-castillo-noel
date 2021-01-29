@@ -19,8 +19,8 @@ public interface LibraryDAO {
 
     void deleteBook(Integer BookId) throws InvalidBookIdException, NullBookIdException;
 
-    Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException;
+    Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException, NullBookAuthorException, NullBookTitleException, InvalidBookTitleException;
 
-    Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException;
+    Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException, NullBookTitleException, InvalidBookYearException, NullBookAuthorException, InvalidBookTitleException;
 
 }

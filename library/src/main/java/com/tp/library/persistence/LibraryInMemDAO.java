@@ -95,14 +95,23 @@ public class LibraryInMemDAO implements LibraryDAO {
     }
 
     @Override
-    public Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException {
+    public Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException, NullBookAuthorException, NullBookTitleException, InvalidBookTitleException {
         if (book.getId() == null) {
             throw new NullBookIdException("You cannot add a Book with null id.");
+        }
+        if(book.getTitle() == null){
+            throw new NullBookTitleException("You cannot add a Book with null title.");
+        }
+        if(book.getTitle().equals("")){
+            throw new InvalidBookTitleException("You cannot add a Book with an empty title.");
         }
         if (book.getAuthors().size() == 0) {
             throw new InvalidBookAuthorsException("You cannot add a Book without authors.");
         }
         for (String authorToCheck : book.getAuthors()) {
+            if (authorToCheck == null) {
+                throw new NullBookAuthorException("You cannot add a Book with a null value for author.");
+            }
             if (authorToCheck.equals("")) {
                 throw new InvalidBookAuthorsException("You cannot add a Book without authors.");
             }
@@ -116,31 +125,34 @@ public class LibraryInMemDAO implements LibraryDAO {
     }
 
     @Override
-    public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException {
-        if (bookId == null) {
-            throw new NullBookIdException("You cannot edit a Book with null id.");
+    public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException, NullBookTitleException, InvalidBookYearException, NullBookAuthorException, InvalidBookTitleException {
+
+        if(updatedBook.getTitle() == null){
+            throw new NullBookTitleException("You cannot edit a Book to have a null title.");
+        }
+        if(updatedBook.getTitle().equals("")){
+            throw new InvalidBookTitleException("You cannot edit a Book to have no title.");
+        }
+        if (updatedBook.getAuthors().size() == 0) {
+            throw new InvalidBookAuthorsException("You cannot edit a Book to have no authors.");
+        }
+        for (String authorToCheck : updatedBook.getAuthors()) {
+            if (authorToCheck == null) {
+                throw new NullBookAuthorException("You cannot edit a Book to have a null value for author.");
+            }
+            if (authorToCheck.equals("")) {
+                throw new InvalidBookAuthorsException("You cannot edit a Book to have authors.");
+            }
+        }
+        if(updatedBook.getPublicationYear() > Calendar.getInstance().get(Calendar.YEAR)
+                || updatedBook.getPublicationYear() < 800){
+            throw new InvalidBookYearException("No books were published during the year submitted!");
         }
         for (Book book : allBooks) {
             if (book.getId().equals(bookId)) {
-                if (!updatedBook.getTitle().equals("")) {
-                    book.setTitle(updatedBook.getTitle());
-                }
-                if (updatedBook.getAuthors().size() != 0) {
-                    Book copy = new Book(updatedBook);
-                    for (String authorToCheck : updatedBook.getAuthors()) {
-                        if (!authorToCheck.equals("")) {
-                            copy.getAuthors().add(authorToCheck);
-                        }
-                    }
-                    if (copy.getAuthors().size() == 0) {
-                        throw new InvalidBookAuthorsException("You cannot edit a Book to have no authors.");
-                    } else {
-                        book.setAuthors(copy.getAuthors());
-                    }
-                }
-                if (updatedBook.getPublicationYear() != null) {
-                    book.setPublicationYear(updatedBook.getPublicationYear());
-                }
+                book.setTitle(updatedBook.getTitle());
+                book.setAuthors(updatedBook.getAuthors());
+                book.setPublicationYear(updatedBook.getPublicationYear());
                 return book;
             }
         }
