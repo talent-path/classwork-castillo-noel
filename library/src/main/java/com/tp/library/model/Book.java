@@ -6,7 +6,7 @@ import java.util.List;
 public class Book {
 
     // V A R I A B L E S
-    private Integer bookId;
+    private Integer id;
     private String title;
     private List<String> authors;
     private Integer publicationYear;
@@ -14,14 +14,14 @@ public class Book {
 
     // C O N S T R U C T O R S
     public Book(Integer bookId, String title, List<String> authors, Integer publicationYear) {
-        this.bookId = bookId;
+        this.id = bookId;
         this.title = title;
         this.authors = authors;
         this.publicationYear = publicationYear;
     }
 
     public Book(Book that) {
-        this.bookId = that.bookId;
+        this.id = that.id;
         this.title = that.title;
         this.authors = that.authors;
         this.publicationYear = that.publicationYear;
@@ -29,12 +29,12 @@ public class Book {
     }
 
     // G E T T E R S && S E T T E R S
-    public Integer getBookId() {
-        return bookId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {

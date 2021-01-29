@@ -21,7 +21,7 @@ public class LibraryInMemDAO implements LibraryDAO {
         }
 
         for (Book book : allBooks) {
-            if (book.getBookId().equals(bookId)) {
+            if (book.getId().equals(bookId)) {
 
                 return book;
             }
@@ -43,7 +43,7 @@ public class LibraryInMemDAO implements LibraryDAO {
     @Override
     public void deleteBook(Integer bookId) throws InvalidBookIdException {
         for (int i = 0; i < allBooks.size(); i++) {
-            if (allBooks.get(i).getBookId().equals(bookId)) {
+            if (allBooks.get(i).getId().equals(bookId)) {
                 allBooks.remove(i);
                 return;
             }
@@ -65,7 +65,7 @@ public class LibraryInMemDAO implements LibraryDAO {
         }
 
         for (Book book : allBooks) {
-            if (book.getBookId().equals(bookId)) {
+            if (book.getId().equals(bookId)) {
                 book.setTitle(updatedBook.getTitle());
                 book.setAuthors(updatedBook.getAuthors());
                 book.setPublicationYear(updatedBook.getPublicationYear());

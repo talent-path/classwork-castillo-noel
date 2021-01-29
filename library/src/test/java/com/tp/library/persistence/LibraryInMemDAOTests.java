@@ -27,7 +27,7 @@ class LibraryInMemDAOTests {
         List<Book> allBooks = toTest.getAllBooks();
 
         for (Book toRemove : allBooks) {
-            toTest.deleteBook(toRemove.getBookId());
+            toTest.deleteBook(toRemove.getId());
         }
 
         List<String> authors = new ArrayList<>();
@@ -44,7 +44,7 @@ class LibraryInMemDAOTests {
         try {
             Book testBook = toTest.getBookById(0);
             assertTrue(testBook.getTitle().equals("My First Book"));
-            assertEquals(0, testBook.getBookId());
+            assertEquals(0, testBook.getId());
             assertEquals(2, testBook.getAuthors().size());
             assertEquals(2021, testBook.getPublicationYear());
 

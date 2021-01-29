@@ -15,7 +15,7 @@ public class LibraryController {
     @Autowired
     LibraryService service;
 
-    @GetMapping("/book/{bookId}")
+    @GetMapping("/books/{bookId}")
     public Book getBookById(@PathVariable Integer bookId) throws InvalidBookIdException, NullBookIdException {
         return service.getBookById(bookId);
     }
@@ -25,18 +25,18 @@ public class LibraryController {
         return service.getAllBooks();
     }
 
-    @PostMapping("/new-book/")
+    @PostMapping("/books/new-book")
     public Book newBook(@RequestBody Book book) {
         return service.newBook(book);
     }
 
-    @DeleteMapping("delete/{bookId}")
+    @DeleteMapping("/books/delete/{bookId}")
     public String deleteBook(@PathVariable Integer bookId) throws InvalidBookIdException {
         service.deleteBook(bookId);
         return "Book " + bookId + " deleted";
     }
 
-    @PutMapping("/book/{bookId}/{book}")
+    @PutMapping("/books/{bookId}")
     public Book editBook(@PathVariable Integer bookId, @RequestBody Book book) throws InvalidBookIdException, NullBookIdException {
         return service.editBook(bookId, book);
 
