@@ -22,7 +22,7 @@ class LibraryInMemDAOTests {
 
     //this will run before each @Test method
     @BeforeEach
-    public void setup() throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException {
+    public void setup() throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException {
         List<Book> allBooks = toTest.getAllBooks();
 
         for (Book toRemove : allBooks) {

@@ -19,7 +19,7 @@ public interface LibraryDAO {
 
     void deleteBook(Integer BookId) throws InvalidBookIdException, NullBookIdException;
 
-    Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException;
+    Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException;
 
     Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException;
 

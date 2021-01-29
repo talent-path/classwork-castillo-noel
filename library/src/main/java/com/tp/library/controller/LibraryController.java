@@ -40,7 +40,7 @@ public class LibraryController {
     }
 
     @PostMapping("/books/new-book")
-    public Book newBook(@RequestBody Book book) throws NullBookIdException, InvalidBookAuthorsException {
+    public Book newBook(@RequestBody Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException {
         return service.newBook(book);
     }
 

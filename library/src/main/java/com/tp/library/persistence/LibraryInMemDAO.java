@@ -5,6 +5,7 @@ import com.tp.library.model.Book;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Repository
@@ -94,20 +95,22 @@ public class LibraryInMemDAO implements LibraryDAO {
     }
 
     @Override
-    public Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException {
+    public Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException, InvalidBookYearException {
         if (book.getId() == null) {
             throw new NullBookIdException("You cannot add a Book with null id.");
         }
         if (book.getAuthors().size() == 0) {
             throw new InvalidBookAuthorsException("You cannot add a Book without authors.");
         }
-
         for (String authorToCheck : book.getAuthors()) {
             if (authorToCheck.equals("")) {
                 throw new InvalidBookAuthorsException("You cannot add a Book without authors.");
             }
         }
-
+        if(book.getPublicationYear() > Calendar.getInstance().get(Calendar.YEAR)
+        || book.getPublicationYear() < 800){
+            throw new InvalidBookYearException("No books were published during the year submitted!");
+        }
         allBooks.add(book);
         return book;
     }
