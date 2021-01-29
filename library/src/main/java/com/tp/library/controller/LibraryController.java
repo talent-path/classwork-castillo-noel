@@ -41,7 +41,7 @@ public class LibraryController {
     @PutMapping("/book/{bookId}/{book}")
     public Book editBook(@PathVariable Integer bookId, @PathVariable Book book) throws InvalidBookIdException, NullBookIdException {
 
-        return service.editBook(service.getBookById(bookId), book);
+        return service.editBook(bookId, book);
 
     }
 }

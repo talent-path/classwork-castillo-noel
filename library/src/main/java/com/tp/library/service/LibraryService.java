@@ -33,9 +33,9 @@ public class LibraryService {
         dao.deleteBook(bookId);
     }
 
-    public Book editBook(Book currentBook, Book updatedBook) {
+    public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException{
 
-        return dao.editBook(currentBook, updatedBook);
+        return dao.editBook(bookId, updatedBook);
     }
 
 

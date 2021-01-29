@@ -53,15 +53,26 @@ public class LibraryInMemDAO implements LibraryDAO {
 
     @Override
     public Book newBook(Book book) {
-
-
+        allBooks.add(book);
         return book;
     }
 
     @Override
-    public Book editBook(Book currentBook, Book updatedBook) {
+    public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException {
 
-        return updatedBook;
+        if (bookId == null) {
+            throw new NullBookIdException("You cannot edit a Book with null id.");
+        }
+
+        for (Book book : allBooks) {
+            if (book.getBookId().equals(bookId)) {
+                book.setTitle(updatedBook.getTitle());
+                book.setAuthors(updatedBook.getAuthors());
+                book.setPublicationYear(updatedBook.getPublicationYear());
+                return book;
+            }
+        }
+        throw new InvalidBookIdException("No Book with " + bookId);
     }
 
 

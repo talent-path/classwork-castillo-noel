@@ -16,7 +16,7 @@ public interface LibraryDAO {
 
     Book newBook(Book book);
 
-    Book editBook(Book currentBook, Book updatedBook);
+    Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException;
 
 
 }
