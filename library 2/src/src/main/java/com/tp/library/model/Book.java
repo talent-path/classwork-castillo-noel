@@ -1,5 +1,7 @@
 package com.tp.library.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.List;
 
 
