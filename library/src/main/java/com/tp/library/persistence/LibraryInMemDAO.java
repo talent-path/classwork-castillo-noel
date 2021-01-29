@@ -94,21 +94,50 @@ public class LibraryInMemDAO implements LibraryDAO {
     }
 
     @Override
-    public Book newBook(Book book) {
+    public Book newBook(Book book) throws NullBookIdException, InvalidBookAuthorsException {
+        if (book.getId() == null) {
+            throw new NullBookIdException("You cannot add a Book with null id.");
+        }
+        if (book.getAuthors().size() == 0) {
+            throw new InvalidBookAuthorsException("You cannot add a Book without authors.");
+        }
+
+        for (String authorToCheck : book.getAuthors()) {
+            if (authorToCheck.equals("")) {
+                throw new InvalidBookAuthorsException("You cannot add a Book without authors.");
+            }
+        }
+
         allBooks.add(book);
         return book;
     }
 
     @Override
-    public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException {
+    public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException, InvalidBookAuthorsException {
         if (bookId == null) {
             throw new NullBookIdException("You cannot edit a Book with null id.");
         }
         for (Book book : allBooks) {
             if (book.getId().equals(bookId)) {
-                book.setTitle(updatedBook.getTitle());
-                book.setAuthors(updatedBook.getAuthors());
-                book.setPublicationYear(updatedBook.getPublicationYear());
+                if (!updatedBook.getTitle().equals("")) {
+                    book.setTitle(updatedBook.getTitle());
+                }
+                if (updatedBook.getAuthors().size() != 0) {
+                    Book copy = new Book(updatedBook);
+                    for (String authorToCheck : updatedBook.getAuthors()) {
+                        if (!authorToCheck.equals("")) {
+                            copy.getAuthors().add(authorToCheck);
+                        }
+                    }
+                    if (copy.getAuthors().size() == 0) {
+                        throw new InvalidBookAuthorsException("You cannot edit a Book to have no authors.");
+                    } else {
+                        book.setAuthors(copy.getAuthors());
+                    }
+                }
+                if (updatedBook.getPublicationYear() != null) {
+                    book.setPublicationYear(updatedBook.getPublicationYear());
+                }
                 return book;
             }
         }
