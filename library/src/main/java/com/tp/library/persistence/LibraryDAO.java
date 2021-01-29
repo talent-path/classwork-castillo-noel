@@ -1,7 +1,6 @@
 package com.tp.library.persistence;
 
-import com.tp.library.exceptions.InvalidBookIdException;
-import com.tp.library.exceptions.NullBookIdException;
+import com.tp.library.exceptions.*;
 import com.tp.library.model.Book;
 
 import java.util.List;
@@ -12,7 +11,13 @@ public interface LibraryDAO {
 
     List<Book> getAllBooks();
 
-    void deleteBook(Integer BookId) throws InvalidBookIdException;
+    List<Book> getAllBooksByTitle(String title) throws NullBookTitleException;
+
+    List<Book> getAllBooksByAuthor(String author) throws NullBookAuthorException;
+
+    List<Book> getAllBooksByYear(Integer year) throws NullBookYearException;
+
+    void deleteBook(Integer BookId) throws InvalidBookIdException, NullBookIdException;
 
     Book newBook(Book book);
 

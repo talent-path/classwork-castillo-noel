@@ -1,7 +1,6 @@
 package com.tp.library.persistence;
 
-import com.tp.library.exceptions.InvalidBookIdException;
-import com.tp.library.exceptions.NullBookIdException;
+import com.tp.library.exceptions.*;
 import com.tp.library.model.Book;
 import org.springframework.stereotype.Repository;
 
@@ -15,14 +14,11 @@ public class LibraryInMemDAO implements LibraryDAO {
 
     @Override
     public Book getBookById(Integer bookId) throws InvalidBookIdException, NullBookIdException {
-
         if (bookId == null) {
             throw new NullBookIdException("You cannot retrieve a Book with null id.");
         }
-
         for (Book book : allBooks) {
             if (book.getId().equals(bookId)) {
-
                 return book;
             }
         }
@@ -31,17 +27,63 @@ public class LibraryInMemDAO implements LibraryDAO {
 
     @Override
     public List<Book> getAllBooks() {
-
         List<Book> copyAllBooks = new ArrayList<>();
         for (Book copy : allBooks) {
             copyAllBooks.add(new Book(copy));
         }
-
         return copyAllBooks;
     }
 
     @Override
-    public void deleteBook(Integer bookId) throws InvalidBookIdException {
+    public List<Book> getAllBooksByTitle(String title) throws NullBookTitleException {
+        if (title == null) {
+            throw new NullBookTitleException("Cannot retrieve books with a null value for title.");
+        }
+        List<Book> copyAllBooks = new ArrayList<>();
+        for (Book copy : allBooks) {
+            if (copy.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                copyAllBooks.add(new Book(copy));
+            }
+        }
+        return copyAllBooks;
+    }
+
+    @Override
+    public List<Book> getAllBooksByAuthor(String author) throws NullBookAuthorException {
+        if (author == null) {
+            throw new NullBookAuthorException("Cannot retrieve books with a null value for author.");
+        }
+        List<Book> copyAllBooks = new ArrayList<>();
+        for (Book copy : allBooks) {
+            for (String authorToCheck : copy.getAuthors()) {
+                if (authorToCheck.toLowerCase().contains(author.toLowerCase())) {
+                    copyAllBooks.add(new Book(copy));
+                    break;
+                }
+            }
+        }
+        return copyAllBooks;
+    }
+
+    @Override
+    public List<Book> getAllBooksByYear(Integer year) throws NullBookYearException {
+        if (year == null) {
+            throw new NullBookYearException("Cannot retrieve books with a null value for publication year.");
+        }
+        List<Book> copyAllBooks = new ArrayList<>();
+        for (Book copy : allBooks) {
+            if (copy.getPublicationYear().equals(year)) {
+                copyAllBooks.add(new Book(copy));
+            }
+        }
+        return copyAllBooks;
+    }
+
+    @Override
+    public void deleteBook(Integer bookId) throws InvalidBookIdException, NullBookIdException {
+        if (bookId == null) {
+            throw new NullBookIdException("You cannot delete a Book with null id.");
+        }
         for (int i = 0; i < allBooks.size(); i++) {
             if (allBooks.get(i).getId().equals(bookId)) {
                 allBooks.remove(i);
@@ -59,11 +101,9 @@ public class LibraryInMemDAO implements LibraryDAO {
 
     @Override
     public Book editBook(Integer bookId, Book updatedBook) throws InvalidBookIdException, NullBookIdException {
-
         if (bookId == null) {
             throw new NullBookIdException("You cannot edit a Book with null id.");
         }
-
         for (Book book : allBooks) {
             if (book.getId().equals(bookId)) {
                 book.setTitle(updatedBook.getTitle());
@@ -74,8 +114,6 @@ public class LibraryInMemDAO implements LibraryDAO {
         }
         throw new InvalidBookIdException("No Book with " + bookId);
     }
-
-
 }
 
 

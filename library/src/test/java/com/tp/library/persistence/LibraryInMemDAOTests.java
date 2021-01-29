@@ -1,8 +1,7 @@
 package com.tp.library.persistence;
 
 
-import com.tp.library.exceptions.InvalidBookIdException;
-import com.tp.library.exceptions.NullBookIdException;
+import com.tp.library.exceptions.*;
 import com.tp.library.model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ class LibraryInMemDAOTests {
 
     //this will run before each @Test method
     @BeforeEach
-    public void setup() throws InvalidBookIdException {
+    public void setup() throws InvalidBookIdException, NullBookIdException {
         List<Book> allBooks = toTest.getAllBooks();
 
         for (Book toRemove : allBooks) {
@@ -36,6 +35,10 @@ class LibraryInMemDAOTests {
         Book testBook = new Book(0, "My First Book", authors, 2021);
         toTest.newBook(testBook);
 
+        authors = new ArrayList<>();
+        authors.add("Author Three");
+        testBook = new Book(1, "My Second Book", authors, 2022);
+        toTest.newBook(testBook);
     }
 
 
@@ -56,6 +59,42 @@ class LibraryInMemDAOTests {
 
     }
 
+    @Test
+    public void getAllBooksByTitleTestGoldenPath() {
+        try {
+            assertEquals(1, toTest.getAllBooksByTitle("FiRst").size());
+            assertEquals(0, toTest.getAllBooksByTitle("firsT").get(0).getId());
+
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void getAllBooksByAuthorTestGoldenPath() {
+        try {
+            assertEquals(2, toTest.getAllBooksByAuthor("author").size());
+            assertEquals(1, toTest.getAllBooksByAuthor("one").size());
+
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void getAllBooksByYearTestGoldenPath() {
+        try {
+            assertEquals(1, toTest.getAllBooksByYear(2021).size());
+            assertEquals(0, toTest.getAllBooksByYear(2021).get(0).getId());
+
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
+
 
     @Test
     public void getBookByIdTestNullGameId() {
@@ -71,7 +110,37 @@ class LibraryInMemDAOTests {
     }
 
     @Test
-    public void getGameByIdTestPastUpperBoundGameId() {
+    public void getAllBooksByTitleTestNullTitle() {
+        try {
+            List<Book> testBooks = toTest.getAllBooksByTitle(null);
+            fail();
+        } catch (NullBookTitleException ex) {
+            //do nothing because this is the specific exception we WANT
+        }
+    }
+
+    @Test
+    public void getAllBooksByAuthorTestNullAuthor() {
+        try {
+            List<Book> testBooks = toTest.getAllBooksByAuthor(null);
+            fail();
+        } catch (NullBookAuthorException ex) {
+            //do nothing because this is the specific exception we WANT
+        }
+    }
+
+    @Test
+    public void getAllBooksByYearTestNullYear() {
+        try {
+            List<Book> testBooks = toTest.getAllBooksByYear(null);
+            fail();
+        } catch (NullBookYearException ex) {
+            //do nothing because this is the specific exception we WANT
+        }
+    }
+
+    @Test
+    public void getBookByIdTestPastUpperBoundBookId() {
         try {
             Book testBook = toTest.getBookById(Integer.MAX_VALUE);
         } catch (NullBookIdException e) {
@@ -83,7 +152,7 @@ class LibraryInMemDAOTests {
     }
 
     @Test
-    public void getBookByIdTestPastLowerBoundGameId() {
+    public void getBookByIdTestPastLowerBoundBookId() {
         try {
             Book testBook = toTest.getBookById(Integer.MIN_VALUE);
         } catch (NullBookIdException e) {
