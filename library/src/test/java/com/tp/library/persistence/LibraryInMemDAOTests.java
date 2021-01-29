@@ -109,36 +109,6 @@ class LibraryInMemDAOTests {
     }
 
     @Test
-    public void getAllBooksByTitleTestNullTitle() {
-        try {
-            List<Book> testBooks = toTest.getAllBooksByTitle(null);
-            fail();
-        } catch (NullBookTitleException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void getAllBooksByAuthorTestNullAuthor() {
-        try {
-            List<Book> testBooks = toTest.getAllBooksByAuthor(null);
-            fail();
-        } catch (NullBookAuthorException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void getAllBooksByYearTestNullYear() {
-        try {
-            List<Book> testBooks = toTest.getAllBooksByYear(null);
-            fail();
-        } catch (NullBookYearException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
     public void getBookByIdTestPastUpperBoundBookId() {
         try {
             Book testBook = toTest.getBookById(Integer.MAX_VALUE);
@@ -162,215 +132,32 @@ class LibraryInMemDAOTests {
         }
     }
 
-    //CREATING A BOOK TESTS
+
     @Test
-    public void addBookTestPastUpperBoundPubYear() {
-        try {
+    public void addBookTestGoldenPath() throws InvalidBookIdException, NullBookIdException {
+
             List<String> authors = new ArrayList<>();
             authors.add("Author One");
             authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 2022);
-            toTest.newBook(testBook);
-        } catch (NullBookIdException | InvalidBookAuthorsException | NullBookAuthorException
-                | NullBookTitleException | InvalidBookTitleException e) {
-            fail();
-        } catch (InvalidBookYearException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void addBookTestPastLowerBoundPubYear() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 5);
-            toTest.newBook(testBook);
-        } catch (NullBookIdException | InvalidBookAuthorsException | NullBookAuthorException
-                | NullBookTitleException | InvalidBookTitleException e) {
-            fail();
-        } catch (InvalidBookYearException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void addBookTestNullBookAuthor() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add(null);
             Book testBook = new Book(0, "My First Book", authors, 2020);
+
             toTest.newBook(testBook);
-        } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
-                | NullBookTitleException | InvalidBookTitleException e) {
-            fail();
-        } catch (NullBookAuthorException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
+            assertEquals("My First Book", toTest.getBookById(0).getTitle());
     }
 
-    @Test
-    public void addBookTestEmptyBookAuthor() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
-            toTest.newBook(testBook);
-        } catch (NullBookIdException | InvalidBookYearException | NullBookAuthorException
-                | NullBookTitleException | InvalidBookTitleException e) {
-            fail();
-        } catch (InvalidBookAuthorsException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
 
     @Test
-    public void addBookTestNullBookTitle() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, null, authors, 2020);
-            toTest.newBook(testBook);
-        } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
-                | NullBookAuthorException | InvalidBookTitleException e) {
-            fail();
-        } catch (NullBookTitleException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void addBookTestEmptyBookTitle() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, "", authors, 2020);
-            toTest.newBook(testBook);
-        } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
-                | NullBookAuthorException | NullBookTitleException e) {
-            fail();
-        } catch (InvalidBookTitleException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    //EDITING A BOOK TESTS
-    @Test
-    public void editBookTestPastUpperBoundPubYear() {
-        try {
+    public void editBookTestPastGoldenPath() throws InvalidBookIdException, NullBookIdException {
             List<String> authors = new ArrayList<>();
             authors.add("Author One");
             authors.add("Author Two");
             Book testBook = new Book(0, "My First Book", authors, 2020);
             toTest.newBook(testBook);
 
-            testBook.setPublicationYear(2022);
+            testBook.setTitle("My First Book Updated");
+            testBook.setPublicationYear(2021);
             toTest.editBook(0, testBook);
+            assertEquals("My First Book Updated", toTest.getBookById(0).getTitle());
 
-        } catch (NullBookIdException | InvalidBookAuthorsException | NullBookAuthorException
-                | NullBookTitleException | InvalidBookTitleException | InvalidBookIdException e) {
-            fail();
-        } catch (InvalidBookYearException ex) {
-            //do nothing because this is the specific exception we WANT
         }
     }
-
-    @Test
-    public void editBookTestPastLowerBoundPubYear() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
-            toTest.newBook(testBook);
-
-            testBook.setPublicationYear(5);
-            toTest.editBook(0, testBook);
-
-        } catch (NullBookIdException | InvalidBookAuthorsException | NullBookAuthorException
-                | NullBookTitleException | InvalidBookTitleException | InvalidBookIdException e) {
-            fail();
-        } catch (InvalidBookYearException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void editBookTestNullBookAuthor() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
-            toTest.newBook(testBook);
-
-            testBook.getAuthors().add(null);
-            toTest.editBook(0, testBook);
-
-        } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
-                | NullBookTitleException | InvalidBookTitleException | InvalidBookIdException e) {
-            fail();
-        } catch (NullBookAuthorException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void editBookTestEmptyBookAuthor() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("");
-            Book testBook = new Book(0, "My First Book", authors, 5);
-            toTest.newBook(testBook);
-
-            testBook.getAuthors().add("");
-            toTest.editBook(0, testBook);
-
-        } catch (NullBookIdException | InvalidBookYearException | NullBookAuthorException
-                | NullBookTitleException | InvalidBookTitleException | InvalidBookIdException e) {
-            fail();
-        } catch (InvalidBookAuthorsException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void editBookTestNullBookTitle() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, null, authors, 5);
-            toTest.newBook(testBook);
-
-            testBook.setTitle(null);
-            toTest.editBook(0, testBook);
-
-        } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
-                | NullBookAuthorException | InvalidBookTitleException | InvalidBookIdException e) {
-            fail();
-        } catch (NullBookTitleException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-    @Test
-    public void editBookTestEmptyBookTitle() {
-        try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, "", authors, 5);
-            toTest.newBook(testBook);
-
-            testBook.getAuthors().add("");
-            toTest.editBook(0, testBook);
-
-        } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
-                | NullBookAuthorException | NullBookTitleException | InvalidBookIdException e) {
-            fail();
-        } catch (InvalidBookTitleException ex) {
-            //do nothing because this is the specific exception we WANT
-        }
-    }
-
-
-}
