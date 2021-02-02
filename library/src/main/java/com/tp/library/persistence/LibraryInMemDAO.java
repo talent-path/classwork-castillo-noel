@@ -82,8 +82,9 @@ public class LibraryInMemDAO implements LibraryDAO {
 
     @Override
     public Book newBook(Book book) {
-        book.setId(id);
-        id++;
+//        book.setId(id);
+//        id++;
+        
         allBooks.add(book);
         return book;
     }
