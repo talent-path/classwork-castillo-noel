@@ -37,9 +37,9 @@ public class Book {
     }
 
     // M E T H O D S
-//    public void addAuthor(Author author){
-//        this.authors.add(author);
-//    }
+    public void addAuthor(String author) {
+        this.authors.add(author);
+    }
 
     // G E T T E R S && S E T T E R S
     public Integer getId() {
