@@ -177,9 +177,8 @@ class LibraryServiceTests {
     public void addBookTestPastUpperBoundPubYear() {
         try {
             List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 2022);
+            authors.add("Author Four");
+            Book testBook = new Book(3, "A Third Book", authors, Integer.MAX_VALUE);
             toTest.newBook(testBook);
         } catch (NullBookIdException | InvalidBookAuthorsException | NullBookAuthorException
                 | NullBookTitleException | InvalidBookTitleException e) {
@@ -193,9 +192,8 @@ class LibraryServiceTests {
     public void addBookTestPastLowerBoundPubYear() {
         try {
             List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 5);
+            authors.add("Author Four");
+            Book testBook = new Book(3, "A Third Book", authors, Integer.MIN_VALUE);
             toTest.newBook(testBook);
         } catch (NullBookIdException | InvalidBookAuthorsException | NullBookAuthorException
                 | NullBookTitleException | InvalidBookTitleException e) {
@@ -210,7 +208,7 @@ class LibraryServiceTests {
         try {
             List<String> authors = new ArrayList<>();
             authors.add(null);
-            Book testBook = new Book(0, "My First Book", authors, 2020);
+            Book testBook = new Book(3, "A Third Book", authors, 2021);
             toTest.newBook(testBook);
         } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
                 | NullBookTitleException | InvalidBookTitleException e) {
@@ -225,7 +223,7 @@ class LibraryServiceTests {
         try {
             List<String> authors = new ArrayList<>();
             authors.add("");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
+            Book testBook = new Book(3, "A Third Book", authors, 2021);
             toTest.newBook(testBook);
         } catch (NullBookIdException | InvalidBookYearException | NullBookAuthorException
                 | NullBookTitleException | InvalidBookTitleException e) {
@@ -239,8 +237,8 @@ class LibraryServiceTests {
     public void addBookTestNullBookTitle() {
         try {
             List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, null, authors, 2020);
+            authors.add("Author Four");
+            Book testBook = new Book(3, null, authors, 2021);
             toTest.newBook(testBook);
         } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
                 | NullBookAuthorException | InvalidBookTitleException e) {
@@ -254,8 +252,8 @@ class LibraryServiceTests {
     public void addBookTestEmptyBookTitle() {
         try {
             List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, "", authors, 2020);
+            authors.add("Author Four");
+            Book testBook = new Book(3, "", authors, 2021);
             toTest.newBook(testBook);
         } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
                 | NullBookAuthorException | NullBookTitleException e) {
@@ -269,13 +267,8 @@ class LibraryServiceTests {
     @Test
     public void editBookTestPastUpperBoundPubYear() {
         try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
-            toTest.newBook(testBook);
-
-            testBook.setPublicationYear(2022);
+            Book testBook = toTest.getBookById(0);
+            testBook.setPublicationYear(Integer.MAX_VALUE);
             toTest.editBook(0, testBook);
 
         } catch (NullBookIdException | InvalidBookAuthorsException | NullBookAuthorException
@@ -289,13 +282,8 @@ class LibraryServiceTests {
     @Test
     public void editBookTestPastLowerBoundPubYear() {
         try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
-            toTest.newBook(testBook);
-
-            testBook.setPublicationYear(5);
+            Book testBook = toTest.getBookById(0);
+            testBook.setPublicationYear(Integer.MIN_VALUE);
             toTest.editBook(0, testBook);
 
         } catch (NullBookIdException | InvalidBookAuthorsException | NullBookAuthorException
@@ -309,12 +297,8 @@ class LibraryServiceTests {
     @Test
     public void editBookTestNullBookAuthor() {
         try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
-            toTest.newBook(testBook);
-
-            testBook.getAuthors().add(null);
+            Book testBook = toTest.getBookById(0);
+            testBook.addAuthor(null);
             toTest.editBook(0, testBook);
 
         } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
@@ -328,12 +312,8 @@ class LibraryServiceTests {
     @Test
     public void editBookTestEmptyBookAuthor() {
         try {
-            List<String> authors = new ArrayList<>();
-            authors.add("");
-            Book testBook = new Book(0, "My First Book", authors, 5);
-            toTest.newBook(testBook);
-
-            testBook.getAuthors().add("");
+            Book testBook = toTest.getBookById(0);
+            testBook.addAuthor("");
             toTest.editBook(0, testBook);
 
         } catch (NullBookIdException | InvalidBookYearException | NullBookAuthorException
@@ -347,11 +327,7 @@ class LibraryServiceTests {
     @Test
     public void editBookTestNullBookTitle() {
         try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, null, authors, 5);
-            toTest.newBook(testBook);
-
+            Book testBook = toTest.getBookById(0);
             testBook.setTitle(null);
             toTest.editBook(0, testBook);
 
@@ -366,12 +342,8 @@ class LibraryServiceTests {
     @Test
     public void editBookTestEmptyBookTitle() {
         try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            Book testBook = new Book(0, "", authors, 5);
-            toTest.newBook(testBook);
-
-            testBook.getAuthors().add("");
+            Book testBook = toTest.getBookById(0);
+            testBook.setTitle("");
             toTest.editBook(0, testBook);
 
         } catch (NullBookIdException | InvalidBookYearException | InvalidBookAuthorsException
