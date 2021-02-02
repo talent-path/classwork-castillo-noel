@@ -4,20 +4,19 @@ import com.tp.library.exceptions.*;
 import com.tp.library.model.Book;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class LibraryInMemDAO implements LibraryDAO {
     List<Book> allBooks = new ArrayList<>();
+    Map<Integer, Book> library = new HashMap<>();
     Integer id = 0;
 
     @Override
     public Book getBookById(Integer bookId) throws InvalidBookIdException {
         for (Book book : allBooks) {
             if (book.getId().equals(bookId)) {
-                return book;
+                return new Book(book);
             }
         }
         throw new InvalidBookIdException("No Book with " + bookId);
@@ -83,6 +82,8 @@ public class LibraryInMemDAO implements LibraryDAO {
 
     @Override
     public Book newBook(Book book) {
+        book.setId(id);
+        id++;
         allBooks.add(book);
         return book;
     }
@@ -94,7 +95,7 @@ public class LibraryInMemDAO implements LibraryDAO {
                 book.setTitle(updatedBook.getTitle());
                 book.setAuthors(updatedBook.getAuthors());
                 book.setPublicationYear(updatedBook.getPublicationYear());
-                return book;
+                return updatedBook;
             }
         }
         throw new InvalidBookIdException("No Book with " + bookId);
