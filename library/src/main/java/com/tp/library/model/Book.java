@@ -9,6 +9,7 @@ public class Book {
     private Integer id;
     private String title;
     private List<String> authors;
+    //    private List<Author> authors;
     private Integer publicationYear;
 
 
@@ -20,6 +21,13 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
+//    public Book(Integer bookId, String title, List<Author> authors, Integer publicationYear) {
+//        this.id = bookId;
+//        this.title = title;
+//        this.authors = authors;
+//        this.publicationYear = publicationYear;
+//    }
+
     public Book(Book that) {
         this.id = that.id;
         this.title = that.title;
@@ -29,9 +37,9 @@ public class Book {
     }
 
     // M E T H O D S
-    public void addAuthor(String author){
-        this.authors.add(author);
-    }
+//    public void addAuthor(Author author){
+//        this.authors.add(author);
+//    }
 
     // G E T T E R S && S E T T E R S
     public Integer getId() {
