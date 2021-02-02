@@ -118,12 +118,13 @@ class LibraryInMemDAOTests {
     public void addBookTestGoldenPath() {
         try {
             List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
-
+            authors.add("Author Four");
+            Book testBook = new Book(3, "A Third Book", authors, 2021);
             toTest.newBook(testBook);
-            assertEquals("My First Book", toTest.getBookById(0).getTitle());
+            assertEquals("A Third Book", toTest.getBookById(3).getTitle());
+            assertEquals("Author Four", toTest.getBookById(3).getAuthors().get(0));
+            assertEquals(2021, toTest.getBookById(3).getPublicationYear());
+
         } catch (InvalidBookIdException e) {
             fail();
         }
@@ -133,16 +134,14 @@ class LibraryInMemDAOTests {
     @Test
     public void editBookTestPastGoldenPath() {
         try {
-            List<String> authors = new ArrayList<>();
-            authors.add("Author One");
-            authors.add("Author Two");
-            Book testBook = new Book(0, "My First Book", authors, 2020);
-            toTest.newBook(testBook);
-
+            Book testBook = toTest.getBookById(0);
             testBook.setTitle("My First Book Updated");
             testBook.setPublicationYear(2021);
             toTest.editBook(0, testBook);
             assertEquals("My First Book Updated", toTest.getBookById(0).getTitle());
+            assertEquals("Author One", toTest.getBookById(0).getAuthors().get(0));
+            assertEquals("Author Two", toTest.getBookById(0).getAuthors().get(1));
+            assertEquals(2021, toTest.getBookById(0).getPublicationYear());
         } catch (InvalidBookIdException e) {
             fail();
         }
