@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
+//@Repository
 public class LibraryInMemDAO implements LibraryDAO {
     List<Book> allBooks = new ArrayList<>();
     Map<Integer, Book> library = new HashMap<>();
