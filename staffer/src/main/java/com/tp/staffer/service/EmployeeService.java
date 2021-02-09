@@ -3,18 +3,15 @@ package com.tp.staffer.service;
 
 import com.tp.staffer.exceptions.*;
 import com.tp.staffer.model.Employee;
-import com.tp.staffer.model.Position;
-import com.tp.staffer.persistence.EmployeeInMemDAO;
+import com.tp.staffer.persistence.PostgresEmployeeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Calendar;
 
 @Service
 public class EmployeeService {
 
     @Autowired
-    EmployeeInMemDAO dao;
+    PostgresEmployeeDao dao;
 
     public Employee getEmployeeById(Integer id) throws NullEmployeeIdException, InvalidEmployeeIdException {
         if (id == null) {

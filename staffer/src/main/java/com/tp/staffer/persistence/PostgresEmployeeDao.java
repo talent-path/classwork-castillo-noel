@@ -21,6 +21,14 @@ public class PostgresEmployeeDao implements EmployeeDAO {
 
     @Override
     public Employee getEmployeeById(Integer id)  {
+        List<Integer> employees = template.query("SELECT id, name\n" +
+                "\tFROM public.\"Employee\"\n" +
+                "\t\tWHERE \"id\" = '" + id + "';", new IdMapper());
+
+        if(employees.isEmpty()){
+            return null;
+        }
+
         return null;
     }
 
@@ -37,45 +45,11 @@ public class PostgresEmployeeDao implements EmployeeDAO {
         return null;
     }
 
-//    private Integer addOrRetrieve(String author) {
-//
-//        Integer authorId = getAuthorId(author);
-//
-//        if (authorId == null) {
-//            authorId = addAuthor(author);
-//        }
-//
-//        return authorId;
-//    }
-//
-//    private Integer getAuthorId(String author) {
-//
-//        List<Integer> id = template.query("SELECT id, name\n" +
-//                "\tFROM public.\"Author\"\n" +
-//                "\t\tWHERE \"name\" = '" + author + "';", new IdMapper());
-//
-//        if(id.isEmpty()){
-//            return null;
-//        }
-//
-//        return id.get(0);
-//    }
-//
-//
-//
-//    private Integer addAuthor(String author) {
-//
-//        return template.query("INSERT INTO public.\"Author\"(name)\n" +
-//                        "\tVALUES ('" + author + "')\n" +
-//                        "\t\tRETURNING \"id\";",
-//                new IdMapper()).get(0);
-//    }
-//
-//    private class IdMapper implements RowMapper<Integer> {
-//
-//        @Override
-//        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-//            return resultSet.getInt("id");
-//        }
-//    }
+    private class IdMapper implements RowMapper<Integer> {
+
+        @Override
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getInt("id");
+        }
+    }
 }
