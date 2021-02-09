@@ -22,5 +22,4 @@ public class EmployeeController {
         return service.newEmployee(employee);
     }
 
-
 }

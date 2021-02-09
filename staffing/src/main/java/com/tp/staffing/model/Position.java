@@ -9,13 +9,15 @@ public class Position {
 
 
     // C O N S T R U C T O R S
+    public Position(){
+
+    }
+
     public Position(Integer bookId, String title) {
         this.id = bookId;
         this.title = title;
 
     }
-
-
 
     public Position(Position that) {
         this.id = that.id;
@@ -24,7 +26,6 @@ public class Position {
     }
 
     // M E T H O D S
-
 
     // G E T T E R S && S E T T E R S
     public Integer getId() {
