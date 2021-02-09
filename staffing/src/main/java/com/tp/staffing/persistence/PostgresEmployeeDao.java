@@ -1,6 +1,7 @@
 package com.tp.staffing.persistence;
 
 import com.tp.staffing.model.Employee;
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,21 +19,36 @@ public class PostgresEmployeeDao implements EmployeeDAO {
     JdbcTemplate template;
 
     @Override
-    public Employee getEmployeeById(Integer id)  {
-        List<Integer> employees = template.query("SELECT id, name\n" +
+    public Employee getEmployeeById(Integer id) {
+        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
                 "\tFROM public.\"Employee\"\n" +
-                "\t\tWHERE \"id\" = '" + id + "';", new IdMapper());
+                "\t\tWHERE \"id\" = '" + id + "';", new EmployeeMapper());
 
-        if(employees.isEmpty()){
+        if (employees.isEmpty()) {
             return null;
         }
 
-        return null;
+        return employees.get(0);
     }
 
 
     @Override
     public Employee newEmployee(Employee employee) {
+
+//        INSERT INTO public."Employee"(
+//                id, "firstName", "lastName")
+//        VALUES (?, ?, ?);
+//
+//        List<Employee> employees = template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
+//                "VALUES ( id, name\n" +
+//                "\tFROM public.\"Employee\"\n" +
+//                "\t\tWHERE \"id\" = '" + id + "';", new EmployeeMapper());
+//
+//        if (employees.isEmpty()) {
+//            return null;
+//        }
+//
+//        return employees.get(0);
 
 //        List<Integer> employeeList = new ArrayList<>();
 //
@@ -43,11 +59,15 @@ public class PostgresEmployeeDao implements EmployeeDAO {
         return null;
     }
 
-    private class IdMapper implements RowMapper<Integer> {
+    private class EmployeeMapper implements RowMapper<Employee> {
 
         @Override
-        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-            return resultSet.getInt("id");
+        public Employee mapRow(ResultSet resultSet, int i) throws SQLException {
+            Employee mappedEmployee = new Employee();
+            mappedEmployee.setId(resultSet.getInt("id"));
+            mappedEmployee.setFirstName(resultSet.getString("firstName"));
+            mappedEmployee.setLastName(resultSet.getString("lastName"));
+            return mappedEmployee;
         }
     }
 }

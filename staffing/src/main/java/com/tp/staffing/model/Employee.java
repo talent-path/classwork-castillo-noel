@@ -10,6 +10,10 @@ public class Employee {
 
     // C O N S T R U C T O R S
 
+    public Employee(){
+
+    }
+
     public Employee(Integer id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
