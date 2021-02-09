@@ -36,13 +36,13 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/employees/delete/{id}")
-    public String deleteEmployee(@PathVariable Integer id) {
+    public String deleteEmployee(@PathVariable Integer id) throws NullEmployeeIdException {
         service.deleteEmployee(id);
         return "Employee " + id + " deleted";
     }
 
     @PutMapping("/employees/{id}")
-    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
+    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
         return service.editEmployee(id, employee);
 
     }
