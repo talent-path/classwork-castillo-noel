@@ -20,8 +20,9 @@ public class PositionController {
         return service.getPositionById(id);
     }
 
+
     @GetMapping("/positions/{title}")
-    public List<Position> getPositionsByLastName(@PathVariable String title) throws NullPositionTitleException {
+    public List<Position> getPositionsByTitle(@PathVariable String title) throws NullPositionTitleException {
         return service.getPositionsByTitle(title);
     }
 

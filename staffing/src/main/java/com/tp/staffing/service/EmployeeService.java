@@ -7,6 +7,8 @@ import com.tp.staffing.persistence.PostgresEmployeeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -33,8 +35,6 @@ public class EmployeeService {
         return dao.getEmployees();
     }
 
-
-
     public Employee newEmployee(Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
 
         if (employee.getFirstName() == null) {
@@ -52,6 +52,28 @@ public class EmployeeService {
         return dao.newEmployee(employee);
     }
 
+    public void deleteEmployee(Integer id) throws NullEmployeeIdException {
+        if (id == null) {
+            throw new NullEmployeeIdException("You cannot delete a Employee with null id.");
+        }
+        dao.deleteEmployee(id);
+    }
+
+    public Employee editEmployee(Integer id, Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
+        if (employee.getFirstName() == null) {
+            throw new NullEmployeeFirstNameException("You cannot add a Employee with a null first name.");
+        }
+        if (employee.getLastName() == null) {
+            throw new NullEmployeeLastNameException("You cannot add a Employee with a null last name.");
+        }
+        if (employee.getFirstName().trim().equals("")) {
+            throw new InvalidEmployeeFirstNameException("You cannot add a Employee with a empty first name.");
+        }
+        if (employee.getLastName().trim().equals("")) {
+            throw new InvalidEmployeeLastNameException("You cannot add a Employee with a empty last name.");
+        }
+        return dao.editEmployee(id, employee);
+    }
 
 
 }

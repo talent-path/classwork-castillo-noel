@@ -3,6 +3,7 @@ package com.tp.staffing.persistence;
 import com.tp.staffing.exceptions.InvalidEmployeeIdException;
 import com.tp.staffing.model.Employee;
 
+import java.awt.print.Book;
 import java.util.List;
 
 public interface EmployeeDAO {
@@ -14,6 +15,10 @@ public interface EmployeeDAO {
     List<Employee> getEmployees();
 
     Employee newEmployee(Employee employee);
+
+    void deleteEmployee(Integer id);
+
+    Employee editEmployee(Integer id, Employee updatedEmployee);
 
 
 }

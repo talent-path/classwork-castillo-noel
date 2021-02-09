@@ -7,6 +7,7 @@ import com.tp.staffing.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.util.List;
 
 @RestController
@@ -32,6 +33,18 @@ public class EmployeeController {
     @PostMapping("/employees/new-employee")
     public Employee newEmployee(@RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
         return service.newEmployee(employee);
+    }
+
+    @DeleteMapping("/employees/delete/{id}")
+    public String deleteEmployee(@PathVariable Integer id) {
+        service.deleteEmployee(id);
+        return "Employee " + id + " deleted";
+    }
+
+    @PutMapping("/employees/{id}")
+    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
+        return service.editEmployee(id, employee);
+
     }
 
 }

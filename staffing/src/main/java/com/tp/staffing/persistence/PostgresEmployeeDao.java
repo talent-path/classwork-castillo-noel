@@ -57,6 +57,8 @@ public class PostgresEmployeeDao implements EmployeeDAO {
     }
 
 
+
+
     @Override
     public Employee newEmployee(Employee employee) {
 
@@ -81,6 +83,16 @@ public class PostgresEmployeeDao implements EmployeeDAO {
 //            Integer authorId = addOrRetrieve(author);
 //            authorList.add(authorId);
 //        }
+        return null;
+    }
+
+    @Override
+    public void deleteEmployee(Integer id) {
+        
+    }
+
+    @Override
+    public Employee editEmployee(Integer id, Employee updatedEmployee) {
         return null;
     }
 
