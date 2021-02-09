@@ -14,13 +14,13 @@ public class EmployeeController {
     EmployeeService service;
 
     @GetMapping("/employees/{id}")
-    public Position getEmployeeById(@PathVariable Integer id) {
+    public Employee getEmployeeById(@PathVariable Integer id) throws NullEmployeeIdException, InvalidEmployeeIdException {
         return service.getEmployeeById(id);
     }
 
     @PostMapping("/employees/new-employee")
-    public Employee newEmployee(@RequestBody Employee employee) {
-        return service.newPosition(position);
+    public Employee newEmployee(@RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
+        return service.newEmployee(employee);
     }
 
 
