@@ -8,6 +8,8 @@ import com.tp.staffing.persistence.PostgresPositionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PositionService {
 
@@ -19,6 +21,17 @@ public class PositionService {
             throw new NullPositionIdException("You cannot retrieve a Position with null id.");
         }
         return dao.getPositionById(id);
+    }
+
+    public List<Position> getPositionsByTitle(String title) throws NullPositionTitleException {
+        if (title == null) {
+            throw new NullPositionTitleException("You cannot retrieve Positions with a null title.");
+        }
+        return dao.getPositionsByTitle(title);
+    }
+
+    public List<Position> getPositions() {
+        return dao.getPositions();
     }
 
     public Position newPosition(Position position) throws NullPositionTitleException, InvalidPositionTitleException {

@@ -31,6 +31,31 @@ public class PostgresEmployeeDao implements EmployeeDAO {
         return employees.get(0);
     }
 
+    @Override
+    public List<Employee> getEmployeesByLastName(String lastName) {
+        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
+                "\tFROM public.\"Employee\"\n" +
+                "\t\tWHERE \"lastName\" = '" + lastName + "';", new EmployeeMapper());
+
+        if (employees.isEmpty()) {
+            return null;
+        }
+
+        return employees;
+    }
+
+    @Override
+    public List<Employee> getEmployees() {
+        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
+                "\tFROM public.\"Employee\"\n;", new EmployeeMapper());
+
+        if (employees.isEmpty()) {
+            return null;
+        }
+
+        return employees;
+    }
+
 
     @Override
     public Employee newEmployee(Employee employee) {

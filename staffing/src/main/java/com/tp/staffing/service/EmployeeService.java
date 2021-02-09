@@ -7,6 +7,8 @@ import com.tp.staffing.persistence.PostgresEmployeeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
 
@@ -18,6 +20,17 @@ public class EmployeeService {
             throw new NullEmployeeIdException("You cannot retrieve an Employee with null id.");
         }
         return dao.getEmployeeById(id);
+    }
+
+    public List<Employee> getEmployeesByLastName(String lastName) throws NullEmployeeLastNameException {
+        if (lastName == null) {
+            throw new NullEmployeeLastNameException("You cannot retrieve an Employee with null last name.");
+        }
+        return dao.getEmployeesByLastName(lastName);
+    }
+
+    public List<Employee> getEmployees() {
+        return dao.getEmployees();
     }
 
 

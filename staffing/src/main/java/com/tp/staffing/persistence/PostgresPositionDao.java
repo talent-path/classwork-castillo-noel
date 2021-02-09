@@ -1,5 +1,6 @@
 package com.tp.staffing.persistence;
 
+import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,6 +31,30 @@ public class PostgresPositionDao implements PositionDAO {
         return positions.get(0);
     }
 
+    @Override
+    public List<Position> getPositions() {
+        List<Position> positions = template.query("SELECT id, \"title\"\n" +
+                "\tFROM public.\"Position\"\n;", new PostgresPositionDao.PositionMapper());
+
+        if (positions.isEmpty()) {
+            return null;
+        }
+
+        return positions;
+    }
+
+    @Override
+    public List<Position> getPositionsByTitle(String title) {
+        List<Position> positions = template.query("SELECT id, \"title\"\n" +
+                "\tFROM public.\"Position\"\n" +
+                "\t\tWHERE \"title\" = '" + title + "';", new PostgresPositionDao.PositionMapper());
+
+        if (positions.isEmpty()) {
+            return null;
+        }
+
+        return positions;
+    }
 
     @Override
     public Position newPosition(Position position) {

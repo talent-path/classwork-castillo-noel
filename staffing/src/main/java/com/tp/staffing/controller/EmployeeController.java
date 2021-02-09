@@ -7,14 +7,26 @@ import com.tp.staffing.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class EmployeeController {
     @Autowired
     EmployeeService service;
 
-    @GetMapping("/employees/{id}")
+    @GetMapping("/employee/{id}")
     public Employee getEmployeeById(@PathVariable Integer id) throws NullEmployeeIdException, InvalidEmployeeIdException {
         return service.getEmployeeById(id);
+    }
+
+    @GetMapping("/employees/{lastName}")
+    public List<Employee> getEmployeesByLastName(@PathVariable String lastName) throws NullEmployeeLastNameException {
+        return service.getEmployeesByLastName(lastName);
+    }
+
+    @GetMapping("/employees/")
+    public List<Employee> getEmployees() {
+        return service.getEmployees();
     }
 
     @PostMapping("/employees/new-employee")
