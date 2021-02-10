@@ -32,7 +32,7 @@ public class PositionController {
     }
 
     @PostMapping("/positions/new-position")
-    public Position newPosition(@RequestBody Position position) throws NullPositionTitleException, InvalidPositionTitleException {
+    public Integer newPosition(@RequestBody Position position) throws NullPositionTitleException, InvalidPositionTitleException {
         return service.newPosition(position);
     }
 

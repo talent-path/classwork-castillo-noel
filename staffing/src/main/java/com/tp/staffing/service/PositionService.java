@@ -34,7 +34,7 @@ public class PositionService {
         return dao.getPositions();
     }
 
-    public Position newPosition(Position position) throws NullPositionTitleException, InvalidPositionTitleException {
+    public Integer newPosition(Position position) throws NullPositionTitleException, InvalidPositionTitleException {
         if (position.getTitle() == null) {
             throw new NullPositionTitleException("You cannot add a Position with a null title.");
         }

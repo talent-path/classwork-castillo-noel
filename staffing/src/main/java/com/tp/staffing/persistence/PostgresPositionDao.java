@@ -57,9 +57,19 @@ public class PostgresPositionDao implements PositionDAO {
     }
 
     @Override
-    public Position newPosition(Position position) {
+    public Integer newPosition(Position position) {
 
-        return null;
+        return template.query("INSERT INTO public.\"Position\"(\"title\")" +
+                "VALUES ( '"+ position.getTitle() + "') " +
+                "RETURNING \"id\";", new PostgresPositionDao.IdMapper()).get(0);
+    }
+
+    private class IdMapper implements RowMapper<Integer> {
+
+        @Override
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getInt("id");
+        }
     }
 
     private class PositionMapper implements RowMapper<Position> {

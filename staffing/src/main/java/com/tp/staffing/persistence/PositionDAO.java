@@ -14,6 +14,6 @@ public interface PositionDAO {
 
     List<Position> getPositions();
 
-    Position newPosition(Position position);
+    Integer newPosition(Position position);
 
 }
