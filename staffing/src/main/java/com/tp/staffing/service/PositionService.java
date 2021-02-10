@@ -45,6 +45,13 @@ public class PositionService {
         return dao.newPosition(position);
     }
 
+    public boolean deletePosition(Integer id) throws NullPositionIdException {
+        if (id == null) {
+            throw new NullPositionIdException("You cannot delete a Position with null id.");
+        }
+        return dao.deletePosition(id);
+    }
+
 
 
 }

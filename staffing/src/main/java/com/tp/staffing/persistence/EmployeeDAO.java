@@ -16,7 +16,7 @@ public interface EmployeeDAO {
 
     Integer newEmployee(Employee employee);
 
-    void deleteEmployee(Integer id);
+    boolean deleteEmployee(Integer id);
 
     Employee editEmployee(Integer id, Employee updatedEmployee);
 

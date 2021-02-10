@@ -16,7 +16,7 @@ public class PostgresEmployeeDao implements EmployeeDAO {
 
 
     @Autowired
-    JdbcTemplate template;
+    private JdbcTemplate template;
 
     @Override
     public Employee getEmployeeById(Integer id) {
@@ -57,20 +57,25 @@ public class PostgresEmployeeDao implements EmployeeDAO {
     }
 
 
-
-
     @Override
     public Integer newEmployee(Employee employee) {
 
         return template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
-                "VALUES ( '"+ employee.getFirstName() +"', '" + employee.getLastName() + "') " +
+                "VALUES ( '" + employee.getFirstName() + "', '" + employee.getLastName() + "') " +
                 "RETURNING \"id\";", new IdMapper()).get(0);
 
     }
 
     @Override
-    public void deleteEmployee(Integer id) {
+    public boolean deleteEmployee(Integer id) {
 
+        if (getEmployeeById(id) == null) {
+            return false;
+        } else {
+            template.execute("DELETE FROM public.\"Employee\" " +
+                    "WHERE \"id\" = " + id + ";");
+            return true;
+        }
     }
 
     @Override

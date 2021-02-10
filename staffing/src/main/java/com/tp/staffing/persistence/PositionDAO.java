@@ -16,4 +16,6 @@ public interface PositionDAO {
 
     Integer newPosition(Position position);
 
+    boolean deletePosition(Integer id);
+
 }

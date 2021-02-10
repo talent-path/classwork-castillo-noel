@@ -16,7 +16,7 @@ public class PostgresPositionDao implements PositionDAO {
 
 
     @Autowired
-    JdbcTemplate template;
+    private JdbcTemplate template;
 
     @Override
     public Position getPositionById(Integer id) {
@@ -62,6 +62,18 @@ public class PostgresPositionDao implements PositionDAO {
         return template.query("INSERT INTO public.\"Position\"(\"title\")" +
                 "VALUES ( '"+ position.getTitle() + "') " +
                 "RETURNING \"id\";", new PostgresPositionDao.IdMapper()).get(0);
+    }
+
+    @Override
+    public boolean deletePosition(Integer id) {
+
+        if (getPositionById(id) == null) {
+            return false;
+        } else {
+            template.execute("DELETE FROM public.\"Position\" " +
+                    "WHERE \"id\" = " + id + ";");
+            return true;
+        }
     }
 
     private class IdMapper implements RowMapper<Integer> {

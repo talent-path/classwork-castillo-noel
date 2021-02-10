@@ -36,4 +36,13 @@ public class PositionController {
         return service.newPosition(position);
     }
 
+    @DeleteMapping("/positions/delete/{id}")
+    public String deletePosition(@PathVariable Integer id) throws NullPositionIdException {
+        if(service.deletePosition(id)) {
+            return "Position " + id + " deleted";
+        } else{
+            return "Position " + id + " not found";
+        }
+    }
+
 }

@@ -37,8 +37,11 @@ public class EmployeeController {
 
     @DeleteMapping("/employees/delete/{id}")
     public String deleteEmployee(@PathVariable Integer id) throws NullEmployeeIdException {
-        service.deleteEmployee(id);
-        return "Employee " + id + " deleted";
+        if(service.deleteEmployee(id)) {
+            return "Employee " + id + " deleted";
+        } else{
+            return "Employee " + id + " not found";
+        }
     }
 
     @PutMapping("/employees/{id}")
