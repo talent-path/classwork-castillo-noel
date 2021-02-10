@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class PostgresEmployeeDao implements EmployeeDAO {
+public class EmployeePostgresDao implements EmployeeDAO {
 
 
     @Autowired

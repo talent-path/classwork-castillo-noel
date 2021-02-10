@@ -1,20 +1,22 @@
 package com.tp.staffing.daos;
 
 
-import com.tp.staffing.persistence.PostgresEmployeeDao;
+import com.tp.staffing.persistence.EmployeePostgresDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
+@ActiveProfiles("daoTesting")
 class EmployeePostgresDaoTests {
 
     @Autowired
-    PostgresEmployeeDao toTest;
+    EmployeePostgresDao toTest;
 
     @Autowired
     JdbcTemplate template;
@@ -23,11 +25,11 @@ class EmployeePostgresDaoTests {
     //this will run before each @Test method
     @BeforeEach
     public void setup() {
-        try {
 
-        } catch (Exception e) {
-            fail();
-        }
+        template.update("TRUNCATE \"Employee\", \"Position\", \"EmployeePosition\" RESTART IDENTITY;");
+
+        template.update( "INSERT INTO \"Position\" (\"title\") VALUES ('Server')" );
+
     }
 
     @Test

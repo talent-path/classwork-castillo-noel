@@ -1,6 +1,6 @@
 package com.tp.staffing.persistence;
 
-import com.tp.staffing.model.Employee;
+import com.tp.staffing.exceptions.InvalidPositionIdException;
 import com.tp.staffing.model.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,20 +12,20 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class PostgresPositionDao implements PositionDAO {
+public class PositionPostgresDao implements PositionDAO {
 
 
     @Autowired
     private JdbcTemplate template;
 
     @Override
-    public Position getPositionById(Integer id) {
+    public Position getPositionById(Integer id) throws InvalidPositionIdException {
         List<Position> positions = template.query("SELECT id, \"title\"\n" +
                 "\tFROM public.\"Position\"\n" +
                 "\t\tWHERE \"id\" = '" + id + "';", new PositionMapper());
 
         if (positions.isEmpty()) {
-            return null;
+            throw new InvalidPositionIdException("No Position with that ID exists.");
         }
 
         return positions.get(0);
@@ -34,7 +34,7 @@ public class PostgresPositionDao implements PositionDAO {
     @Override
     public List<Position> getPositions() {
         List<Position> positions = template.query("SELECT id, \"title\"\n" +
-                "\tFROM public.\"Position\"\n;", new PostgresPositionDao.PositionMapper());
+                "\tFROM public.\"Position\"\n;", new PositionPostgresDao.PositionMapper());
 
         if (positions.isEmpty()) {
             return null;
@@ -47,7 +47,7 @@ public class PostgresPositionDao implements PositionDAO {
     public List<Position> getPositionsByTitle(String title) {
         List<Position> positions = template.query("SELECT id, \"title\"\n" +
                 "\tFROM public.\"Position\"\n" +
-                "\t\tWHERE \"title\" = '" + title + "';", new PostgresPositionDao.PositionMapper());
+                "\t\tWHERE \"title\" = '" + title + "';", new PositionPostgresDao.PositionMapper());
 
         if (positions.isEmpty()) {
             return null;
@@ -61,11 +61,11 @@ public class PostgresPositionDao implements PositionDAO {
 
         return template.query("INSERT INTO public.\"Position\"(\"title\")" +
                 "VALUES ( '"+ position.getTitle() + "') " +
-                "RETURNING \"id\";", new PostgresPositionDao.IdMapper()).get(0);
+                "RETURNING \"id\";", new PositionPostgresDao.IdMapper()).get(0);
     }
 
     @Override
-    public boolean deletePosition(Integer id) {
+    public boolean deletePosition(Integer id) throws InvalidPositionIdException {
 
         if (getPositionById(id) == null) {
             return false;

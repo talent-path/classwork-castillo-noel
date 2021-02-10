@@ -3,19 +3,17 @@ package com.tp.staffing.service;
 
 import com.tp.staffing.exceptions.*;
 import com.tp.staffing.model.Employee;
-import com.tp.staffing.persistence.PostgresEmployeeDao;
+import com.tp.staffing.persistence.EmployeePostgresDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
-import java.util.Calendar;
 import java.util.List;
 
 @Service
 public class EmployeeService {
 
     @Autowired
-    PostgresEmployeeDao dao;
+    EmployeePostgresDao dao;
 
     public Employee getEmployeeById(Integer id) throws NullEmployeeIdException, InvalidEmployeeIdException {
         if (id == null) {

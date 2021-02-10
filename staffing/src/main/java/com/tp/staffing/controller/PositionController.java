@@ -16,7 +16,7 @@ public class PositionController {
     PositionService service;
 
     @GetMapping("/position/{id}")
-    public Position getPositionById(@PathVariable Integer id) throws NullPositionIdException {
+    public Position getPositionById(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {
         return service.getPositionById(id);
     }
 
@@ -37,7 +37,7 @@ public class PositionController {
     }
 
     @DeleteMapping("/positions/delete/{id}")
-    public String deletePosition(@PathVariable Integer id) throws NullPositionIdException {
+    public String deletePosition(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {
         if(service.deletePosition(id)) {
             return "Position " + id + " deleted";
         } else{

@@ -2,9 +2,8 @@ package com.tp.staffing.service;
 
 
 import com.tp.staffing.exceptions.*;
-import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
-import com.tp.staffing.persistence.PostgresPositionDao;
+import com.tp.staffing.persistence.PositionPostgresDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +13,9 @@ import java.util.List;
 public class PositionService {
 
     @Autowired
-    PostgresPositionDao dao;
+    PositionPostgresDao dao;
 
-    public Position getPositionById(Integer id) throws NullPositionIdException {
+    public Position getPositionById(Integer id) throws NullPositionIdException, InvalidPositionIdException {
         if (id == null) {
             throw new NullPositionIdException("You cannot retrieve a Position with null id.");
         }
@@ -45,7 +44,7 @@ public class PositionService {
         return dao.newPosition(position);
     }
 
-    public boolean deletePosition(Integer id) throws NullPositionIdException {
+    public boolean deletePosition(Integer id) throws NullPositionIdException, InvalidPositionIdException {
         if (id == null) {
             throw new NullPositionIdException("You cannot delete a Position with null id.");
         }
