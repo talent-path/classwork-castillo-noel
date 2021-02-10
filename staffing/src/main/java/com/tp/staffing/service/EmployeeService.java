@@ -35,7 +35,7 @@ public class EmployeeService {
         return dao.getEmployees();
     }
 
-    public Employee newEmployee(Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
+    public Integer newEmployee(Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
 
         if (employee.getFirstName() == null) {
             throw new NullEmployeeFirstNameException("You cannot add a Employee with a null first name.");

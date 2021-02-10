@@ -14,7 +14,7 @@ public interface EmployeeDAO {
 
     List<Employee> getEmployees();
 
-    Employee newEmployee(Employee employee);
+    Integer newEmployee(Employee employee);
 
     void deleteEmployee(Integer id);
 

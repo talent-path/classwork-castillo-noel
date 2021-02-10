@@ -60,30 +60,12 @@ public class PostgresEmployeeDao implements EmployeeDAO {
 
 
     @Override
-    public Employee newEmployee(Employee employee) {
+    public Integer newEmployee(Employee employee) {
 
-//        INSERT INTO public."Employee"(
-//                id, "firstName", "lastName")
-//        VALUES (?, ?, ?);
-//
-//        List<Employee> employees = template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
-//                "VALUES ( id, name\n" +
-//                "\tFROM public.\"Employee\"\n" +
-//                "\t\tWHERE \"id\" = '" + id + "';", new EmployeeMapper());
-//
-//        if (employees.isEmpty()) {
-//            return null;
-//        }
-//
-//        return employees.get(0);
+        return template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
+                "VALUES ( '"+ employee.getFirstName() +"', '" + employee.getLastName() + "') " +
+                "RETURNING \"id\";", new IdMapper()).get(0);
 
-//        List<Integer> employeeList = new ArrayList<>();
-//
-//        for (String author : book.getAuthors()) {
-//            Integer authorId = addOrRetrieve(author);
-//            authorList.add(authorId);
-//        }
-        return null;
     }
 
     @Override
@@ -94,6 +76,14 @@ public class PostgresEmployeeDao implements EmployeeDAO {
     @Override
     public Employee editEmployee(Integer id, Employee updatedEmployee) {
         return null;
+    }
+
+    private class IdMapper implements RowMapper<Integer> {
+
+        @Override
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getInt("id");
+        }
     }
 
     private class EmployeeMapper implements RowMapper<Employee> {

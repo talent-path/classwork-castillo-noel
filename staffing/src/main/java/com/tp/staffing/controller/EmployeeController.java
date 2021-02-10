@@ -31,7 +31,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees/new-employee")
-    public Employee newEmployee(@RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
+    public Integer newEmployee(@RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
         return service.newEmployee(employee);
     }
 
