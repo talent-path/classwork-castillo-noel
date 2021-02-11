@@ -15,24 +15,6 @@ public class EmployeeService {
     @Autowired
     EmployeePostgresDao dao;
 
-    public Employee getEmployeeById(Integer id) throws NullEmployeeIdException, InvalidEmployeeIdException {
-        if (id == null) {
-            throw new NullEmployeeIdException("You cannot retrieve an Employee with null id.");
-        }
-        return dao.getEmployeeById(id);
-    }
-
-    public List<Employee> getEmployeesByLastName(String lastName) throws NullEmployeeLastNameException {
-        if (lastName == null) {
-            throw new NullEmployeeLastNameException("You cannot retrieve an Employee with null last name.");
-        }
-        return dao.getEmployeesByLastName(lastName);
-    }
-
-    public List<Employee> getEmployees() {
-        return dao.getEmployees();
-    }
-
     public Integer newEmployee(Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
 
         if (employee.getFirstName() == null) {
@@ -49,14 +31,21 @@ public class EmployeeService {
         }
         return dao.newEmployee(employee);
     }
-
-    public boolean deleteEmployee(Integer id) throws NullEmployeeIdException {
+    public Employee getEmployeeById(Integer id) throws NullEmployeeIdException, InvalidEmployeeIdException {
         if (id == null) {
-            throw new NullEmployeeIdException("You cannot delete a Employee with null id.");
+            throw new NullEmployeeIdException("You cannot retrieve an Employee with null id.");
         }
-        return dao.deleteEmployee(id);
+        return dao.getEmployeeById(id);
     }
-
+    public List<Employee> getEmployeesByLastName(String lastName) throws NullEmployeeLastNameException {
+        if (lastName == null) {
+            throw new NullEmployeeLastNameException("You cannot retrieve an Employee with null last name.");
+        }
+        return dao.getEmployeesByLastName(lastName);
+    }
+    public List<Employee> getEmployees() {
+        return dao.getEmployees();
+    }
     public boolean editEmployee(Integer id, Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
         if (employee.getFirstName() == null) {
             throw new NullEmployeeFirstNameException("You cannot edit a Employee to have a null first name.");
@@ -71,6 +60,12 @@ public class EmployeeService {
             throw new InvalidEmployeeLastNameException("You cannot edit a Employee to have a empty last name.");
         }
         return dao.editEmployee(id, employee);
+    }
+    public boolean deleteEmployee(Integer id) throws NullEmployeeIdException {
+        if (id == null) {
+            throw new NullEmployeeIdException("You cannot delete a Employee with null id.");
+        }
+        return dao.deleteEmployee(id);
     }
 
 

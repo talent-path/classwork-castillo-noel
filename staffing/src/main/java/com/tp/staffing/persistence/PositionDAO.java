@@ -21,4 +21,8 @@ public interface PositionDAO {
 
     boolean editPosition(Integer id, Position updatedPosition) throws InvalidPositionIdException;
 
+    boolean addEmployeeToPosition(Integer employeeId, Integer positionId) throws InvalidPositionIdException;
+
+    boolean removeEmployeeFromPosition(Integer id) throws InvalidPositionIdException;
+
 }

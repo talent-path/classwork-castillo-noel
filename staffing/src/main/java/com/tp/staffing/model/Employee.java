@@ -8,8 +8,6 @@ public class Employee {
     private Integer id;
     public String firstName;
     public String lastName;
-    public List<Position> positions;
-
 
     // C O N S T R U C T O R S
 
@@ -32,9 +30,6 @@ public class Employee {
         this.id = that.id;
         this.firstName = that.firstName;
         this.lastName = that.lastName;
-        for (Position position : that.positions) {
-            this.positions.add(position);
-        }
 
     }
 
@@ -65,11 +60,4 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public List<Position> getPositions() {
-        return positions;
-    }
-
-    public void setPositions(List<Position> positions) {
-        this.positions = positions;
-    }
 }

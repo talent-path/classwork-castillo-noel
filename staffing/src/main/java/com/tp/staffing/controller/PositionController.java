@@ -27,7 +27,7 @@ public class PositionController {
     }
 
     @GetMapping("/positions")
-    public List<Position> getPositions()  {
+    public List<Position> getPositions() {
         return service.getPositions();
     }
 
@@ -38,21 +38,39 @@ public class PositionController {
 
     @DeleteMapping("/positions/delete/{id}")
     public String deletePosition(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {
-        if(service.deletePosition(id)) {
+        if (service.deletePosition(id)) {
             return "Position " + id + " deleted";
-        } else{
+        } else {
             return "Position " + id + " not found";
         }
     }
 
     @PutMapping("/positions/{id}")
     public String editPosition(@PathVariable Integer id, @RequestBody Position position) throws InvalidPositionTitleException, NullPositionTitleException, InvalidPositionIdException {
-        if(service.editPosition(id, position)){
+        if (service.editPosition(id, position)) {
             return "Position " + id + " updated";
         } else {
             return "Position " + id + " not found";
         }
 
+    }
+
+    @PutMapping("/employee/{employeeId}/position/{positionId}")
+    public String addEmployeeToPosition(@PathVariable Integer employeeId, @PathVariable Integer positionId) throws NullEmployeeIdException, NullPositionIdException, InvalidPositionIdException {
+        if (service.addEmployeeToPosition(employeeId, positionId)) {
+            return "Employee " + employeeId + " has taken Position " + positionId;
+        } else {
+            return "Unable to locate associated Employee " + employeeId + " or Position " + positionId;
+        }
+    }
+
+    @PutMapping("/position/{id}/clear")
+    public String removeEmployeeFromPosition(@PathVariable Integer id) throws InvalidPositionIdException, NullPositionIdException {
+        if (service.removeEmployeeFromPosition(id)) {
+            return "Position " + id + " is now vacant.";
+        } else {
+            return "Unable to locate associated Position " + id + ".";
+        }
     }
 
 }

@@ -63,6 +63,22 @@ public class PositionService {
         return dao.editPosition(id, position);
     }
 
+    public boolean addEmployeeToPosition(Integer employeeId, Integer positionId) throws NullEmployeeIdException, NullPositionIdException, InvalidPositionIdException {
+        if (employeeId == null) {
+            throw new NullEmployeeIdException("You cannot retrieve an Employee with null id.");
+        }
+
+        if (positionId == null) {
+            throw new NullPositionIdException("You cannot retrieve a Position with null id.");
+        }
+        return dao.addEmployeeToPosition(employeeId, positionId);
+    }
 
 
+    public boolean removeEmployeeFromPosition(Integer id) throws NullPositionIdException, InvalidPositionIdException {
+        if (id == null) {
+            throw new NullPositionIdException("Cannot locate a Position with null id.");
+        }
+        return dao.removeEmployeeFromPosition(id);
+    }
 }

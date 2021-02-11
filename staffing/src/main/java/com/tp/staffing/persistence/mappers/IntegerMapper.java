@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 public class IntegerMapper implements RowMapper<Integer> {
 
-
     String columnName;
 
     @Override

@@ -33,7 +33,7 @@ class PositionPostgresDaoTests {
     @BeforeEach
     public void setup() {
 
-        template.update("TRUNCATE \"Employee\", \"Position\", \"EmployeePosition\" RESTART IDENTITY;");
+        template.update("TRUNCATE \"Employee\", \"Position\" RESTART IDENTITY;");
 
 //        template.update( "INSERT INTO \"Position\" (\"title\") VALUES ('Server')" );
 
