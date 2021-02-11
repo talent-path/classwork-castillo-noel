@@ -1,6 +1,7 @@
 package com.tp.staffing.persistence;
 
 import com.tp.staffing.model.Employee;
+import com.tp.staffing.persistence.mappers.EmployeeMapper;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +18,15 @@ public class EmployeePostgresDao implements EmployeeDAO {
 
     @Autowired
     private JdbcTemplate template;
+
+    @Override
+    public Integer newEmployee(Employee employee) {
+
+        return template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
+                "VALUES ( '" + employee.getFirstName() + "', '" + employee.getLastName() + "') " +
+                "RETURNING \"id\";", new IdMapper()).get(0);
+
+    }
 
     @Override
     public Employee getEmployeeById(Integer id) {
@@ -56,14 +66,17 @@ public class EmployeePostgresDao implements EmployeeDAO {
         return employees;
     }
 
-
     @Override
-    public Integer newEmployee(Employee employee) {
-
-        return template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
-                "VALUES ( '" + employee.getFirstName() + "', '" + employee.getLastName() + "') " +
-                "RETURNING \"id\";", new IdMapper()).get(0);
-
+    public boolean editEmployee(Integer id, Employee updatedEmployee) {
+        if (getEmployeeById(id) == null) {
+            return false;
+        } else {
+            template.execute("UPDATE public.\"Employee\"\n" +
+                    "SET \"firstName\"='" + updatedEmployee.getFirstName() + "', " +
+                    "\"lastName\" ='" + updatedEmployee.getLastName() + "'\n" +
+                    "WHERE \"id\" = " + id + ";");
+            return true;
+        }
     }
 
     @Override
@@ -76,11 +89,6 @@ public class EmployeePostgresDao implements EmployeeDAO {
                     "WHERE \"id\" = " + id + ";");
             return true;
         }
-    }
-
-    @Override
-    public Employee editEmployee(Integer id, Employee updatedEmployee) {
-        return null;
     }
 
     private class IdMapper implements RowMapper<Integer> {

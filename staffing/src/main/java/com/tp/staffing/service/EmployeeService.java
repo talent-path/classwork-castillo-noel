@@ -57,18 +57,18 @@ public class EmployeeService {
         return dao.deleteEmployee(id);
     }
 
-    public Employee editEmployee(Integer id, Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
+    public boolean editEmployee(Integer id, Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
         if (employee.getFirstName() == null) {
-            throw new NullEmployeeFirstNameException("You cannot add a Employee with a null first name.");
+            throw new NullEmployeeFirstNameException("You cannot edit a Employee to have a null first name.");
         }
         if (employee.getLastName() == null) {
-            throw new NullEmployeeLastNameException("You cannot add a Employee with a null last name.");
+            throw new NullEmployeeLastNameException("You cannot edit a Employee to have a null last name.");
         }
         if (employee.getFirstName().trim().equals("")) {
-            throw new InvalidEmployeeFirstNameException("You cannot add a Employee with a empty first name.");
+            throw new InvalidEmployeeFirstNameException("You cannot edit a Employee to have a empty first name.");
         }
         if (employee.getLastName().trim().equals("")) {
-            throw new InvalidEmployeeLastNameException("You cannot add a Employee with a empty last name.");
+            throw new InvalidEmployeeLastNameException("You cannot edit a Employee to have a empty last name.");
         }
         return dao.editEmployee(id, employee);
     }

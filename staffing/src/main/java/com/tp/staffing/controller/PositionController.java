@@ -45,4 +45,14 @@ public class PositionController {
         }
     }
 
+    @PutMapping("/positions/{id}")
+    public String editPosition(@PathVariable Integer id, @RequestBody Position position) throws InvalidPositionTitleException, NullPositionTitleException, InvalidPositionIdException {
+        if(service.editPosition(id, position)){
+            return "Position " + id + " updated";
+        } else {
+            return "Position " + id + " not found";
+        }
+
+    }
+
 }

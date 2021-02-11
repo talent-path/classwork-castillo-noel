@@ -37,17 +37,20 @@ public class EmployeeController {
 
     @DeleteMapping("/employees/delete/{id}")
     public String deleteEmployee(@PathVariable Integer id) throws NullEmployeeIdException {
-        if(service.deleteEmployee(id)) {
+        if (service.deleteEmployee(id)) {
             return "Employee " + id + " deleted";
-        } else{
+        } else {
             return "Employee " + id + " not found";
         }
     }
 
     @PutMapping("/employees/{id}")
-    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
-        return service.editEmployee(id, employee);
-
+    public String editEmployee(@PathVariable Integer id, @RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
+        if (service.editEmployee(id, employee)) {
+            return "Employee " + id + " updated";
+        } else {
+            return "Employee " + id + " not found";
+        }
     }
 
 }

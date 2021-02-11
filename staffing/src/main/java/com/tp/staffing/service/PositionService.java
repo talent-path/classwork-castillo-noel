@@ -2,6 +2,7 @@ package com.tp.staffing.service;
 
 
 import com.tp.staffing.exceptions.*;
+import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
 import com.tp.staffing.persistence.PositionPostgresDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,17 @@ public class PositionService {
             throw new NullPositionIdException("You cannot delete a Position with null id.");
         }
         return dao.deletePosition(id);
+    }
+
+    public boolean editPosition(Integer id, Position position) throws InvalidPositionTitleException, NullPositionTitleException, InvalidPositionIdException {
+        if (position.getTitle() == null) {
+            throw new NullPositionTitleException("You cannot edit a Position to have a null title.");
+        }
+
+        if (position.getTitle().trim().equals("")) {
+            throw new InvalidPositionTitleException("You cannot edit a Position with a empty title.");
+        }
+        return dao.editPosition(id, position);
     }
 
 

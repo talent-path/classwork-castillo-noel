@@ -1,7 +1,9 @@
 package com.tp.staffing.persistence;
 
 import com.tp.staffing.exceptions.InvalidPositionIdException;
+import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
+import com.tp.staffing.persistence.mappers.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,6 +19,14 @@ public class PositionPostgresDao implements PositionDAO {
 
     @Autowired
     private JdbcTemplate template;
+
+    @Override
+    public Integer newPosition(Position position) {
+
+        return template.query("INSERT INTO public.\"Position\"(\"title\")" +
+                "VALUES ( '"+ position.getTitle() + "') " +
+                "RETURNING \"id\";", new PositionPostgresDao.IdMapper()).get(0);
+    }
 
     @Override
     public Position getPositionById(Integer id) throws InvalidPositionIdException {
@@ -57,11 +67,15 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override
-    public Integer newPosition(Position position) {
-
-        return template.query("INSERT INTO public.\"Position\"(\"title\")" +
-                "VALUES ( '"+ position.getTitle() + "') " +
-                "RETURNING \"id\";", new PositionPostgresDao.IdMapper()).get(0);
+    public boolean editPosition(Integer id, Position updatedPosition) throws InvalidPositionIdException {
+       if (getPositionById(id) == null) {
+            return false;
+        } else {
+            template.execute("UPDATE public.\"Position\"\n" +
+                    "SET \"title\"='" + updatedPosition.getTitle() + "'\n" +
+                    "WHERE \"id\" = " + id + ";");
+            return true;
+        }
     }
 
     @Override
@@ -75,6 +89,7 @@ public class PositionPostgresDao implements PositionDAO {
             return true;
         }
     }
+
 
     private class IdMapper implements RowMapper<Integer> {
 

@@ -19,4 +19,6 @@ public interface PositionDAO {
 
     boolean deletePosition(Integer id) throws InvalidPositionIdException;
 
+    boolean editPosition(Integer id, Position updatedPosition) throws InvalidPositionIdException;
+
 }
