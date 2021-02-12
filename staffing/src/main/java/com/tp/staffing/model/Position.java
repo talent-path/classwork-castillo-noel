@@ -1,17 +1,23 @@
 package com.tp.staffing.model;
 
 
+import java.sql.Time;
+import java.util.List;
+
 public class Position {
 
     // V A R I A B L E S
-    private Integer id;
-    private String title;
-    private Integer employeeId;
+    private Integer id; //Primary Key, Cannot be null
+    private String title; //Cannot be null
+    private Integer employeeId; //Foreign Key, can be null
+    private List<String> days; //Can be null
+    private String startTime; //Can be null
+    private String endTime; //Can be null
 
 
     // C O N S T R U C T O R S
     public Position() {
-        this.employeeId = null;
+
     }
 
     public Position(Integer id, String title, Integer employeeId) {
@@ -25,6 +31,11 @@ public class Position {
         this.id = that.id;
         this.title = that.title;
         this.employeeId = that.employeeId;
+        for (String day : that.days) {
+            this.days.add(day);
+        }
+        this.startTime = that.startTime;
+        this.endTime = that.endTime;
 
     }
 
@@ -53,5 +64,29 @@ public class Position {
 
     public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public List<String> getDays() {
+        return days;
+    }
+
+    public void setDays(List<String> days) {
+        this.days = days;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

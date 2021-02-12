@@ -5,9 +5,9 @@ import java.util.List;
 public class Employee {
 
     // V A R I A B L E S
-    private Integer id;
-    public String firstName;
-    public String lastName;
+    private Integer id;     //Primary Key, Cannot be null
+    public String firstName; //Cannot be null
+    public String lastName; //Cannot be null
 
     // C O N S T R U C T O R S
 
