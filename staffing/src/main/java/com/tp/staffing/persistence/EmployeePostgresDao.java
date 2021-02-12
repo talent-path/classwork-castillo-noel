@@ -19,7 +19,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
     @Autowired
     private JdbcTemplate template;
 
-    @Override
+    @Override //Adds an employee to the database and returns it's id.
     public Integer addEmployee(Employee employee) {
 
         return template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
@@ -28,7 +28,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
 
     }
 
-    @Override
+    @Override //Returns an employee from the database. Returns null if not found by given id.
     public Employee getEmployeeById(Integer id) {
         List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
                 "\tFROM public.\"Employee\"\n" +
@@ -41,7 +41,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
         return employees.get(0);
     }
 
-    @Override
+    @Override //Returns a list of employees with the given last name to check for.
     public List<Employee> getEmployeesByLastName(String lastName) {
         List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
                 "\tFROM public.\"Employee\"\n" +
@@ -54,7 +54,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
         return employees;
     }
 
-    @Override
+    @Override //Returns a list of all employees in the database.
     public List<Employee> getEmployees() {
         List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
                 "\tFROM public.\"Employee\"\n;", new EmployeeMapper());
@@ -66,7 +66,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
         return employees;
     }
 
-    @Override
+    @Override //Returns true or false if updating an employee in the database was successful.
     public boolean editEmployee(Integer id, Employee updatedEmployee) {
         if (getEmployeeById(id) == null) {
             return false;
@@ -79,7 +79,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
         }
     }
 
-    @Override
+    @Override //Returns true or false if deleting an employee from the database was successful.
     public boolean deleteEmployee(Integer id) {
 
         if (getEmployeeById(id) == null) {

@@ -21,7 +21,7 @@ public class PositionPostgresDao implements PositionDAO {
     @Autowired
     private JdbcTemplate template;
 
-    @Override
+    @Override  //Adds a position to the database and returns it's id.
     public Integer addPosition(Position position) {
 
         return template.query("INSERT INTO public.\"Position\"(\"title\")" +
@@ -29,7 +29,8 @@ public class PositionPostgresDao implements PositionDAO {
                 "RETURNING \"id\";", new PositionPostgresDao.IdMapper()).get(0);
     }
 
-    @Override
+    @Override //Returns a position from the database with the given id.
+    // Or returns null if no positions are found with the given id.
     public Position getPositionById(Integer id) {
         List<Position> positions = template.query("SELECT id, \"title\", \"employeeId\"\n" +
                 "\tFROM public.\"Position\"\n" +
@@ -42,7 +43,7 @@ public class PositionPostgresDao implements PositionDAO {
         return positions.get(0);
     }
 
-    @Override
+    @Override //Returns a list of all positions in the database.
     public List<Position> getPositions() {
         List<Position> positions = template.query("SELECT id, \"title\", \"employeeId\"\n" +
                 "\tFROM public.\"Position\"\n;", new PositionPostgresDao.PositionMapper());
@@ -54,7 +55,7 @@ public class PositionPostgresDao implements PositionDAO {
         return positions;
     }
 
-    @Override
+    @Override //Returns a list of all positions in the database with the given title.
     public List<Position> getPositionsByTitle(String title) {
         List<Position> positions = template.query("SELECT id, \"title\", \"employeeId\"\n" +
                 "\tFROM public.\"Position\"\n" +
@@ -67,7 +68,7 @@ public class PositionPostgresDao implements PositionDAO {
         return positions;
     }
 
-    @Override
+    @Override //Returns true or false if updating a position was successful.
     public boolean editPosition(Integer id, Position updatedPosition)  {
        if (getPositionById(id) == null) {
             return false;
@@ -79,7 +80,7 @@ public class PositionPostgresDao implements PositionDAO {
         }
     }
 
-    @Override
+    @Override //Returns true or false if deleting a position was successful.
     public boolean deletePosition(Integer id)  {
 
         if (getPositionById(id) == null) {
@@ -91,7 +92,7 @@ public class PositionPostgresDao implements PositionDAO {
         }
     }
 
-    @Override
+    @Override //Adds an employee id to a position entity. Returns true or false if successful.
     public boolean addEmployeeToPosition(Integer employeeId, Integer positionId)  {
 
         List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
@@ -112,7 +113,7 @@ public class PositionPostgresDao implements PositionDAO {
 
     }
 
-    @Override
+    @Override //Removes an employee id from a position. Returns true or false if successful.
     public boolean removeEmployeeFromPosition(Integer positionId)  {
 
         if (getPositionById(positionId) == null) {
