@@ -24,14 +24,11 @@ class EmployeeServiceTests {
     //this will run before each @Test method
     @BeforeEach
     public void setup() {
-        try {
-
-        } catch (Exception e) {
-            fail();
-        }
+        //None of these tests should reach into the database as exceptions should be thrown
+        //prior to that. Nothing to setup for.
     }
 
-    @Test
+    @Test //Testing method properly handles adding an employee to the database when given a null first name.
     public void addEmployeeNullFirstNameTest() {
         try {
             Employee employeeToAdd = new Employee();
@@ -47,7 +44,7 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles adding an employee to the database when given null last name.
     public void addEmployeeNullLastNameTest() {
         try {
             Employee employeeToAdd = new Employee();
@@ -63,7 +60,7 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles adding an employee to the database when given an empty first name.
     public void addEmployeeEmptyFirstNameTest() {
         try {
             Employee employeeToAdd = new Employee();
@@ -79,7 +76,7 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles adding an employee to the database when given an empty last name.
     public void addEmployeeEmptyLastNameTest() {
         try {
             Employee employeeToAdd = new Employee();
@@ -95,7 +92,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles retrieving an employee from the database by id
+    // when given a null id.
     public void getEmployeeByIdNullIdTest() {
         try {
             toTest.getEmployeeById(null);
@@ -108,7 +106,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles retrieving an employee from the database
+    // when given an invalid id.
     public void getEmployeeByIdInvalidUpperBoundIdTest() {
         try {
             toTest.getEmployeeById(Integer.MAX_VALUE);
@@ -121,7 +120,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles retrieving an employee from the database
+    // when given an invalid id.
     public void getEmployeeByIdInvalidLowerBoundIdTest() {
         try {
             toTest.getEmployeeById(Integer.MIN_VALUE);
@@ -134,31 +134,34 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles retrieving a list of employees by a given last name
+    // when given a null last name to check for.
     public void getEmployeesByNullLastNameTest() {
         try {
             List<Employee> employeesToCheck = toTest.getEmployeesByLastName(null);
-        } catch(NullEmployeeLastNameException e){
+        } catch (NullEmployeeLastNameException e) {
             //Nothing done since we want this.
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             fail();
         }
     }
 
-    @Test
+    @Test //Testing method properly handles retrieving a list of employees by a given last name
+    // when given a empty last name to check for.
     public void getEmployeesByEmptyLastNameTest() {
         try {
             List<Employee> employeesToCheck = toTest.getEmployeesByLastName("");
-        } catch(InvalidEmployeeLastNameException e){
+        } catch (InvalidEmployeeLastNameException e) {
             //Nothing done since we want this.
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             fail();
         }
     }
 
-    @Test
+    @Test //Testing method properly handles updating an employee to the database
+    // when given an null first name.
     public void editEmployeeNullFirstNameTest() {
         try {
             Employee editedEmployee = new Employee();
@@ -174,7 +177,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles updating an employee to the database
+    // when given an null last name.
     public void editEmployeeNullLastNameTest() {
         try {
             Employee editedEmployee = new Employee();
@@ -190,7 +194,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles updating an employee to the database
+    // when given an empty first name.
     public void editEmployeeEmptyFirstNameTest() {
         try {
             Employee editedEmployee = new Employee();
@@ -206,7 +211,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles updating an employee to the database
+    // when given an empty last name.
     public void editEmployeeEmptyLastNameTest() {
         try {
             Employee editedEmployee = new Employee();
@@ -222,7 +228,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles deleting an employee by id from the database
+    // when given an null id.
     public void deleteEmployeeNullIdTest() {
         try {
             toTest.deleteEmployee(null);
@@ -235,7 +242,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles deleting an employee by id from the database
+    // when given an invalid id.
     public void deleteEmployeeInvalidUpperBoundIdTest() {
         try {
             assertFalse(toTest.deleteEmployee(Integer.MAX_VALUE));
@@ -246,7 +254,8 @@ class EmployeeServiceTests {
         }
     }
 
-    @Test
+    @Test //Testing method properly handles deleting an employee by id from the database
+    // when given an invalid id.
     public void deleteEmployeeInvalidLowerBoundIdTest() {
         try {
             assertFalse(toTest.deleteEmployee(Integer.MIN_VALUE));

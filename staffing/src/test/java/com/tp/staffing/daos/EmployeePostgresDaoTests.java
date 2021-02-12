@@ -32,13 +32,15 @@ class EmployeePostgresDaoTests {
     @BeforeEach
     public void setup() {
 
+        //Clearing all rows from the Employee and Position tables and restarting the
+        //id sequence to begin at 1.
         template.update("TRUNCATE \"Employee\", \"Position\" RESTART IDENTITY;");
-
+        //Inserting values into the test database for testing purposes.
         template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\") VALUES ('Noel', 'Castillo')");
 
     }
 
-    @Test
+    @Test //Testing method to add an employee to the database. Golden path.
     public void newEmployeeGoldenPathTest() {
         try {
             Employee employeeToAdd = new Employee();
@@ -57,7 +59,7 @@ class EmployeePostgresDaoTests {
         }
     }
 
-    @Test
+    @Test //Testing method to retrieve an employee from the database by corresponding id. Golden path.
     public void getEmployeeByIdGoldenPathTest() {
         try {
             Employee addedEmployeeToCheck = toTest.getEmployeeById(1);
@@ -70,7 +72,7 @@ class EmployeePostgresDaoTests {
         }
     }
 
-    @Test
+    @Test //Testing method to retrieve all employees from database. Golden path.
     public void getEmployeesGoldenPath() {
         List<Employee> employeesToCheck = toTest.getEmployees();
 
@@ -79,7 +81,7 @@ class EmployeePostgresDaoTests {
         assertEquals("Castillo", employeesToCheck.get(0).getLastName());
     }
 
-    @Test
+    @Test //Testing method to retrieve all employees from the database by last name. Golden path.
     public void getEmployeesByLastNameGoldenPath() {
         List<Employee> employeesToCheck = toTest.getEmployeesByLastName("Castillo");
 
@@ -88,7 +90,8 @@ class EmployeePostgresDaoTests {
         assertEquals("Castillo", employeesToCheck.get(0).getLastName());
     }
 
-    @Test
+    @Test //Testing method to update an existing employee in the database
+    // by a given employee and corresponding id. Golden path.
     public void updateEmployeeGoldenPathTest() {
         try {
 
@@ -108,7 +111,7 @@ class EmployeePostgresDaoTests {
 
     }
 
-    @Test
+    @Test //Testing method to delete an employee from the database by corresponding id. Golden path.
     public void deleteEmployeeGoldenPathTest() {
         try {
 
@@ -121,12 +124,12 @@ class EmployeePostgresDaoTests {
         }
     }
 
-    @Test
+    @Test //Testing method to delete an employee from the database with an ID that does not exist in the database.
     public void deleteEmployeeInvalidUpperBoundIdTest() {
         assertFalse(toTest.deleteEmployee(Integer.MAX_VALUE));
     }
 
-    @Test
+    @Test //Testing method to delete an employee from the database with an ID that does not exist in the database.
     public void deleteEmployeeInvalidLowerBoundIdTest() {
         assertFalse(toTest.deleteEmployee(Integer.MIN_VALUE));
     }

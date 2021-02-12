@@ -32,13 +32,15 @@ class PositionPostgresDaoTests {
     @BeforeEach
     public void setup() {
 
+        //Clearing all rows from the Employee and Position tables and restarting the
+        //id sequence to begin at 1.
         template.update("TRUNCATE \"Employee\", \"Position\" RESTART IDENTITY;");
-
+        //Inserting values into the test database for testing purposes.
         template.update("INSERT INTO \"Position\" (\"title\") VALUES ('Server')");
 
     }
 
-    @Test
+    @Test //Testing method to add a new position to the database. Golden path.
     public void newPositionGoldenPath() {
 
         Position positionToAdd = new Position();
@@ -59,7 +61,7 @@ class PositionPostgresDaoTests {
 
     }
 
-    @Test
+    @Test //Testing method to retrieve a position from the database by corresponding id. Golden path.
     public void getPositionByIdGoldenPath() {
         Position positionToCheck = toTest.getPositionById(1);
 
@@ -69,7 +71,7 @@ class PositionPostgresDaoTests {
 
     }
 
-    @Test
+    @Test //Testing method to retrieve all positions from the database. Golden path.
     public void getPositionsGoldenPath() {
         List<Position> positionsToCheck = toTest.getPositions();
 
@@ -77,7 +79,7 @@ class PositionPostgresDaoTests {
         assertEquals("Server", positionsToCheck.get(0).getTitle());
     }
 
-    @Test
+    @Test //Testing method to retrieve all positions from the database by a given title. Golden path.
     public void getPositionsByTitleGoldenPath() {
         List<Position> positionsToCheck = toTest.getPositionsByTitle("Server");
 
@@ -85,7 +87,8 @@ class PositionPostgresDaoTests {
         assertEquals("Server", positionsToCheck.get(0).getTitle());
     }
 
-    @Test
+    @Test //Testing method to update an existing position in the database
+    // by a given position and corresponding id. Golden path.
     public void updatePositionGoldenPathTest() {
         Position positionToUpdate = toTest.getPositionById(1);
         positionToUpdate.setTitle("Manager");
@@ -98,7 +101,7 @@ class PositionPostgresDaoTests {
 
     }
 
-    @Test
+    @Test //Testing method to delete a position from the database by its corresponding id. Golden path.
     public void deletePositionGoldenPathTest() {
         assertNotNull(toTest.getPositionById(1));
         toTest.deletePosition(1);
@@ -106,25 +109,26 @@ class PositionPostgresDaoTests {
 
     }
 
-    @Test
+    @Test //Testing method to delete a position from the database with an ID that does not exist in the database.
     public void deletePositionInvalidUpperBoundIdTest() {
         assertFalse(toTest.deletePosition(Integer.MAX_VALUE));
     }
 
-    @Test
+    @Test //Testing method to delete a position from the database with an ID that does not exist in the database.
     public void deletePositionInvalidLowerBoundIdTest() {
         assertFalse(toTest.deletePosition(Integer.MIN_VALUE));
 
     }
 
-    @Test
+    @Test //Testing method to add an employee id to a position by the given corresponding employee id and position id.
+    //Golden path.
     public void addEmployeeToPositionGoldenPathTest() {
         template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\") VALUES ('Noel', 'Castillo')");
         toTest.addEmployeeToPosition(1, 1);
         assertEquals(1, toTest.getPositionById(1).getEmployeeId());
     }
 
-    @Test
+    @Test //Testing method to remove any associated employee id of a position by the given id.
     public void removeEmployeeToPositionGoldenPathTest() {
         template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\") VALUES ('Noel', 'Castillo')");
         toTest.addEmployeeToPosition(1, 1);
