@@ -15,6 +15,11 @@ public class PositionController {
     @Autowired
     PositionService service;
 
+    @PostMapping("/positions/add-position")
+    public Integer addPosition(@RequestBody Position position) throws NullPositionTitleException, InvalidPositionTitleException {
+        return service.addPosition(position);
+    }
+
     @GetMapping("/position/{id}")
     public Position getPositionById(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {
         return service.getPositionById(id);
@@ -29,11 +34,6 @@ public class PositionController {
     @GetMapping("/positions")
     public List<Position> getPositions() {
         return service.getPositions();
-    }
-
-    @PostMapping("/positions/new-position")
-    public Integer newPosition(@RequestBody Position position) throws NullPositionTitleException, InvalidPositionTitleException {
-        return service.newPosition(position);
     }
 
     @DeleteMapping("/positions/delete/{id}")

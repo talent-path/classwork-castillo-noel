@@ -22,7 +22,7 @@ public class PositionPostgresDao implements PositionDAO {
     private JdbcTemplate template;
 
     @Override
-    public Integer newPosition(Position position) {
+    public Integer addPosition(Position position) {
 
         return template.query("INSERT INTO public.\"Position\"(\"title\")" +
                 "VALUES ( '"+ position.getTitle() + "') " +

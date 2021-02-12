@@ -46,7 +46,7 @@ class PositionPostgresDaoTests {
         Position positionToAdd = new Position();
         positionToAdd.setTitle("Owner");
 
-        Integer positionId = toTest.newPosition(positionToAdd);
+        Integer positionId = toTest.addPosition(positionToAdd);
         Position addedPositionToCheck = toTest.getPositionById(2);
 
 

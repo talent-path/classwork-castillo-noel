@@ -14,7 +14,7 @@ public interface EmployeeDAO {
 
     List<Employee> getEmployees();
 
-    Integer newEmployee(Employee employee);
+    Integer addEmployee(Employee employee);
 
     boolean editEmployee(Integer id, Employee updatedEmployee);
 

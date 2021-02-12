@@ -43,7 +43,7 @@ class EmployeePostgresDaoTests {
             employeeToAdd.setFirstName("Joe");
             employeeToAdd.setLastName("Schmo");
 
-            Integer positionId = toTest.newEmployee(employeeToAdd);
+            Integer positionId = toTest.addEmployee(employeeToAdd);
             Employee addedEmployeeToCheck = toTest.getEmployeeById(2);
 
 

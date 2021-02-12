@@ -1,8 +1,8 @@
 package com.tp.staffing.services;
 
 
-import com.tp.staffing.exceptions.InvalidPositionIdException;
-import com.tp.staffing.exceptions.NullPositionIdException;
+import com.tp.staffing.exceptions.*;
+import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
 import com.tp.staffing.service.EmployeeService;
 import com.tp.staffing.service.PositionService;
@@ -27,6 +27,36 @@ class PositionServiceTests {
     @BeforeEach
     public void setup() {
 
+    }
+
+    @Test
+    public void addPositionNullTitleTest() {
+        try {
+            Position positionToAdd = new Position();
+            positionToAdd.setTitle(null);
+            toTest.addPosition(positionToAdd);
+
+        } catch(NullPositionTitleException e){
+            //Nothing done since we want this.
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void addPositionEmptyTitleTest() {
+        try {
+            Position positionToAdd = new Position();
+            positionToAdd.setTitle("");
+            toTest.addPosition(positionToAdd);
+
+        } catch(InvalidPositionTitleException e){
+            //Nothing done since we want this.
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
     }
 
     @Test
@@ -63,6 +93,36 @@ class PositionServiceTests {
             fail();
         }
 
+    }
+
+    @Test
+    public void editPositionNullTitleTest() {
+        try {
+            Position editedPosition = new Position();
+            editedPosition.setTitle(null);
+            toTest.editPosition(1, editedPosition);
+
+        } catch(NullPositionTitleException e){
+            //Nothing done since we want this.
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void editPositionEmptyTitleTest() {
+        try {
+            Position editedPosition = new Position();
+            editedPosition.setTitle("");
+            toTest.editPosition(1, editedPosition);
+
+        } catch(InvalidPositionTitleException e){
+            //Nothing done since we want this.
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
     }
 
 

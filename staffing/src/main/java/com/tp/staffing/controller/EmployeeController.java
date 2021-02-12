@@ -30,9 +30,9 @@ public class EmployeeController {
         return service.getEmployees();
     }
 
-    @PostMapping("/employees/new-employee")
-    public Integer newEmployee(@RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
-        return service.newEmployee(employee);
+    @PostMapping("/employees/add-employee")
+    public Integer addEmployee(@RequestBody Employee employee) throws InvalidEmployeeFirstNameException, NullEmployeeLastNameException, NullEmployeeFirstNameException, InvalidEmployeeLastNameException {
+        return service.addEmployee(employee);
     }
 
     @DeleteMapping("/employees/delete/{id}")

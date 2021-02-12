@@ -20,7 +20,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
     private JdbcTemplate template;
 
     @Override
-    public Integer newEmployee(Employee employee) {
+    public Integer addEmployee(Employee employee) {
 
         return template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
                 "VALUES ( '" + employee.getFirstName() + "', '" + employee.getLastName() + "') " +

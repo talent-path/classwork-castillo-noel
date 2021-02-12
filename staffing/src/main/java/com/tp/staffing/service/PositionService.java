@@ -16,6 +16,17 @@ public class PositionService {
     @Autowired
     PositionPostgresDao dao;
 
+    public Integer addPosition(Position position) throws NullPositionTitleException, InvalidPositionTitleException {
+        if (position.getTitle() == null) {
+            throw new NullPositionTitleException("You cannot add a Position with a null title.");
+        }
+
+        if (position.getTitle().trim().equals("")) {
+            throw new InvalidPositionTitleException("You cannot add a Position with a empty title.");
+        }
+        return dao.addPosition(position);
+    }
+
     public Position getPositionById(Integer id) throws NullPositionIdException, InvalidPositionIdException {
         if (id == null) {
             throw new NullPositionIdException("You cannot retrieve a Position with null id.");
@@ -41,24 +52,6 @@ public class PositionService {
         return dao.getPositions();
     }
 
-    public Integer newPosition(Position position) throws NullPositionTitleException, InvalidPositionTitleException {
-        if (position.getTitle() == null) {
-            throw new NullPositionTitleException("You cannot add a Position with a null title.");
-        }
-
-        if (position.getTitle().trim().equals("")) {
-            throw new InvalidPositionTitleException("You cannot add a Position with a empty title.");
-        }
-        return dao.newPosition(position);
-    }
-
-    public boolean deletePosition(Integer id) throws NullPositionIdException, InvalidPositionIdException {
-        if (id == null) {
-            throw new NullPositionIdException("You cannot delete a Position with null id.");
-        }
-        return dao.deletePosition(id);
-    }
-
     public boolean editPosition(Integer id, Position position) throws InvalidPositionTitleException, NullPositionTitleException, InvalidPositionIdException {
         if (position.getTitle() == null) {
             throw new NullPositionTitleException("You cannot edit a Position to have a null title.");
@@ -68,6 +61,13 @@ public class PositionService {
             throw new InvalidPositionTitleException("You cannot edit a Position with a empty title.");
         }
         return dao.editPosition(id, position);
+    }
+
+    public boolean deletePosition(Integer id) throws NullPositionIdException, InvalidPositionIdException {
+        if (id == null) {
+            throw new NullPositionIdException("You cannot delete a Position with null id.");
+        }
+        return dao.deletePosition(id);
     }
 
     public boolean addEmployeeToPosition(Integer employeeId, Integer positionId) throws NullEmployeeIdException, NullPositionIdException, InvalidPositionIdException {

@@ -15,7 +15,7 @@ public interface PositionDAO {
 
     List<Position> getPositions();
 
-    Integer newPosition(Position position);
+    Integer addPosition(Position position);
 
     boolean deletePosition(Integer id) throws InvalidPositionIdException;
 

@@ -15,7 +15,7 @@ public class EmployeeService {
     @Autowired
     EmployeePostgresDao dao;
 
-    public Integer newEmployee(Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
+    public Integer addEmployee(Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
 
         if (employee.getFirstName() == null) {
             throw new NullEmployeeFirstNameException("You cannot add a Employee with a null first name.");
@@ -29,7 +29,7 @@ public class EmployeeService {
         if (employee.getLastName().trim().equals("")) {
             throw new InvalidEmployeeLastNameException("You cannot add a Employee with a empty last name.");
         }
-        return dao.newEmployee(employee);
+        return dao.addEmployee(employee);
     }
 
     public Employee getEmployeeById(Integer id) throws NullEmployeeIdException, InvalidEmployeeIdException {
