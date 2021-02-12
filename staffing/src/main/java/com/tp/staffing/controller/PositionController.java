@@ -27,7 +27,7 @@ public class PositionController {
 
 
     @GetMapping("/positions/{title}")
-    public List<Position> getPositionsByTitle(@PathVariable String title) throws NullPositionTitleException {
+    public List<Position> getPositionsByTitle(@PathVariable String title) throws NullPositionTitleException, InvalidPositionTitleException {
         return service.getPositionsByTitle(title);
     }
 

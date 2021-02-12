@@ -41,9 +41,13 @@ public class PositionService {
 
     }
 
-    public List<Position> getPositionsByTitle(String title) throws NullPositionTitleException {
+    public List<Position> getPositionsByTitle(String title) throws NullPositionTitleException, InvalidPositionTitleException {
         if (title == null) {
             throw new NullPositionTitleException("You cannot retrieve Positions with a null title.");
+        }
+
+        if (title.trim().equals("")) {
+            throw new InvalidPositionTitleException("You cannot retrieve Positions with a empty title.");
         }
         return dao.getPositionsByTitle(title);
     }

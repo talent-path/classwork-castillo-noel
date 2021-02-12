@@ -21,7 +21,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{lastName}")
-    public List<Employee> getEmployeesByLastName(@PathVariable String lastName) throws NullEmployeeLastNameException {
+    public List<Employee> getEmployeesByLastName(@PathVariable String lastName) throws NullEmployeeLastNameException, InvalidEmployeeLastNameException {
         return service.getEmployeesByLastName(lastName);
     }
 

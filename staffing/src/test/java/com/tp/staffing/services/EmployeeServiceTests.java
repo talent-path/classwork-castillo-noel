@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class EmployeeServiceTests {
@@ -36,7 +39,7 @@ class EmployeeServiceTests {
             employeeToAdd.setLastName("Schmo");
             toTest.addEmployee(employeeToAdd);
 
-        } catch(NullEmployeeFirstNameException e){
+        } catch (NullEmployeeFirstNameException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -52,7 +55,7 @@ class EmployeeServiceTests {
             employeeToAdd.setLastName(null);
             toTest.addEmployee(employeeToAdd);
 
-        } catch(NullEmployeeLastNameException e){
+        } catch (NullEmployeeLastNameException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -68,7 +71,7 @@ class EmployeeServiceTests {
             employeeToAdd.setLastName("Schmo");
             toTest.addEmployee(employeeToAdd);
 
-        } catch(InvalidEmployeeFirstNameException e){
+        } catch (InvalidEmployeeFirstNameException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -84,7 +87,7 @@ class EmployeeServiceTests {
             employeeToAdd.setLastName("");
             toTest.addEmployee(employeeToAdd);
 
-        } catch(InvalidEmployeeLastNameException e){
+        } catch (InvalidEmployeeLastNameException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -97,7 +100,7 @@ class EmployeeServiceTests {
         try {
             toTest.getEmployeeById(null);
 
-        } catch(NullEmployeeIdException e){
+        } catch (NullEmployeeIdException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -110,7 +113,7 @@ class EmployeeServiceTests {
         try {
             toTest.getEmployeeById(Integer.MAX_VALUE);
 
-        } catch(InvalidEmployeeIdException e){
+        } catch (InvalidEmployeeIdException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -123,9 +126,33 @@ class EmployeeServiceTests {
         try {
             toTest.getEmployeeById(Integer.MIN_VALUE);
 
-        } catch(InvalidEmployeeIdException e){
+        } catch (InvalidEmployeeIdException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void getEmployeesByNullLastNameTest() {
+        try {
+            List<Employee> employeesToCheck = toTest.getEmployeesByLastName(null);
+        } catch(NullEmployeeLastNameException e){
+            //Nothing done since we want this.
+        } catch(Exception e){
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void getEmployeesByEmptyLastNameTest() {
+        try {
+            List<Employee> employeesToCheck = toTest.getEmployeesByLastName("");
+        } catch(InvalidEmployeeLastNameException e){
+            //Nothing done since we want this.
+        } catch(Exception e){
             System.out.println(e);
             fail();
         }
@@ -139,7 +166,7 @@ class EmployeeServiceTests {
             editedEmployee.setLastName("Schmo");
             toTest.editEmployee(1, editedEmployee);
 
-        } catch(NullEmployeeFirstNameException e){
+        } catch (NullEmployeeFirstNameException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -155,7 +182,7 @@ class EmployeeServiceTests {
             editedEmployee.setLastName(null);
             toTest.editEmployee(1, editedEmployee);
 
-        } catch(NullEmployeeLastNameException e){
+        } catch (NullEmployeeLastNameException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -171,7 +198,7 @@ class EmployeeServiceTests {
             editedEmployee.setLastName("Schmo");
             toTest.editEmployee(1, editedEmployee);
 
-        } catch(InvalidEmployeeFirstNameException e){
+        } catch (InvalidEmployeeFirstNameException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -187,7 +214,7 @@ class EmployeeServiceTests {
             editedEmployee.setLastName("");
             toTest.editEmployee(1, editedEmployee);
 
-        } catch(InvalidEmployeeLastNameException e){
+        } catch (InvalidEmployeeLastNameException e) {
             //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
@@ -195,6 +222,39 @@ class EmployeeServiceTests {
         }
     }
 
+    @Test
+    public void deleteEmployeeNullIdTest() {
+        try {
+            toTest.deleteEmployee(null);
 
+        } catch (NullEmployeeIdException e) {
+            //Nothing done since we want this.
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void deleteEmployeeInvalidUpperBoundIdTest() {
+        try {
+            assertFalse(toTest.deleteEmployee(Integer.MAX_VALUE));
+
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void deleteEmployeeInvalidLowerBoundIdTest() {
+        try {
+            assertFalse(toTest.deleteEmployee(Integer.MIN_VALUE));
+
+        } catch (Exception e) {
+            System.out.println(e);
+            fail();
+        }
+    }
 
 }

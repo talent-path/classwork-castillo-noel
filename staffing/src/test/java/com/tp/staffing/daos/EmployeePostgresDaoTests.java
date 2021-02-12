@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -66,7 +68,24 @@ class EmployeePostgresDaoTests {
         } catch (Exception e) {
             fail();
         }
+    }
 
+    @Test
+    public void getEmployeesGoldenPath() {
+        List<Employee> employeesToCheck = toTest.getEmployees();
+
+        assertEquals(1, employeesToCheck.get(0).getId());
+        assertEquals("Noel", employeesToCheck.get(0).getFirstName());
+        assertEquals("Castillo", employeesToCheck.get(0).getLastName());
+    }
+
+    @Test
+    public void getEmployeesByLastNameGoldenPath() {
+        List<Employee> employeesToCheck = toTest.getEmployeesByLastName("Castillo");
+
+        assertEquals(1, employeesToCheck.get(0).getId());
+        assertEquals("Noel", employeesToCheck.get(0).getFirstName());
+        assertEquals("Castillo", employeesToCheck.get(0).getLastName());
     }
 
     @Test
@@ -100,7 +119,16 @@ class EmployeePostgresDaoTests {
         } catch (Exception e) {
             fail();
         }
+    }
 
+    @Test
+    public void deleteEmployeeInvalidUpperBoundIdTest() {
+        assertFalse(toTest.deleteEmployee(Integer.MAX_VALUE));
+    }
+
+    @Test
+    public void deleteEmployeeInvalidLowerBoundIdTest() {
+        assertFalse(toTest.deleteEmployee(Integer.MIN_VALUE));
     }
 
 

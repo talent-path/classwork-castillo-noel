@@ -4,7 +4,6 @@ package com.tp.staffing.services;
 import com.tp.staffing.exceptions.*;
 import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
-import com.tp.staffing.service.EmployeeService;
 import com.tp.staffing.service.PositionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
@@ -92,7 +91,30 @@ class PositionServiceTests {
         } catch (Exception e){
             fail();
         }
+    }
 
+    @Test
+    public void getPositionsByNullTitleTest() {
+        try {
+            List<Position> positionsToCheck = toTest.getPositionsByTitle(null);
+        } catch(NullPositionTitleException e){
+            //Nothing done since we want this.
+        } catch(Exception e){
+            System.out.println(e);
+            fail();
+        }
+    }
+
+    @Test
+    public void getPositionsByEmptyTitleTest() {
+        try {
+            List<Position> positionsToCheck = toTest.getPositionsByTitle("");
+        } catch(InvalidPositionTitleException e){
+            //Nothing done since we want this.
+        } catch(Exception e){
+            System.out.println(e);
+            fail();
+        }
     }
 
     @Test
@@ -125,7 +147,33 @@ class PositionServiceTests {
         }
     }
 
+    @Test
+    public void deletePositionNullIdTest() {
+        try{
+            toTest.deletePosition(null);
+        } catch(NullPositionIdException e){
+            //Nothing done since we want this.
+        } catch (Exception e){
+            fail();
+        }
 
+    }
 
+    @Test
+    public void deletePositionInvalidUpperBoundIdTest() {
+        try{
+            assertFalse(toTest.deletePosition(Integer.MAX_VALUE));
+        } catch (Exception e){
+            fail();
+        }
+    }
 
+    @Test
+    public void deletePositionInvalidLowerBoundIdTest() {
+        try{
+            assertFalse(toTest.deletePosition(Integer.MIN_VALUE));
+        } catch (Exception e){
+            fail();
+        }
+    }
 }

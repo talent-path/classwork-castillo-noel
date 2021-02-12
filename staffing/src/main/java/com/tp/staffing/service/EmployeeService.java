@@ -43,12 +43,15 @@ public class EmployeeService {
         } else {
             return employeeToReturn;
         }
-
     }
 
-    public List<Employee> getEmployeesByLastName(String lastName) throws NullEmployeeLastNameException {
+    public List<Employee> getEmployeesByLastName(String lastName) throws NullEmployeeLastNameException, InvalidEmployeeLastNameException {
         if (lastName == null) {
-            throw new NullEmployeeLastNameException("You cannot retrieve an Employee with null last name.");
+            throw new NullEmployeeLastNameException("You cannot retrieve Employees with null last name.");
+        }
+
+        if (lastName.trim().equals("")) {
+            throw new InvalidEmployeeLastNameException("You cannot retrieve Employees with a empty last name.");
         }
         return dao.getEmployeesByLastName(lastName);
     }
