@@ -20,7 +20,14 @@ public class PositionService {
         if (id == null) {
             throw new NullPositionIdException("You cannot retrieve a Position with null id.");
         }
-        return dao.getPositionById(id);
+
+        Position positionToReturn = dao.getPositionById(id);
+        if(positionToReturn == null){
+            throw new InvalidPositionIdException("No Position with that ID exists.");
+        } else{
+            return positionToReturn;
+        }
+
     }
 
     public List<Position> getPositionsByTitle(String title) throws NullPositionTitleException {

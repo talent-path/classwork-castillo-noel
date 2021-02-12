@@ -30,13 +30,13 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override
-    public Position getPositionById(Integer id) throws InvalidPositionIdException {
+    public Position getPositionById(Integer id) {
         List<Position> positions = template.query("SELECT id, \"title\", \"employeeId\"\n" +
                 "\tFROM public.\"Position\"\n" +
                 "\t\tWHERE \"id\" = '" + id + "';", new PositionMapper());
 
         if (positions.isEmpty()) {
-            throw new InvalidPositionIdException("No Position with that ID exists.");
+            return null;
         }
 
         return positions.get(0);
@@ -68,7 +68,7 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override
-    public boolean editPosition(Integer id, Position updatedPosition) throws InvalidPositionIdException {
+    public boolean editPosition(Integer id, Position updatedPosition)  {
        if (getPositionById(id) == null) {
             return false;
         } else {
@@ -80,7 +80,7 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override
-    public boolean deletePosition(Integer id) throws InvalidPositionIdException {
+    public boolean deletePosition(Integer id)  {
 
         if (getPositionById(id) == null) {
             return false;
@@ -92,7 +92,7 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override
-    public boolean addEmployeeToPosition(Integer employeeId, Integer positionId) throws InvalidPositionIdException {
+    public boolean addEmployeeToPosition(Integer employeeId, Integer positionId)  {
 
         List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
                 "\tFROM public.\"Employee\"\n" +
@@ -113,7 +113,7 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override
-    public boolean removeEmployeeFromPosition(Integer positionId) throws InvalidPositionIdException {
+    public boolean removeEmployeeFromPosition(Integer positionId)  {
 
         if (getPositionById(positionId) == null) {
             return false;

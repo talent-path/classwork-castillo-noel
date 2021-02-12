@@ -31,21 +31,32 @@ public class EmployeeService {
         }
         return dao.newEmployee(employee);
     }
+
     public Employee getEmployeeById(Integer id) throws NullEmployeeIdException, InvalidEmployeeIdException {
         if (id == null) {
             throw new NullEmployeeIdException("You cannot retrieve an Employee with null id.");
         }
-        return dao.getEmployeeById(id);
+
+        Employee employeeToReturn = dao.getEmployeeById(id);
+        if (employeeToReturn == null) {
+            throw new InvalidEmployeeIdException("No Employee with that ID exists.");
+        } else {
+            return employeeToReturn;
+        }
+
     }
+
     public List<Employee> getEmployeesByLastName(String lastName) throws NullEmployeeLastNameException {
         if (lastName == null) {
             throw new NullEmployeeLastNameException("You cannot retrieve an Employee with null last name.");
         }
         return dao.getEmployeesByLastName(lastName);
     }
+
     public List<Employee> getEmployees() {
         return dao.getEmployees();
     }
+
     public boolean editEmployee(Integer id, Employee employee) throws NullEmployeeFirstNameException, NullEmployeeLastNameException, InvalidEmployeeFirstNameException, InvalidEmployeeLastNameException {
         if (employee.getFirstName() == null) {
             throw new NullEmployeeFirstNameException("You cannot edit a Employee to have a null first name.");
@@ -61,6 +72,7 @@ public class EmployeeService {
         }
         return dao.editEmployee(id, employee);
     }
+
     public boolean deleteEmployee(Integer id) throws NullEmployeeIdException {
         if (id == null) {
             throw new NullEmployeeIdException("You cannot delete a Employee with null id.");

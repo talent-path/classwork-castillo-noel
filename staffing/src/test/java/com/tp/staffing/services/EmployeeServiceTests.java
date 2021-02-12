@@ -28,9 +28,12 @@ class EmployeeServiceTests {
     }
 
     @Test
-    public void getEmployeeByIdGoldenPath() {
+    public void getEmployeeByIdNullIdTest() {
         try {
+            toTest.getEmployeeById(null);
 
+        } catch(NullEmployeeIdException e){
+            //Nothing done since we want this.
         } catch (Exception e) {
             System.out.println(e);
             fail();
