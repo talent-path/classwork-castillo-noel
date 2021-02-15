@@ -10,7 +10,6 @@ public class Position {
     private Integer id; //Primary Key, Cannot be null
     private String title; //Cannot be null
     private Integer employeeId; //Foreign Key, can be null
-    private List<String> days; //Can be null
     private String startTime; //Can be null
     private String endTime; //Can be null
 
@@ -31,9 +30,6 @@ public class Position {
         this.id = that.id;
         this.title = that.title;
         this.employeeId = that.employeeId;
-        for (String day : that.days) {
-            this.days.add(day);
-        }
         this.startTime = that.startTime;
         this.endTime = that.endTime;
 
@@ -64,14 +60,6 @@ public class Position {
 
     public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public List<String> getDays() {
-        return days;
-    }
-
-    public void setDays(List<String> days) {
-        this.days = days;
     }
 
     public String getStartTime() {

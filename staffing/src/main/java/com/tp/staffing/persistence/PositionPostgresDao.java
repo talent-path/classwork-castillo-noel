@@ -4,6 +4,7 @@ import com.tp.staffing.exceptions.InvalidPositionIdException;
 import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
 import com.tp.staffing.persistence.mappers.EmployeeMapper;
+import com.tp.staffing.persistence.mappers.IdMapper;
 import com.tp.staffing.persistence.mappers.PositionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,15 +25,15 @@ public class PositionPostgresDao implements PositionDAO {
     @Override  //Adds a position to the database and returns it's id.
     public Integer addPosition(Position position) {
 
-        return template.query("INSERT INTO public.\"Position\"(\"title\")" +
-                "VALUES ( '"+ position.getTitle() + "') " +
-                "RETURNING \"id\";", new PositionPostgresDao.IdMapper()).get(0);
+        return template.query("INSERT INTO public.\"Position\"(\"title\", \"startTime\", \"endTime\")" +
+                "VALUES ( '" + position.getTitle() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "') " +
+                "RETURNING \"id\";", new IdMapper()).get(0);
     }
 
     @Override //Returns a position from the database with the given id.
     // Or returns null if no positions are found with the given id.
     public Position getPositionById(Integer id) {
-        List<Position> positions = template.query("SELECT id, \"title\", \"employeeId\"\n" +
+        List<Position> positions = template.query("SELECT * " +
                 "\tFROM public.\"Position\"\n" +
                 "\t\tWHERE \"id\" = '" + id + "';", new PositionMapper());
 
@@ -45,8 +46,8 @@ public class PositionPostgresDao implements PositionDAO {
 
     @Override //Returns a list of all positions in the database.
     public List<Position> getPositions() {
-        List<Position> positions = template.query("SELECT id, \"title\", \"employeeId\"\n" +
-                "\tFROM public.\"Position\"\n;", new PositionPostgresDao.PositionMapper());
+        List<Position> positions = template.query("SELECT * " +
+                "\tFROM public.\"Position\"\n;", new PositionMapper());
 
         if (positions.isEmpty()) {
             return null;
@@ -57,9 +58,9 @@ public class PositionPostgresDao implements PositionDAO {
 
     @Override //Returns a list of all positions in the database with the given title.
     public List<Position> getPositionsByTitle(String title) {
-        List<Position> positions = template.query("SELECT id, \"title\", \"employeeId\"\n" +
+        List<Position> positions = template.query("SELECT * " +
                 "\tFROM public.\"Position\"\n" +
-                "\t\tWHERE \"title\" = '" + title + "';", new PositionPostgresDao.PositionMapper());
+                "\t\tWHERE \"title\" = '" + title + "';", new PositionMapper());
 
         if (positions.isEmpty()) {
             return null;
@@ -69,19 +70,21 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override //Returns true or false if updating a position was successful.
-    public boolean editPosition(Integer id, Position updatedPosition)  {
-       if (getPositionById(id) == null) {
+    public boolean editPosition(Integer id, Position updatedPosition) {
+        if (getPositionById(id) == null) {
             return false;
         } else {
-            template.execute("UPDATE public.\"Position\"\n" +
-                    "SET \"title\"='" + updatedPosition.getTitle() + "'\n" +
+            template.execute("UPDATE public.\"Position\" " +
+                    "SET \"title\"='" + updatedPosition.getTitle() +
+                    "', \"startTime\"='" + updatedPosition.getStartTime() +
+                    "', \"endTime\"='" + updatedPosition.getEndTime() + "' " +
                     "WHERE \"id\" = " + id + ";");
             return true;
         }
     }
 
     @Override //Returns true or false if deleting a position was successful.
-    public boolean deletePosition(Integer id)  {
+    public boolean deletePosition(Integer id) {
 
         if (getPositionById(id) == null) {
             return false;
@@ -93,7 +96,7 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override //Adds an employee id to a position entity. Returns true or false if successful.
-    public boolean addEmployeeToPosition(Integer employeeId, Integer positionId)  {
+    public boolean addEmployeeToPosition(Integer employeeId, Integer positionId) {
 
         List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
                 "\tFROM public.\"Employee\"\n" +
@@ -114,7 +117,7 @@ public class PositionPostgresDao implements PositionDAO {
     }
 
     @Override //Removes an employee id from a position. Returns true or false if successful.
-    public boolean removeEmployeeFromPosition(Integer positionId)  {
+    public boolean removeEmployeeFromPosition(Integer positionId) {
 
         if (getPositionById(positionId) == null) {
             return false;
@@ -125,26 +128,5 @@ public class PositionPostgresDao implements PositionDAO {
             return true;
         }
 
-    }
-
-    private class IdMapper implements RowMapper<Integer> {
-
-        @Override
-        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-            return resultSet.getInt("id");
-        }
-    }
-
-    private class PositionMapper implements RowMapper<Position> {
-
-        @Override
-        public Position mapRow(ResultSet resultSet, int i) throws SQLException {
-            Position mappedPosition = new Position();
-            mappedPosition.setId(resultSet.getInt("id"));
-            mappedPosition.setTitle(resultSet.getString("title"));
-            mappedPosition.setEmployeeId(resultSet.getInt("employeeId"));
-
-            return mappedPosition;
-        }
     }
 }

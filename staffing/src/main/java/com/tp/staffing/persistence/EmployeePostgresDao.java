@@ -2,6 +2,7 @@ package com.tp.staffing.persistence;
 
 import com.tp.staffing.model.Employee;
 import com.tp.staffing.persistence.mappers.EmployeeMapper;
+import com.tp.staffing.persistence.mappers.IdMapper;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -91,23 +92,4 @@ public class EmployeePostgresDao implements EmployeeDAO {
         }
     }
 
-    private class IdMapper implements RowMapper<Integer> {
-
-        @Override
-        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-            return resultSet.getInt("id");
-        }
-    }
-
-    private class EmployeeMapper implements RowMapper<Employee> {
-
-        @Override
-        public Employee mapRow(ResultSet resultSet, int i) throws SQLException {
-            Employee mappedEmployee = new Employee();
-            mappedEmployee.setId(resultSet.getInt("id"));
-            mappedEmployee.setFirstName(resultSet.getString("firstName"));
-            mappedEmployee.setLastName(resultSet.getString("lastName"));
-            return mappedEmployee;
-        }
-    }
 }

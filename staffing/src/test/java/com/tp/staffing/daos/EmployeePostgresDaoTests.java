@@ -32,9 +32,9 @@ class EmployeePostgresDaoTests {
     @BeforeEach
     public void setup() {
 
-        //Clearing all rows from the Employee and Position tables and restarting the
+        //Clearing all rows from the Employee, PositionDay, Position, and Day tables and restarting the
         //id sequence to begin at 1.
-        template.update("TRUNCATE \"Employee\", \"Position\" RESTART IDENTITY;");
+        template.update("TRUNCATE \"Employee\", \"PositionDay\", \"Position\", \"Day\" RESTART IDENTITY;");
         //Inserting values into the test database for testing purposes.
         template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\") VALUES ('Noel', 'Castillo')");
 
