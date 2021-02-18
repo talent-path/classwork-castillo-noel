@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessing Game</title>
+    <style>
+        .center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div>
+            <h1 style="text-align:center">Guessing Game</h1>
+        </div>
+        <div>
+            <button class="guessDisplay" style="width: 175px; height: 175px;"></button>
+            <button class="guessDisplay" style="width: 175px; height: 175px;"></button>
+            <button class="guessDisplay" style="width: 175px; height: 175px;"></button>
+            <button class="guessDisplay" style="width: 175px; height: 175px;"></button>
+        </div>
+        <div>
+
+            <input type="text" id="guess" placeholder="Enter your guess here">
+            <button type="submit" id="submitGuess" onclick="makeGuess()">Guess</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="guessinggame.js"></script>
+</body>
+
+</html>
