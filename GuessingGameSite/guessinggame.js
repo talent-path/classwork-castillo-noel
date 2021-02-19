@@ -1,23 +1,47 @@
 const makeGuess = function () {
     var guess = document.getElementById("guess").value;
-    let toFilterGuess = 1000;
     let allGuessDisplays = document.getElementsByClassName("guess-display");
-   
+    let firstNumberToGuess = Math.trunc(numberToGuess / 1000);
+    let secondNumberToGuess = Math.trunc((numberToGuess - (1000 * firstNumberToGuess)) / 100);
+    let thirdNumberToGuess = Math.trunc((numberToGuess - (1000 * firstNumberToGuess) - (100 * secondNumberToGuess)) / 10);
+    let fourthNumberToGuess = Math.trunc(numberToGuess - (1000 * firstNumberToGuess) - (100 * secondNumberToGuess) - (10 * thirdNumberToGuess));
+
+    let answers = [];
+    answers.push(firstNumberToGuess);
+    answers.push(secondNumberToGuess);
+    answers.push(thirdNumberToGuess);
+    answers.push(fourthNumberToGuess);
+    console.log(answers);
+
+    let firstGuessSubmitted = Math.trunc(guess / 1000);
+    let secondGuessSubmitted = Math.trunc((guess - (1000 * firstGuessSubmitted)) / 100);
+    let thirdGuessSubmitted = Math.trunc((guess - (1000 * firstGuessSubmitted) - (100 * secondGuessSubmitted)) / 10);
+    let fourthGuessSubmitted = Math.trunc(guess - (1000 * firstGuessSubmitted) - (100 * secondGuessSubmitted) - (10 * thirdGuessSubmitted));
+
+    let guesses = [];
+    guesses.push(firstGuessSubmitted);
+    guesses.push(secondGuessSubmitted);
+    guesses.push(thirdGuessSubmitted);
+    guesses.push(fourthGuessSubmitted);
+    console.log(guesses);
+
+    let greenCount = 0;
     for (let i = 0; i < 4; i++) {
-        if (Math.trunc((numberToGuess/toFilterGuess)) === Math.trunc((guess / toFilterGuess))) {
-            console.log("exact match! Green");
-        } else if (Math.trunc((numberToGuess/toFilterGuess)) === Math.trunc((guess / 1000))
-            || Math.trunc((numberToGuess/toFilterGuess)) === Math.trunc(((guess - (Math.trunc((guess / 1000))*1000)) / 100))
-            || Math.trunc((numberToGuess/toFilterGuess)) === Math.trunc(((guess - (Math.trunc((guess / 100))*100)) / 10))
-            || Math.trunc((numberToGuess/toFilterGuess)) === Math.trunc(((guess - (Math.trunc((guess / 10))*10)) / 1))) {
-            console.log("partial match! Yellow");
-            //partial match! Yellow
+        allGuessDisplays[i].innerHTML = guesses[i];
+        if (answers[i] === guesses[i]) {
+            allGuessDisplays[i].style.backgroundColor = "green";
+            greenCount++;
+        } else if (guesses[i] === answers[0] || guesses[i] === answers[1] || guesses[i] === answers[2] || guesses[i] === answers[3]) {
+            allGuessDisplays[i].style.backgroundColor = "yellow";
         } else {
-            console.log("no match! Red");
-            //no match! Red
+            allGuessDisplays[i].style.backgroundColor = "red";
         }
-        toFilterGuess /= 10;
     }
+
+    if (greenCount === 4) {
+        document.getElementById("message").innerHTML = "You won!";
+    }
+
 }
 
 const populateGuessNumber = function () {
@@ -43,8 +67,18 @@ const betterGGGen = function () {
         answer += digit;
         //digits.splice(  )
     }
+    console.log(answer);
     return answer;
 }
 
+const reset = function () {
+    numberToGuess = betterGGGen();
+    let allGuessDisplays = document.getElementsByClassName("guess-display");
+    for (let i = 0; i < 4; i++) {
+        allGuessDisplays[i].innerHTML = "";
+        allGuessDisplays[i].style.backgroundColor = "white";
+    }
+
+}
+
 let numberToGuess = betterGGGen();
-console.log(numberToGuess);

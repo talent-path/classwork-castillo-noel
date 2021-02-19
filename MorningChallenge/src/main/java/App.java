@@ -1,14 +1,204 @@
 import org.w3c.dom.Node;
 
+import javax.swing.tree.TreeNode;
 import java.util.*;
 
 public class App {
 
     public static void main(String[] args) {
 
-        System.out.println(minDays(16));
+
     }
 
+    public int[] intersection(int[] nums1, int[] nums2) {
+
+        if(nums1.length > nums2.length){
+            int[] toReturn = new int[nums2.length];
+            for(int i = 0; i < nums2.length; i++){
+
+            }
+        } else {
+            int[] toReturn = new int[nums1.length];
+            for(int)
+        }
+    }
+//
+//    public List<String> letterCasePermutation(String S) {
+//        //Create a new empty List<String> to hold Strings that will be returned to user.
+//        List<String> toReturn = new ArrayList<>();
+//
+//        //Return empty list if S is null
+//        if (S == null) {
+//            return toReturn;
+//        }
+//        letterCasePermutation(toReturn, S, 0, new String(""));
+//        return toReturn;
+//    }
+//
+//    private void letterCasePermutation(List<String> toReturn, String S, int index, String toAdd) {
+//        //Add the string to the list once the index has reached the length of the string.
+//        //This indicates that all letters have been added. We add the created String to our list
+//        //and return to start unraveling for next permutation.
+//        if (index == S.length()) {
+//            toReturn.add(toAdd);
+//            return;
+//        }
+//
+//        //Identify the character at the given index for the String, S, being examined.
+//        char c = S.charAt(index);
+//
+//        //Two distinct courses of action depending on whether c is a letter or not
+//        if (Character.isLetter(c)) {
+//            //Adding the character to an empty String.
+//            toAdd += Character.toLowerCase(c);
+//
+//            //Calling permutation for the next index.
+//            letterCasePermutation(toReturn, S, index + 1, toAdd);
+//
+//            //As all the letters get added as lowercase, the recursion will loop back from the end
+//            //We will remove the last letter added and replace it with an uppercase.
+//            toAdd = toAdd.substring(0, toAdd.length() - 1);
+//            toAdd += Character.toUpperCase(c);
+//
+//            //Once replaced by the uppercase, we will call the permutation method once more.
+//            letterCasePermutation(toReturn, S, index, toAdd);
+//
+//        } else {
+//            //For non-letters, upper and lower case are not taken into account.
+//            toAdd += c;
+//            letterCasePermutation(toReturn, S, index + 1, toAdd);
+//            toAdd = toAdd.substring(0, toAdd.length() - 1);
+//        }
+//    }
+
+//    public static int calculate(String expression) {
+//
+//        int left;
+//        int right;
+//
+//        for (int i = 0; i < expression.length(); i++) {
+//            if (expression.charAt(i) == '+' || expression.charAt(i) == '-' ||
+//                    expression.charAt(i) == '*' || expression.charAt(i) == '/') {
+//                left = Integer.parseInt(expression.substring(0, i).trim());
+//                right = Integer.parseInt(expression.substring(i + 1).trim());
+//                switch (expression.charAt(i)) {
+//                    case '+':
+//                        return left + right;
+//                    case '-':
+//                        return left - right;
+//                    case '*':
+//                        return left * right;
+//                    case '/':
+//                        return left / right;
+//                    default:
+//                }
+//            }
+//        }
+//        return 0;
+//    }
+//
+//    private static int advCalculate(String expression){
+//        List<Integer> leftParenthesisIndex = new ArrayList<>();
+//        List<Integer> rightParenthesisIndex = new ArrayList<>();
+//        int toReturn = 0;
+//        for(int i = 0; i < expression.length(); i++){
+//            if(expression.charAt(i) == '('){
+//                leftParenthesisIndex.add(i);
+//            }
+//        }
+//        for(int j = expression.length() - 1; j >= 0; j--){
+//            if(expression.charAt(j) == ')'){
+//                rightParenthesisIndex.add(j);
+//            }
+//        }
+//        for(int i = 0; i < leftParenthesisIndex.size(); i++){
+//            for(int j = rightParenthesisIndex.size() - 1; j >= 0; j--){
+//                if(expression.substring(i, j).contains("(")){
+//
+//                }
+//            }
+//        }
+//
+//        return 0;
+//    }
+
+//    class Node {
+//        public int val;
+//        public List<Node> children;
+//
+//        public Node() {
+//        }
+//
+//        public Node(int _val) {
+//            val = _val;
+//        }
+//
+//        public Node(int _val, List<Node> _children) {
+//            val = _val;
+//            children = _children;
+//        }
+//    }
+//
+//    public int maxDepth(Node root) {
+//        int depth = 0;
+//        if (root == null) {
+//            return 0;
+//        }
+//        for(Node node : root.children){
+//            depth++;
+//        }
+//
+//        return depth;
+//    }
+//
+//    public int maxDepthHelper(List<Node> root, int depth) {
+//        return root.isEmpty() ? depth : maxDepthHelper(root., depth++);
+//    }
+//
+//    public int islandPerimeter(int[][] grid) {
+//        int toReturn = 0;
+//        for (int i = 0; i < grid.length; i++) {
+//            for (int j = 0; j < grid[i].length; j++) {
+//                if (grid[i][j] == 1) {
+//                    toReturn += 4;
+//                    //If there is an island vertically above to the current island
+//                    if (i > 0 && grid[i - 1][j] == 1) {
+//                        toReturn -= 2;
+//                    }
+//                    //If there is an island horizontally left to the current island
+//                    if (j > 0 && grid[i][j - 1] == 1) {
+//                        toReturn -= 2;
+//                    }
+//                }
+//            }
+//        }
+//        return toReturn;
+//    }
+//
+//    /**
+//     * Definition for a binary tree node. */
+//      public class TreeNode {
+//          int val;
+//          TreeNode left;
+//          TreeNode right;
+//          TreeNode() {}
+//          TreeNode(int val) { this.val = val; }
+//          TreeNode(int val, TreeNode left, TreeNode right) {
+//              this.val = val;
+//              this.left = left;
+//              this.right = right;
+//          }
+//      }
+//
+//    public int countNodez(TreeNode root) {
+//        return root == null ? 0 : 1 + countNodes(root.left) + countNodes(root.right);
+//    }
+//
+//
+//    public int countNodes(TreeNode root) {
+//        return root == null ? 0 : 1 + countNodes(root.left) + countNodes(root.right);
+//    }
+//
 //    public static int minDays(int n) {
 //
 //        int minDays = 0;
@@ -28,86 +218,86 @@ public class App {
 //        }
 //        return minDays;
 //    }
-
-    public boolean validTicTacToe(String[] board) {
-        int exes = 0;
-        int ohs = 0;
-        int[] testIntBoard = new int[9];
-
-
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i].charAt(j) == 'X') {
-                    exes++;
-                    testIntBoard[i] = 1;
-                } else if (board[i].charAt(j) == 'O') {
-                    ohs++;
-                    testIntBoard[i] = -1;
-                } else {
-                    testIntBoard[i] = 0;
-                }
-
-                if (evaluateBoard(testIntBoard) != -1) {
-                    break;
-                }
-            }
-        }
-        if (ohs > exes) {
-            return false;
-        }
-        if (ohs - exes > 1 || exes - ohs > 1) {
-            return false;
-        }
-
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i].charAt(j) == 'X' && testIntBoard[i] != 1) {
-                    return false;
-                } else if (board[i].charAt(j) == 'O' && testIntBoard[i] != -1) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-
-    }
-
-
-    //-1 continue playing
-    //0 draw
-    //1 current player wins
-    private static int evaluateBoard(int[] board) {
-        int status = -1;
-
-        //draw check
-        int product = 1;
-        for (int i = 0; i < 9; i++) product *= board[i];
-        if (product != 0) status = 0;
-
-        //win check
-        for (int row = 0; row < 3; row++) {
-            int rowSum = board[row * 3 + 0] + board[row * 3 + 1] + board[row * 3 + 2];
-            if (rowSum * rowSum == 9) status = 1;
-        }
-
-        // 0 1 2
-        // 3 4 5
-        // 6 7 8
-
-        for (int col = 0; col < 3; col++) {
-            int colSum = board[3 * 0 + col] + board[3 * 1 + col] + board[3 * 2 + col];
-            if (colSum * colSum == 9) status = 1;
-        }
-
-        int d1Sum = board[0] + board[4] + board[8];
-        int d2Sum = board[6] + board[4] + board[2];
-
-        if (d1Sum * d1Sum == 9 || d2Sum * d2Sum == 9) status = 1;
-
-        return status;
-    }
-
+//
+//    public boolean validTicTacToe(String[] board) {
+//        int exes = 0;
+//        int ohs = 0;
+//        int[] testIntBoard = new int[9];
+//
+//
+//        for (int i = 0; i < board.length; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                if (board[i].charAt(j) == 'X') {
+//                    exes++;
+//                    testIntBoard[i] = 1;
+//                } else if (board[i].charAt(j) == 'O') {
+//                    ohs++;
+//                    testIntBoard[i] = -1;
+//                } else {
+//                    testIntBoard[i] = 0;
+//                }
+//
+//                if (evaluateBoard(testIntBoard) != -1) {
+//                    break;
+//                }
+//            }
+//        }
+//        if (ohs > exes) {
+//            return false;
+//        }
+//        if (ohs - exes > 1 || exes - ohs > 1) {
+//            return false;
+//        }
+//
+//        for (int i = 0; i < board.length; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                if (board[i].charAt(j) == 'X' && testIntBoard[i] != 1) {
+//                    return false;
+//                } else if (board[i].charAt(j) == 'O' && testIntBoard[i] != -1) {
+//                    return false;
+//                }
+//            }
+//        }
+//
+//        return true;
+//
+//    }
+//
+//
+//    //-1 continue playing
+//    //0 draw
+//    //1 current player wins
+//    private static int evaluateBoard(int[] board) {
+//        int status = -1;
+//
+//        //draw check
+//        int product = 1;
+//        for (int i = 0; i < 9; i++) product *= board[i];
+//        if (product != 0) status = 0;
+//
+//        //win check
+//        for (int row = 0; row < 3; row++) {
+//            int rowSum = board[row * 3 + 0] + board[row * 3 + 1] + board[row * 3 + 2];
+//            if (rowSum * rowSum == 9) status = 1;
+//        }
+//
+//        // 0 1 2
+//        // 3 4 5
+//        // 6 7 8
+//
+//        for (int col = 0; col < 3; col++) {
+//            int colSum = board[3 * 0 + col] + board[3 * 1 + col] + board[3 * 2 + col];
+//            if (colSum * colSum == 9) status = 1;
+//        }
+//
+//        int d1Sum = board[0] + board[4] + board[8];
+//        int d2Sum = board[6] + board[4] + board[2];
+//
+//        if (d1Sum * d1Sum == 9 || d2Sum * d2Sum == 9) status = 1;
+//
+//        return status;
+//    }
+//
 //    public String minWindow(String s, String t) {
 //
 //        HashSet<Character> keyChars = new HashSet<>();
@@ -187,7 +377,7 @@ public class App {
 //        return toReturn;
 //
 //    }
-
+//
 //    public List<List<Integer>> permute(int[] nums) {
 //
 //        List<List<Integer>> allPerms = new ArrayList<List<Integer>>();
@@ -211,7 +401,7 @@ public class App {
 //            permute(startIndex + 1, nums, allPerms);
 //            newStartIndex(startIndex, i, nums);
 //        }
-
+//
 //        List<Integer> onePerm = new ArrayList<Integer>();
 //        for (int i = startIndex; onePerm.size() < nums.length; i++) {
 //            if (i == nums.length) {
@@ -226,9 +416,9 @@ public class App {
 //        } else{
 //            permute(startIndex, nums, allPerms);
 //        }
-
+//
 //    }
-
+//
 //    private void newStartIndex(int startIndex, int newStartIndex, int[] nums) {
 //        int temp = nums[startIndex];
 //        nums[startIndex] = nums[newStartIndex];
@@ -245,7 +435,7 @@ public class App {
 //            next = null;
 //        }
 //    }
-
+//
 //    public ListNode swapPairs(ListNode head) {
 //
 //        int holder;
@@ -259,7 +449,7 @@ public class App {
 //        return head;
 //
 //    }
-
+//
 //    class ListNodeWithFlag extends ListNode{
 //        boolean flag;
 //        ListNodeWithFlag next;
@@ -282,7 +472,7 @@ public class App {
 //        }
 //        return false;
 //    }
-
+//
 //    public HashSet<ListNode> nodes = new HashSet<>();
 //
 //    public boolean hasCycle(ListNode head) {
@@ -513,10 +703,10 @@ public class App {
 //
 //        return true;
 //    }
-
-
-    //6: 1 + 2 + 3 = 6
-    //28: 1 + 2 + 4 + 7 + 14 = 28
+//
+//
+//    6: 1 + 2 + 3 = 6
+//    28: 1 + 2 + 4 + 7 + 14 = 28
 //    public static boolean isPerfect(int num) {
 //        if (num <= 0) return false;
 //        int sumOfFactors = 0;
@@ -530,8 +720,8 @@ public class App {
 //        }
 //        return sumOfFactors - num == num ? true : false;
 //    }
-
-
+//
+//
 //        Map<Long, Integer> count = new HashMap<>();
 //        int maxTerm = 0;
 //        long maxNum = 0;
@@ -545,17 +735,17 @@ public class App {
 //                maxNum = i;
 //                maxTerm = counter;
 //            }
-
+//
 //            Collections.max(count.values());
 //
-
-
+//
+//
 //        System.out.println("Starting # with longest chain under 1,000,000: " + maxNum);
 //        System.out.println("Terms in the chain: " + maxTerm);
-
-
+//
+//
 //    }
-
+//
 //    public static int lengthOfLongestSubstring(String s) {
 //        if (s.length() == 0) {
 //            return 0;
@@ -601,7 +791,7 @@ public class App {
 //        }
 //
 //        return digitReverse;}
-
+//
 //    public static int longestCollatz(long n) {
 //        if (n <= 1) {
 //            return counter;
@@ -610,13 +800,13 @@ public class App {
 //            return n % 2 == 0 ? longestCollatz(n/2) : longestCollatz((3 * n) + 1);
 //        }
 //    }
-
-    //input ["Bob", "Bobby", "Robert", "Roberta", "Alice", "Alicia"
-    //output:
-    //      Map with 3 keys:
-    //      "Bo" -> List: {"Bob", "Bobby"}
-    //      "Ro" -> List: {"Robert", "Roberta"}
-    //      "Al" -> List: {"Alice", "Alicia"}
+//
+//    input ["Bob", "Bobby", "Robert", "Roberta", "Alice", "Alicia"
+//    output:
+//          Map with 3 keys:
+//          "Bo" -> List: {"Bob", "Bobby"}
+//          "Ro" -> List: {"Robert", "Roberta"}
+//          "Al" -> List: {"Alice", "Alicia"}
 //    public static Map<String, List<String>> groupByFirstTwoLetters(String[] toGroup) {
 //
 //        Map<String, List<String>> groupedNames = new HashMap<>();

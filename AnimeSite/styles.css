@@ -1,0 +1,24 @@
+ul {
+    list-style-type: none;
+    margin-bottom: 10px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+body {
+    line-height: 1.42857143;
+    background-color: rgb(20, 20, 20);
+    font-family: Roboto,sans-serif;
+    overscroll-behavior: none;
+}
+
+.searchresult, .items {
+    display: grid;
+    margin-left: -20px;
+    gap: 5px;
+    margin-right: 10px;
+    margin-top: -10px;
+}

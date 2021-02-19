@@ -29,18 +29,23 @@
         <div>
             <h1 style="text-align:center">Guessing Game</h1>
         </div>
-        <div>
-            <button id="Display1" class="guess-display"></button>
-            <button id="Display2" class="guess-display"></button>
-            <button id="Display3" class="guess-display"></button>
-            <button id="Display4" class="guess-display"></button>
+        <div style="width:500px; margin:0 auto;">
+            <div id="Display1" style="width: 100px; height: 100px; border: 7px solid #0e0e0f; display: inline-block; text-align: center" class="guess-display"></div>
+            <div id="Display1" style="width: 100px; height: 100px; border: 7px solid #0e0e0f; display: inline-block; text-align: center" class="guess-display"></div>
+            <div id="Display1" style="width: 100px; height: 100px; border: 7px solid #0e0e0f; display: inline-block; text-align: center" class="guess-display"></div>
+            <div id="Display1" style="width: 100px; height: 100px; border: 7px solid #0e0e0f; display: inline-block; text-align: center" class="guess-display"></div>
+           
         </div>
-        <div>
+        <br>
+        <div style="width:500px; margin:0 auto;">
 
             <input type="text" id="guess" placeholder="Enter your guess here">
             <button type="submit" id="submitGuess" onclick="makeGuess()">Guess</button>
+            <button type="submit" id="reset" onclick="reset()">Reset</button>
         </div>
     </div>
+    <br>
+    <div id="message" style="text-align: center;">Welcome</div>
     <script type="text/javascript" src="guessinggame.js"></script>
 </body>
 

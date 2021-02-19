@@ -7,18 +7,18 @@ function handleClick(buttonId) {
 
     const xImg = document.createElement("img");
     xImg.setAttribute("src", "https://cdn.pixabay.com/photo/2012/04/12/20/12/x-30465_1280.png");
-    xImg.classList.add("buttonImage");
+    xImg.classList.add("button-image");
 
     const oImg = document.createElement("img");
     oImg.setAttribute("src", "https://assets.ltkcontent.com/images/20093/3747.LetterO_0066f46bde.jpg");
-    oImg.classList.add("buttonImage");
+    oImg.classList.add("button-image");
 
-    let toDisable = document.getElementById('button' + buttonId);
+    let toDisable = document.getElementById('Button' + buttonId);
     toDisable.disabled = true;
     if (isXTurn) {
         toDisable.appendChild(xImg);
         board[buttonId - 1] = 1;
-       
+
     } else {
         toDisable.appendChild(oImg);
         board[buttonId - 1] = -1;
@@ -26,7 +26,7 @@ function handleClick(buttonId) {
     console.log(board);
     console.log(checkWin());
     let n = checkWin();
-    
+
     //Update to not use alerts
     if (n === 1) {
         alert(`${isXTurn ? "X Won!" : "O Won!"}`);

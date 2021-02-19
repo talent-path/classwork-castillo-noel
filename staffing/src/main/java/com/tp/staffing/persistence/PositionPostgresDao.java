@@ -129,4 +129,7 @@ public class PositionPostgresDao implements PositionDAO {
         }
 
     }
+
+    //Need methods to implement adding days to a position. There is a PositionDay bridge table.
+    //Pre
 }
