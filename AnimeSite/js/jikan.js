@@ -22,7 +22,6 @@ const getAnime = function () {
                 let animeBox = document.createElement("div");
                 animeBox.className = "box";
                 animeBox.style.width = "196.563px";
-                // animeBox.style.height = "217px";
                 let animeInnerBox = document.createElement("div");
                 animeInnerBox.className = "inner";
                 let animeTitle = document.createElement("h3");
@@ -48,7 +47,6 @@ const getAnime = function () {
                 animeBox.appendChild(animeInnerBox);
                 animeInnerBox.appendChild(animeTitle);
                 animeInnerBox.appendChild(animeDetails);
-                // animeInnerBox.appendChild(animeSynopsis);
                 animeInnerBox.appendChild(animeImg);
                 animeInnerBox.appendChild(document.createElement("br"));
                 animeInnerBox.appendChild(animeWatch);
@@ -86,7 +84,6 @@ const getManga = function () {
                 let mangaBox = document.createElement("div");
                 mangaBox.className = "box";
                 mangaBox.style.width = "196.563px";
-                // animeBox.style.height = "217px";
                 let mangaInnerBox = document.createElement("div");
                 mangaInnerBox.className = "inner";
                 let mangaTitle = document.createElement("h3");
@@ -112,7 +109,6 @@ const getManga = function () {
                 mangaBox.appendChild(mangaInnerBox);
                 mangaInnerBox.appendChild(mangaTitle);
                 mangaInnerBox.appendChild(mangaDetails);
-                // animeInnerBox.appendChild(mangaSynopsis);
                 mangaInnerBox.appendChild(mangaImg);
                 mangaInnerBox.appendChild(document.createElement("br"));
                 mangaInnerBox.appendChild(mangaRead);
@@ -125,17 +121,3 @@ const getManga = function () {
         }
     )
 }
-
-const populateGenres = function () {
-
-    $.get(
-        `https://api.jikan.moe/v3/search/anime?q=${animeSearch}&page=1`,
-        function (data, textStatus, jqXHR) {
-            console.log(data);
-            console.log(textStatus);
-            console.log(jqXHR);
-        }
-    )
-}
-
-//sort by top rated

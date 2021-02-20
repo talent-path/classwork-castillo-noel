@@ -5,7 +5,7 @@
     <title>Anipops</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body id="top">
@@ -15,7 +15,7 @@
                 <h1>Anipops</h1>
                 <p>A responsive search for anime or manga! <br /></p>
                 <input id="search" type="text" placeholder="Search"><br><br>
-                <button onclick="getAnime()">Find Anime</button> &emsp;
+                <button id="myBtn" onclick="getAnime()">Find Anime</button> &emsp;
                 <button onclick="getManga()">Find Manga</button>
 
             </header>
@@ -42,6 +42,15 @@
     <script src="js/skel.min.js"></script>
     <script src="js/util.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        var input = document.getElementById("search");
+        input.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("myBtn").click();
+            }
+        });
+    </script>
 
 </body>
 
