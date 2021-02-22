@@ -7,6 +7,4 @@ Additional features are being able to view the Most Popular / Top Rated / Newest
 
 
 ### Technologies used
--HTML
--CSS
--Javascript
+-HTML, CSS, and Javascript
