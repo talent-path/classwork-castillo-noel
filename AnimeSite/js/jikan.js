@@ -2,13 +2,57 @@ const getAnime = function () {
 
     const animeSearch = $("#search").val();
 
-    clearResults();
+    let results = document.getElementById("results");
+
+    let children = results.childNodes;
+
+    let allChildren = [...children];
+
+    for (let child of allChildren) {
+        child.remove();
+    }
 
     $.get(
         `https://api.jikan.moe/v3/search/anime?q=${animeSearch}&page=1`,
         function (data, textStatus, jqXHR) {
 
-            populateResults(data);
+            let animeResults = document.getElementById("results")
+
+            for (let anime of data.results) {
+                let animeBox = document.createElement("div");
+                animeBox.className = "box";
+                animeBox.style.width = "196.563px";
+                let animeInnerBox = document.createElement("div");
+                animeInnerBox.className = "inner";
+                let animeTitle = document.createElement("h3");
+                animeTitle.innerHTML = anime.title;
+                animeTitle.style.color = "#00FFFF";
+                let animeDetails = document.createElement("h1");
+                animeDetails.innerHTML = "Released: " + anime.start_date.substring(0, 4);
+                let animeSynopsis = document.createElement("p");
+                animeSynopsis.innerHTML = anime.synopsis;
+                let animeImg = document.createElement("img");
+                animeImg.href = anime.url;
+                animeImg.src = anime.image_url;
+                animeImg.className = "image fit";
+                animeImg.style.width = "157.25px";
+                animeImg.style.height = "217px";
+                let animeWatch = document.createElement("a");
+                animeWatch.className = "button fit";
+                animeWatch.innerHTML = "Full Details";
+                animeWatch.innerHTML.color = "#000000";
+                animeWatch.href = anime.url;
+                //animeWatch.onclick = fullDetails.bind(anime);
+                animeWatch.target = "_blank";
+
+                animeBox.appendChild(animeInnerBox);
+                animeInnerBox.appendChild(animeTitle);
+                animeInnerBox.appendChild(animeDetails);
+                animeInnerBox.appendChild(animeImg);
+                animeInnerBox.appendChild(document.createElement("br"));
+                animeInnerBox.appendChild(animeWatch);
+                animeResults.appendChild(animeBox);
+            }
 
             console.log(data);
             console.log(textStatus);
@@ -16,7 +60,6 @@ const getAnime = function () {
         }
     )
 }
-
 const mostPopularAnime = function () {
 
     clearResults();
@@ -176,8 +219,8 @@ const populateResults = function (allData) {
 
 }
 
-const clearResults = function () {
-
+const clearResults = function(){
+    
     let results = document.getElementById("results");
 
     let children = results.childNodes;
