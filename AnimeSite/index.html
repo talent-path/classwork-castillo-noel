@@ -2,9 +2,10 @@
 <html>
 
 <head>
-    <title>Anipops</title>
+    <title></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 
@@ -17,7 +18,6 @@
                 <input id="search" type="text" placeholder="Search"><br><br>
                 <button id="myBtn" onclick="getAnime()">Find Anime</button> &emsp;
                 <button onclick="getManga()">Find Manga</button>
-
             </header>
         </div>
     </section>
@@ -25,6 +25,12 @@
     <!-- Main -->
     <div id="main">
         <div class="inner">
+            <header id="filters">
+                <button onclick="mostPopularAnime()">Most Popular Anime</button> &emsp;
+                <button onclick="topRatedAnime()">Top Rated Anime</button> &emsp;
+                <button onclick="mostPopularManga()">Most Popular Manga</button> &emsp;
+                <button onclick="topRatedManga()">Top Rated Manga</button> &emsp;
+            </header>
 
             <!-- Boxes -->
             <div id="results" class="thumbnails">
@@ -36,6 +42,7 @@
 
     <!-- Scripts -->
     <script src="js/jikan.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.scrolly.min.js"></script>
     <script src="js/jquery.poptrox.min.js"></script>
