@@ -2,57 +2,13 @@ const getAnime = function () {
 
     const animeSearch = $("#search").val();
 
-    let results = document.getElementById("results");
-
-    let children = results.childNodes;
-
-    let allChildren = [...children];
-
-    for (let child of allChildren) {
-        child.remove();
-    }
+    clearResults();
 
     $.get(
         `https://api.jikan.moe/v3/search/anime?q=${animeSearch}&page=1`,
         function (data, textStatus, jqXHR) {
 
-            let animeResults = document.getElementById("results")
-
-            for (let anime of data.results) {
-                let animeBox = document.createElement("div");
-                animeBox.className = "box";
-                animeBox.style.width = "196.563px";
-                let animeInnerBox = document.createElement("div");
-                animeInnerBox.className = "inner";
-                let animeTitle = document.createElement("h3");
-                animeTitle.innerHTML = anime.title;
-                animeTitle.style.color = "#00FFFF";
-                let animeDetails = document.createElement("h1");
-                animeDetails.innerHTML = "Released: " + anime.start_date.substring(0, 4);
-                let animeSynopsis = document.createElement("p");
-                animeSynopsis.innerHTML = anime.synopsis;
-                let animeImg = document.createElement("img");
-                animeImg.href = anime.url;
-                animeImg.src = anime.image_url;
-                animeImg.className = "image fit";
-                animeImg.style.width = "157.25px";
-                animeImg.style.height = "217px";
-                let animeWatch = document.createElement("a");
-                animeWatch.className = "button fit";
-                animeWatch.innerHTML = "Full Details";
-                animeWatch.innerHTML.color = "#000000";
-                animeWatch.href = anime.url;
-                //animeWatch.onclick = fullDetails.bind(anime);
-                animeWatch.target = "_blank";
-
-                animeBox.appendChild(animeInnerBox);
-                animeInnerBox.appendChild(animeTitle);
-                animeInnerBox.appendChild(animeDetails);
-                animeInnerBox.appendChild(animeImg);
-                animeInnerBox.appendChild(document.createElement("br"));
-                animeInnerBox.appendChild(animeWatch);
-                animeResults.appendChild(animeBox);
-            }
+            populateResults(data);
 
             console.log(data);
             console.log(textStatus);
@@ -60,61 +16,16 @@ const getAnime = function () {
         }
     )
 }
+
 const mostPopularAnime = function () {
 
-    const animeSearch = $("#search").val();
-
-    let results = document.getElementById("results");
-
-    let children = results.childNodes;
-
-    let allChildren = [...children];
-
-    for (let child of allChildren) {
-        child.remove();
-    }
+    clearResults();
 
     $.get(
         `https://api.jikan.moe/v3/search/anime?q=&order_by=members&sort=desc&page=1`,
         function (data, textStatus, jqXHR) {
 
-            let animeResults = document.getElementById("results")
-
-            for (let anime of data.results) {
-                let animeBox = document.createElement("div");
-                animeBox.className = "box";
-                animeBox.style.width = "196.563px";
-                let animeInnerBox = document.createElement("div");
-                animeInnerBox.className = "inner";
-                let animeTitle = document.createElement("h3");
-                animeTitle.innerHTML = anime.title;
-                animeTitle.style.color = "#00FFFF";
-                let animeDetails = document.createElement("h1");
-                animeDetails.innerHTML = "Released: " + anime.start_date.substring(0, 4);
-                let animeSynopsis = document.createElement("p");
-                animeSynopsis.innerHTML = anime.synopsis;
-                let animeImg = document.createElement("img");
-                animeImg.href = anime.url;
-                animeImg.src = anime.image_url;
-                animeImg.className = "image fit";
-                animeImg.style.width = "157.25px";
-                animeImg.style.height = "217px";
-                let animeWatch = document.createElement("a");
-                animeWatch.className = "button fit";
-                animeWatch.innerHTML = "Full Details";
-                animeWatch.innerHTML.color = "#000000";
-                animeWatch.href = anime.url;
-                // animeWatch.onclick = fullDetails(anime);
-                animeWatch.target = "_blank";
-
-                animeBox.appendChild(animeInnerBox);
-                animeInnerBox.appendChild(animeTitle);
-                animeInnerBox.appendChild(animeDetails);
-                animeInnerBox.appendChild(animeImg);
-                animeInnerBox.appendChild(document.createElement("br"));
-                animeInnerBox.appendChild(animeWatch);
-                animeResults.appendChild(animeBox);
-            }
+            populateResults(data);
 
             console.log(data);
             console.log(textStatus);
@@ -125,59 +36,30 @@ const mostPopularAnime = function () {
 
 const topRatedAnime = function () {
 
-    const animeSearch = $("#search").val();
-
-    let results = document.getElementById("results");
-
-    let children = results.childNodes;
-
-    let allChildren = [...children];
-
-    for (let child of allChildren) {
-        child.remove();
-    }
+    clearResults();
 
     $.get(
         `https://api.jikan.moe/v3/search/anime?q=&order_by=score&sort=desc&page=1`,
         function (data, textStatus, jqXHR) {
 
-            let animeResults = document.getElementById("results")
+            populateResults(data);
 
-            for (let anime of data.results) {
-                let animeBox = document.createElement("div");
-                animeBox.className = "box";
-                animeBox.style.width = "196.563px";
-                let animeInnerBox = document.createElement("div");
-                animeInnerBox.className = "inner";
-                let animeTitle = document.createElement("h3");
-                animeTitle.innerHTML = anime.title;
-                animeTitle.style.color = "#00FFFF";
-                let animeDetails = document.createElement("h1");
-                animeDetails.innerHTML = "Released: " + anime.start_date.substring(0, 4);
-                let animeSynopsis = document.createElement("p");
-                animeSynopsis.innerHTML = anime.synopsis;
-                let animeImg = document.createElement("img");
-                animeImg.href = anime.url;
-                animeImg.src = anime.image_url;
-                animeImg.className = "image fit";
-                animeImg.style.width = "157.25px";
-                animeImg.style.height = "217px";
-                let animeWatch = document.createElement("a");
-                animeWatch.className = "button fit";
-                animeWatch.innerHTML = "Full Details";
-                animeWatch.innerHTML.color = "#000000";
-                animeWatch.href = anime.url;
-                // animeWatch.onclick = fullDetails(anime);
-                animeWatch.target = "_blank";
+            console.log(data);
+            console.log(textStatus);
+            console.log(jqXHR);
+        }
+    )
+}
 
-                animeBox.appendChild(animeInnerBox);
-                animeInnerBox.appendChild(animeTitle);
-                animeInnerBox.appendChild(animeDetails);
-                animeInnerBox.appendChild(animeImg);
-                animeInnerBox.appendChild(document.createElement("br"));
-                animeInnerBox.appendChild(animeWatch);
-                animeResults.appendChild(animeBox);
-            }
+const newestAnime = function () {
+
+    clearResults();
+
+    $.get(
+        `https://api.jikan.moe/v3/search/anime?q=&order_by=start_date&sort=desc&page=1`,
+        function (data, textStatus, jqXHR) {
+
+            populateResults(data);
 
             console.log(data);
             console.log(textStatus);
@@ -191,57 +73,13 @@ const getManga = function () {
 
     const mangaSearch = $("#search").val();
 
-    let results = document.getElementById("results");
-
-    let children = results.childNodes;
-
-    let allChildren = [...children];
-
-    for (let child of allChildren) {
-        child.remove();
-    }
+    clearResults();
 
     $.get(
         `https://api.jikan.moe/v3/search/manga?q=${mangaSearch}&page=1`,
         function (data, textStatus, jqXHR) {
 
-            let mangaResults = document.getElementById("results")
-
-            for (let manga of data.results) {
-                let mangaBox = document.createElement("div");
-                mangaBox.className = "box";
-                mangaBox.style.width = "196.563px";
-                let mangaInnerBox = document.createElement("div");
-                mangaInnerBox.className = "inner";
-                let mangaTitle = document.createElement("h3");
-                mangaTitle.innerHTML = manga.title;
-                mangaTitle.style.color = "#00FFFF";
-                let mangaDetails = document.createElement("h1");
-                mangaDetails.innerHTML = "Released: " + manga.start_date.substring(0, 4);
-                let mangaSynopsis = document.createElement("p");
-                mangaSynopsis.innerHTML = manga.synopsis;
-                let mangaImg = document.createElement("img");
-                mangaImg.href = manga.url;
-                mangaImg.src = manga.image_url;
-                mangaImg.className = "image fit";
-                mangaImg.style.width = "157.25px";
-                mangaImg.style.height = "217px";
-                let mangaRead = document.createElement("a");
-                mangaRead.className = "button fit";
-                mangaRead.innerHTML = "Full Details";
-                mangaRead.innerHTML.color = "#000000";
-               mangaRead.href = manga.url;
-               //mangaRead.onclick = fullDetails(manga);
-                mangaRead.target = "_blank";
-
-                mangaBox.appendChild(mangaInnerBox);
-                mangaInnerBox.appendChild(mangaTitle);
-                mangaInnerBox.appendChild(mangaDetails);
-                mangaInnerBox.appendChild(mangaImg);
-                mangaInnerBox.appendChild(document.createElement("br"));
-                mangaInnerBox.appendChild(mangaRead);
-                mangaResults.appendChild(mangaBox);
-            }
+            populateResults(data);
 
             console.log(data);
             console.log(textStatus);
@@ -252,60 +90,13 @@ const getManga = function () {
 
 const mostPopularManga = function () {
 
-    const mangaSearch = $("#search").val();
-
-    let results = document.getElementById("results");
-
-    let children = results.childNodes;
-
-    let allChildren = [...children];
-
-    for (let child of allChildren) {
-        child.remove();
-    }
+    clearResults();
 
     $.get(
         `https://api.jikan.moe/v3/search/manga?q=&order_by=members&sort=desc&page=1`,
         function (data, textStatus, jqXHR) {
 
-            let mangaResults = document.getElementById("results")
-
-            for (let manga of data.results) {
-                let mangaBox = document.createElement("div");
-                mangaBox.className = "box";
-                mangaBox.style.width = "196.563px";
-                let mangaInnerBox = document.createElement("div");
-                mangaInnerBox.className = "inner";
-                let mangaTitle = document.createElement("h3");
-                mangaTitle.innerHTML = manga.title;
-                mangaTitle.style.color = "#00FFFF";
-                let mangaDetails = document.createElement("h1");
-                mangaDetails.innerHTML = "Released: " + manga.start_date.substring(0, 4);
-                let mangaSynopsis = document.createElement("p");
-                mangaSynopsis.innerHTML = manga.synopsis;
-                let mangaImg = document.createElement("img");
-                mangaImg.href = manga.url;
-                mangaImg.src = manga.image_url;
-                mangaImg.className = "image fit";
-                mangaImg.style.width = "157.25px";
-                mangaImg.style.height = "217px";
-                let mangaRead = document.createElement("a");
-                mangaRead.className = "button fit";
-                mangaRead.innerHTML = "Full Details";
-                mangaRead.innerHTML.color = "#000000";
-                mangaRead.href = manga.url;
-                //mangaRead.onclick = fullDetails(manga);
-                mangaRead.target = "_blank";
-
-                mangaBox.appendChild(mangaInnerBox);
-                mangaInnerBox.appendChild(mangaTitle);
-                mangaInnerBox.appendChild(mangaDetails);
-                mangaInnerBox.appendChild(mangaImg);
-                mangaInnerBox.appendChild(document.createElement("br"));
-                mangaInnerBox.appendChild(mangaRead);
-                mangaResults.appendChild(mangaBox);
-            }
-
+            populateResults(data);
             console.log(data);
             console.log(textStatus);
             console.log(jqXHR);
@@ -315,7 +106,77 @@ const mostPopularManga = function () {
 
 const topRatedManga = function () {
 
-    const mangaSearch = $("#search").val();
+    clearResults();
+
+    $.get(
+        `https://api.jikan.moe/v3/search/manga?q=&order_by=score&sort=desc&page=1`,
+        function (data, textStatus, jqXHR) {
+
+            populateResults(data);
+            console.log(data);
+            console.log(textStatus);
+            console.log(jqXHR);
+        }
+    )
+}
+
+const newestManga = function () {
+
+    clearResults();
+
+    $.get(
+        `https://api.jikan.moe/v3/search/manga?q=&order_by=start_date&sort=desc&page=1`,
+        function (data, textStatus, jqXHR) {
+
+            populateResults(data);
+            console.log(data);
+            console.log(textStatus);
+            console.log(jqXHR);
+        }
+    )
+}
+
+const populateResults = function (allData) {
+    let results = document.getElementById("results")
+
+    for (let data of allData.results) {
+        let dataBox = document.createElement("div");
+        dataBox.className = "box";
+        dataBox.style.width = "196.563px";
+        let dataInnerBox = document.createElement("div");
+        dataInnerBox.className = "inner";
+        let dataTitle = document.createElement("h3");
+        dataTitle.innerHTML = data.title;
+        dataTitle.style.color = "#00FFFF";
+        let dataReleaseYear = document.createElement("h1");
+        dataReleaseYear.innerHTML = "Released: " + data.start_date.substring(0, 4);
+        let dataSynopsis = document.createElement("p");
+        dataSynopsis.innerHTML = data.synopsis;
+        let dataImg = document.createElement("img");
+        dataImg.href = data.url;
+        dataImg.src = data.image_url;
+        dataImg.className = "image fit";
+        dataImg.style.width = "157.25px";
+        dataImg.style.height = "217px";
+        let dataDetails = document.createElement("a");
+        dataDetails.className = "button fit";
+        dataDetails.innerHTML = "Full Details";
+        dataDetails.innerHTML.color = "#000000";
+        dataDetails.href = data.url;
+        dataDetails.target = "_blank";
+
+        dataBox.appendChild(dataInnerBox);
+        dataInnerBox.appendChild(dataTitle);
+        dataInnerBox.appendChild(dataReleaseYear);
+        dataInnerBox.appendChild(dataImg);
+        dataInnerBox.appendChild(document.createElement("br"));
+        dataInnerBox.appendChild(dataDetails);
+        results.appendChild(dataBox);
+    }
+
+}
+
+const clearResults = function () {
 
     let results = document.getElementById("results");
 
@@ -326,90 +187,5 @@ const topRatedManga = function () {
     for (let child of allChildren) {
         child.remove();
     }
-
-    $.get(
-        `https://api.jikan.moe/v3/search/manga?q=&order_by=score&sort=desc&page=1`,
-        function (data, textStatus, jqXHR) {
-
-            let mangaResults = document.getElementById("results")
-
-            for (let manga of data.results) {
-                let mangaBox = document.createElement("div");
-                mangaBox.className = "box";
-                mangaBox.style.width = "196.563px";
-                let mangaInnerBox = document.createElement("div");
-                mangaInnerBox.className = "inner";
-                let mangaTitle = document.createElement("h3");
-                mangaTitle.innerHTML = manga.title;
-                mangaTitle.style.color = "#00FFFF";
-                let mangaDetails = document.createElement("h1");
-                mangaDetails.innerHTML = "Released: " + manga.start_date.substring(0, 4);
-                let mangaSynopsis = document.createElement("p");
-                mangaSynopsis.innerHTML = manga.synopsis;
-                let mangaImg = document.createElement("img");
-                mangaImg.href = manga.url;
-                mangaImg.src = manga.image_url;
-                mangaImg.className = "image fit";
-                mangaImg.style.width = "157.25px";
-                mangaImg.style.height = "217px";
-                let mangaRead = document.createElement("a");
-                mangaRead.className = "button fit";
-                mangaRead.innerHTML = "Full Details";
-                mangaRead.innerHTML.color = "#000000";
-                mangaRead.href = manga.url;
-                //mangaRead.onclick = fullDetails(manga);
-                mangaRead.target = "_blank";
-
-                mangaBox.appendChild(mangaInnerBox);
-                mangaInnerBox.appendChild(mangaTitle);
-                mangaInnerBox.appendChild(mangaDetails);
-                mangaInnerBox.appendChild(mangaImg);
-                mangaInnerBox.appendChild(document.createElement("br"));
-                mangaInnerBox.appendChild(mangaRead);
-                mangaResults.appendChild(mangaBox);
-            }
-
-            console.log(data);
-            console.log(textStatus);
-            console.log(jqXHR);
-        }
-    )
 }
-
-// const fullDetails = function (data) {
-//     let results = document.getElementById("results");
-//     results.style.display = "none";
-//     let results = document.getElementById("result");
-//     result.style.display = "block";
-
-//     <section id="one" class="wrapper style1">
-// 				<div class="inner">
-// 					<article class="feature left">
-// 						<span class="image"><img src="images/pic01.jpg" alt="" /></span>
-// 						<div class="content">
-// 							<h2>Integer vitae libero acrisus egestas placerat  sollicitudin</h2>
-// 							<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est.</p>
-// 							<ul class="actions">
-// 								<li>
-// 									<a href="#" class="button alt">More</a>
-// 								</li>
-// 							</ul>
-// 						</div>
-// 					</article>
-// 					<article class="feature right">
-// 						<span class="image"><img src="images/pic02.jpg" alt="" /></span>
-// 						<div class="content">
-// 							<h2>Integer vitae libero acrisus egestas placerat  sollicitudin</h2>
-// 							<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est.</p>
-// 							<ul class="actions">
-// 								<li>
-// 									<a href="#" class="button alt">More</a>
-// 								</li>
-// 							</ul>
-// 						</div>
-// 					</article>
-// 				</div>
-// 			</section>
-
-// }
 
