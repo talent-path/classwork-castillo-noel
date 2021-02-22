@@ -95,9 +95,8 @@ const topRatedAnime = function () {
 }
 
 const newestAnime = function () {
-
     clearResults();
-
+ß
     $.get(
         `https://api.jikan.moe/v3/search/anime?q=&order_by=start_date&sort=desc&page=1`,
         function (data, textStatus, jqXHR) {
@@ -219,8 +218,8 @@ const populateResults = function (allData) {
 
 }
 
-const clearResults = function(){
-    
+const clearResults = function () {
+
     let results = document.getElementById("results");
 
     let children = results.childNodes;
