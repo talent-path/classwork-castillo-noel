@@ -2,10 +2,9 @@
 <html>
 
 <head>
-    <title></title>
+    <title>Anisearch</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 
@@ -41,10 +40,15 @@
         </div>
     </div>
 
+    <footer id="footer">
+        <div class="inner">
+            <p class="copyright">&copy; CSS by <a href="https://templated.co" target="_blank">TEMPLATED</a></p>
+        </div>
+    </footer>
+
 
     <!-- Scripts -->
     <script src="js/jikan.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.scrolly.min.js"></script>
     <script src="js/jquery.poptrox.min.js"></script>
@@ -53,7 +57,7 @@
     <script src="js/main.js"></script>
     <script>
         var input = document.getElementById("search");
-        input.addEventListener("keyup", function (event) {
+        input.addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 document.getElementById("myBtn").click();

@@ -1,32 +1,4 @@
 @charset "UTF-8";
 @import url(font-awesome.min.css);
-@import url(fullmotion-templated.css);
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400|Passion+One:400");
-
-.form-control:focus {
-	box-shadow: none;
-  }
-  
-  .form-control-underlined {
-	border-width: 0;
-	border-bottom-width: 1px;
-	border-radius: 0;
-	padding-left: 0;
-  }
-
-  #filters{
-    -moz-align-items: center;
-    -webkit-align-items: center;
-    -ms-align-items: center;
-    align-items: center;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    display: flex;
-    -moz-justify-content: center;
-    -webkit-justify-content: center;
-    -ms-justify-content: center;
-    justify-content: center;
-    padding: 0em 4em 6em 4em;
-}
-
+@import url(fullmotion-templated.css)
