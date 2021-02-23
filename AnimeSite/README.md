@@ -5,6 +5,7 @@ To give users the opportunity to search for anime or manga. This is done by ente
 
 Additional features are being able to view the Most Popular / Top Rated / Newest for Anime or Manga. 
 
+CSS credit to Templated.
 
 ### Technologies used
 -HTML, CSS, and Javascript
