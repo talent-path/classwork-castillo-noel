@@ -21,10 +21,35 @@ var Knight = /** @class */ (function (_super) {
     function Knight(isWhite) {
         var _this = _super.call(this, Piece_1.PieceType.Knight, isWhite) || this;
         _this.generateMoves = function (moveOn, loc) {
-            return [];
+            var knightMoves = [];
+            //we'll generate 4 "position" objects that represent different directions the bishop might move
+            //then try those one at a time and add the results
+            var knightDirections = [];
+            knightDirections.push({ row: 2, col: 1 });
+            knightDirections.push({ row: 2, col: -1 });
+            knightDirections.push({ row: -2, col: 1 });
+            knightDirections.push({ row: -2, col: -1 });
+            knightDirections.push({ row: 1, col: 2 });
+            knightDirections.push({ row: -1, col: 2 });
+            knightDirections.push({ row: 1, col: -2 });
+            knightDirections.push({ row: -1, col: -2 });
+            for (var _i = 0, knightDirections_1 = knightDirections; _i < knightDirections_1.length; _i++) {
+                var direction = knightDirections_1[_i];
+                var newLoc = { row: loc.row + direction.row, col: loc.col + direction.col };
+                if (Knight.isOnBoard(newLoc)
+                    && (moveOn.allSquares[newLoc.row][newLoc.col] === null
+                        || moveOn.allSquares[newLoc.row][newLoc.col].isWhite != _this.isWhite)) {
+                    knightMoves.push({ from: loc, to: newLoc });
+                }
+                // let directionMoves: Move[] = Knight.slidePiece(moveOn, loc, direction, this.isWhite);
+            }
+            return knightMoves;
         };
         return _this;
     }
+    Knight.isOnBoard = function (loc) {
+        return loc.col >= 0 && loc.col < 8 && loc.row >= 0 && loc.row < 8;
+    };
     return Knight;
 }(ChessPiece_1.ChessPiece));
 exports.Knight = Knight;

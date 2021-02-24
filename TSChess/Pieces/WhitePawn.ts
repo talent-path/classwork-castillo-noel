@@ -51,8 +51,12 @@ export class WhitePawn extends ChessPiece {
 
             newLoc = { row: loc.row + whitePawnDirections[2].row, col: loc.col + whitePawnDirections[2].col };
             if (WhitePawn.isOnBoard(newLoc)
-                && moveOn.allSquares[newLoc.row][newLoc.col] != null
-                && !moveOn.allSquares[newLoc.row][newLoc.col].isWhite) {
+                && ((moveOn.allSquares[newLoc.row][newLoc.col] != null
+                    && !moveOn.allSquares[newLoc.row][newLoc.col].isWhite)
+                )
+                || (moveOn.enPassantCaptureLoc != undefined
+                && (moveOn.enPassantCaptureLoc.row === newLoc.row
+                    && moveOn.enPassantCaptureLoc.col === newLoc.col))) {
                 if (WhitePawn.canPromote(newLoc)) {
                     whitePawnMoves.push({ from: loc, to: newLoc, promoteTo: PieceType.Bishop })
                     whitePawnMoves.push({ from: loc, to: newLoc, promoteTo: PieceType.Rook })
@@ -65,8 +69,12 @@ export class WhitePawn extends ChessPiece {
 
             newLoc = { row: loc.row + whitePawnDirections[3].row, col: loc.col + whitePawnDirections[3].col };
             if (WhitePawn.isOnBoard(newLoc)
-                && moveOn.allSquares[newLoc.row][newLoc.col] != null
-                && !moveOn.allSquares[newLoc.row][newLoc.col].isWhite) {
+                && ((moveOn.allSquares[newLoc.row][newLoc.col] != null
+                    && !moveOn.allSquares[newLoc.row][newLoc.col].isWhite)
+                )
+                || (moveOn.enPassantCaptureLoc != undefined
+                    && (moveOn.enPassantCaptureLoc.row === newLoc.row
+                        && moveOn.enPassantCaptureLoc.col === newLoc.col))) {
                 if (WhitePawn.canPromote(newLoc)) {
                     whitePawnMoves.push({ from: loc, to: newLoc, promoteTo: PieceType.Bishop })
                     whitePawnMoves.push({ from: loc, to: newLoc, promoteTo: PieceType.Rook })
