@@ -48,6 +48,12 @@ class ChessBoard implements Board{
 
     //  01234567
 
+    isWhiteTurn : boolean;
+    wKingSideCastle : boolean;
+    wQueenSideCastle: boolean;
+    bKingSideCastle : boolean;
+    bQueenSideCastle: boolean;
+
     pieceAt( loc : Position ) : Piece{
 
         return this.allSquares[loc.row][loc.col];

@@ -31,7 +31,9 @@ export class Knight extends ChessPiece {
 
             for (let direction of knightDirections) {
                 let newLoc: Position = { row: loc.row + direction.row, col: loc.col + direction.col }
-                if (Knight.isOnBoard(newLoc)) {
+                if (Knight.isOnBoard(newLoc)
+                    && (moveOn.allSquares[newLoc.row][newLoc.col] === null 
+                        || moveOn.allSquares[newLoc.row][newLoc.col].isWhite != this.isWhite )) {
                     knightMoves.push({ from: loc, to: newLoc });
                 }
                 // let directionMoves: Move[] = Knight.slidePiece(moveOn, loc, direction, this.isWhite);
