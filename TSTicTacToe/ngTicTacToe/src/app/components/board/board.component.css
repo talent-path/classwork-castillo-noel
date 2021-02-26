@@ -1,0 +1,16 @@
+.board-button {
+    width: 33%;
+    height: 10rem;
+    margin: 0px;
+    padding: 0px;
+}
+
+.button-image {
+    /* width: 130px;
+    height: 160px; */
+    background-size: 100%;
+}
+
+#GameBoard {
+    width: 50%;
+}
