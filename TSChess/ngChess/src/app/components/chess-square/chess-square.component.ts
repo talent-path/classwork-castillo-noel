@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Bishop } from 'src/app/models/Bishop';
+import { Position } from 'src/app/models/Position';
 import { Piece, PieceType } from 'src/app/models/Piece';
 
 @Component({
@@ -8,6 +9,8 @@ import { Piece, PieceType } from 'src/app/models/Piece';
   styleUrls: ['./chess-square.component.css']
 })
 export class ChessSquareComponent implements OnInit {
+
+  @Output() squareClickedEvent: EventEmitter<Position> = new EventEmitter<Position>();
 
   @Input() squarePiece: Piece = new Bishop(true);
   @Input() row: number = 0;
@@ -50,6 +53,12 @@ export class ChessSquareComponent implements OnInit {
     }
 
     this.isLightSquare = ((this.row + this.col) % 2 === 0);
+  }
+
+  squareClicked(): void {
+    this.squareClickedEvent.emit(
+      { row: this.row, col: this.col }
+    );
   }
 
 }

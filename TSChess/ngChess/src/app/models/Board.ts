@@ -142,6 +142,7 @@ export class ChessBoard implements Board {
 
         nextBoard.allSquares[toMake.from.row][toMake.from.col] = null;
         nextBoard.allSquares[toMake.to.row][toMake.to.col] = oldPiece;
+        nextBoard.isWhiteTurn = !this.isWhiteTurn;
 
 
 
