@@ -1,13 +1,13 @@
 import { Move } from "./Move";
-import { Bishop } from "./Pieces/Bishop";
-import { BlackPawn } from "./Pieces/BlackPawn";
-import { ChessPiece } from "./Pieces/ChessPiece";
-import { King } from "./Pieces/King";
-import { Knight } from "./Pieces/Knight";
-import { Piece, PieceType } from "./Pieces/Piece"
-import { Queen } from "./Pieces/Queen";
-import { Rook } from "./Pieces/Rook";
-import { WhitePawn } from "./Pieces/WhitePawn";
+import { Bishop } from "./Bishop";
+import { BlackPawn } from "./BlackPawn";
+import { ChessPiece } from "./ChessPiece";
+import { King } from "./King";
+import { Knight } from "./Knight";
+import { Piece, PieceType } from "./Piece"
+import { Queen } from "./Queen";
+import { Rook } from "./Rook";
+import { WhitePawn } from "./WhitePawn";
 import { Position } from "./Position"
 
 export interface Board {
@@ -29,7 +29,7 @@ export interface Board {
 }
 
 
-class ChessBoard implements Board {
+export class ChessBoard implements Board {
 
     //TODO: capture this in the copy constructor at some point...
     fiftyMoveCount: number;
@@ -106,6 +106,7 @@ class ChessBoard implements Board {
 
             }
         }
+        console.log(this.allSquares);
     }
 
     buildFrom(toCopy: Board) {
@@ -283,18 +284,5 @@ class ChessBoard implements Board {
 
 }
 
-console.log("attempting to create a board")
-let testBoard: Board = new ChessBoard();
-console.log("done creating a board:");
-//console.log( testBoard );
-
-// console.log(testBoard.generateMoves());
-testBoard = testBoard.makeMove({ from: { row: 1, col: 4 }, to: { row: 2, col: 4 } });
-console.log(testBoard.allSquares);
-testBoard = testBoard.makeMove({ from: { row: 1, col: 2 }, to: { row: 2, col: 2 } });
-console.log(testBoard.allSquares);
-testBoard = testBoard.makeMove({ from: { row: 0, col: 1 }, to: { row: 2, col: 2 } });
-// console.log(testBoard.generateMoves());
-console.log(testBoard.allSquares);
 
 
