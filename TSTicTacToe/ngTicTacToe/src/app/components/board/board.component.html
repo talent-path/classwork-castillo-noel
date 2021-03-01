@@ -1,14 +1,5 @@
 <div id="GameBoard">
-    <button id="Button1" class="board-button" (click)="markIcon(1)"></button>
-    <button id="Button2" class="board-button" (click)="markIcon(2)"></button>
-    <button id="Button3" class="board-button" (click)="markIcon(3)"></button>
-    <br>
-    <button id="Button4" class="board-button" (click)="markIcon(4)"></button>
-    <button id="Button5" class="board-button" (click)="markIcon(5)"></button>
-    <button id="Button6" class="board-button" (click)="markIcon(6)"></button>
-    <br>
-    <button id="Button7" class="board-button" (click)="markIcon(7)"></button>
-    <button id="Button8" class="board-button" (click)="markIcon(8)"></button>
-    <button id="Button9" class="board-button" (click)="markIcon(9)"></button>
-    <br>
+    <div *ngFor="let row of game.board; index as r" class="rowDiv">
+        <app-square *ngFor="let s of row; index as c" [isXTurn]="!isXTurn" [row]="r" [col]="c" (squareClickedEvent)="onSquareClicked($event)"></app-square>
+    </div>
 </div>
